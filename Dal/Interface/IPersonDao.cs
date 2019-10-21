@@ -1,16 +1,16 @@
 ﻿﻿using System.Collections.Generic;
 using System.Threading.Tasks;
- using Hurace.Domain;
+ using Hurace.Dal.Domain;
 
  namespace Hurace.Dal.Interface
 {
     public interface IPersonDao
     {
-        IEnumerable<Person> FindAll();
+        IEnumerable<Skier> FindAll();
 
-        Person FindById(int id);
+        Skier FindById(int id);
 
-        bool Update(Person person);
+        bool Update(Skier skier);
 
     }
 }

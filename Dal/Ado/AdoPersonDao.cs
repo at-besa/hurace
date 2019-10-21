@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.Linq;
  using Hurace.Dal.Common;
+ using Hurace.Dal.Domain;
  using Hurace.Dal.Interface;
- using Hurace.Domain;
 
  namespace Hurace.Dal.Ado
 {
@@ -19,9 +19,9 @@ using System.Linq;
             this.template = new AdoTemplate(connectionFactory);
         }
 
-        private Person MapRowToPerson(IDataRecord row)
+        private Skier MapRowToPerson(IDataRecord row)
         {
-            return new Person
+            return new Skier
             {
                 Id = (int)row["id"],
                 FirstName = (string)row["first_name"],
@@ -30,17 +30,17 @@ using System.Linq;
             };
         }
 
-        public bool Update(Person person)
+        public bool Update(Skier skier)
         {
-            return template.Execute(@"update person set first_name=@fn, last_name=@ln, date_of_birth=@dob 
+            return template.Execute(@"update skier set first_name=@fn, last_name=@ln, date_of_birth=@dob 
                                              where id=@id",
-                                             new QueryParameter("@id", person.Id),
-                                             new QueryParameter("@fn", person.FirstName),
-                                             new QueryParameter("@ln", person.LastName),
-                                             new QueryParameter("@dob", person.DateOfBirth)) == 1;
+                                             new QueryParameter("@id", skier.Id),
+                                             new QueryParameter("@fn", skier.FirstName),
+                                             new QueryParameter("@ln", skier.LastName),
+                                             new QueryParameter("@dob", skier.DateOfBirth)) == 1;
         }
 
-        public IEnumerable<Person> FindAll()
+        public IEnumerable<Skier> FindAll()
         {
             //// @ so we dont need to escape
             ////var connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Sebastian\Documents\FH\5_Semester\SWKUE\4_UE\adonet\PersonAdmin\Db\person_db.mdf;Integrated Security=True;Connect Timeout=30";
@@ -60,14 +60,14 @@ using System.Linq;
 
             //    using (DbCommand command = connection.CreateCommand())
             //    {
-            //        command.CommandText = "select * from person";
+            //        command.CommandText = "select * from skier";
 
-            //        var items = new List<Person>();
+            //        var items = new List<Skier>();
             //        using (DbDataReader reader = command.ExecuteReader())
             //        {
             //            while (reader.Read())
             //            {
-            //                items.Add(new Person
+            //                items.Add(new Skier
             //                {
             //                    Id = (int)reader["id"],
             //                    FirstName = (string)reader["first_name"],
@@ -80,12 +80,12 @@ using System.Linq;
             //    }
             //}
 
-            return template.Query("select * from person", MapRowToPerson);
+            return template.Query("select * from skier", MapRowToPerson);
         }
 
-        public Person FindById(int id)
+        public Skier FindById(int id)
         {
-            return template.QueryById("select * from person where id=@id",
+            return template.QueryById("select * from skier where id=@id",
                 MapRowToPerson,
                 new QueryParameter("@id", id));
         }

@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using System.Transactions;
  using Hurace.Dal.Ado;
  using Hurace.Dal.Common;
+ using Hurace.Dal.Domain;
  using Hurace.Dal.Interface;
- using Hurace.Domain;
  using Microsoft.Extensions.Configuration;
 
 //using PersonAdmin.Dal.Interface;
@@ -34,30 +34,30 @@ namespace Hurace.Client
 
         public void TestFindById()
         {
-            Person person1 = personDao.FindById(1);
+            Skier person1 = personDao.FindById(1);
             Console.WriteLine($"FindById(1) -> {person1?.ToString() ?? "<null>"}");
 
-            Person person2 = personDao.FindById(99);
+            Skier person2 = personDao.FindById(99);
             Console.WriteLine($"FindById(99) -> {person2?.ToString() ?? "<null>"}");
         }
 
         public void TestUpdate()
         {
-            Person person = personDao.FindById(1);
-            Console.WriteLine($"before update: person -> {person?.ToString() ?? "<null>"}");
-            if (person == null) return;
+            Skier skier = personDao.FindById(1);
+            Console.WriteLine($"before update: skier -> {skier?.ToString() ?? "<null>"}");
+            if (skier == null) return;
 
-            person.DateOfBirth = DateTime.Now.AddYears(-100);
-            personDao.Update(person);
+            skier.DateOfBirth = DateTime.Now.AddYears(-100);
+            personDao.Update(skier);
 
-            person = personDao.FindById(1);
-            Console.WriteLine($"after update:  person -> {person?.ToString() ?? "<null>"}");
+            skier = personDao.FindById(1);
+            Console.WriteLine($"after update:  skier -> {skier?.ToString() ?? "<null>"}");
         }
 
         public void TestTransactions()
         {
-            Person person1 = personDao.FindById(1);
-            Person person2 = personDao.FindById(2);
+            Skier person1 = personDao.FindById(1);
+            Skier person2 = personDao.FindById(2);
 
             DateTime oldDate1 = person1.DateOfBirth;
             DateTime oldDate2 = person2.DateOfBirth;
@@ -101,16 +101,16 @@ namespace Hurace.Client
 
         //public async Task TestFindByIdAsync()
         //{
-        //    Person person1 = await personDao.FindByIdAsync(1);
+        //    Skier person1 = await personDao.FindByIdAsync(1);
         //    Console.WriteLine($"FindById(1) -> {person1?.ToString() ?? "<null>"}");
 
-        //    Person person2 = await personDao.FindByIdAsync(99);
+        //    Skier person2 = await personDao.FindByIdAsync(99);
         //    Console.WriteLine($"FindById(99) -> {person2?.ToString() ?? "<null>"}");
         //}
 
         //public async Task TestUpdateAsync()
         //{
-        //    Person person = await personDao.FindByIdAsync(1);
+        //    Skier person = await personDao.FindByIdAsync(1);
         //    Console.WriteLine($"before update: person -> {person?.ToString() ?? "<null>"}");
         //    if (person == null) return;
 
@@ -123,8 +123,8 @@ namespace Hurace.Client
 
         //public async Task TestTransactionsAsync()
         //{
-        //    Person person1 = await personDao.FindByIdAsync(1);
-        //    Person person2 = await personDao.FindByIdAsync(2);
+        //    Skier person1 = await personDao.FindByIdAsync(1);
+        //    Skier person2 = await personDao.FindByIdAsync(2);
 
         //    DateTime oldDate1 = person1.DateOfBirth;
         //    DateTime oldDate2 = person2.DateOfBirth;

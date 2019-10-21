@@ -4,11 +4,11 @@ namespace Hurace.Dal.Common
 {
   public static class ConfigurationUtil
   {
-    private static IConfiguration configuration = null;
+    private static IConfiguration configuration;
 
     public static IConfiguration GetConfiguration() =>
-      configuration = configuration ?? new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", optional: false)
+      configuration ??= new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", false)
         .Build();
 
     public static (string connectionString, string providerName) GetConnectionParameters(string configName)
