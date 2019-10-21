@@ -8,10 +8,12 @@ namespace Hurace.Dal.Domain
         private const int Splittimes = 5;
         public Race Race { get; set; }
         public int SkierId { get; set; }
-        public string[] SplitTime { get; set; } = new string[Splittimes];
+        public int Run { get; set; }
+        public DateTime[] SplitTime { get; set; } = new DateTime[Splittimes];
+        public DateTime FinishTime { get; set; }
         public bool Disqualified { get; set; }
         
         public override string ToString() =>
-            $"RaceData(id:{SkierId}, Race:{Race}, SplitTime:{SplitTime}, Disqualified:{Disqualified})";
+            $"RaceData(id:{SkierId}, Race:{Race}, Run:{Run}, SplitTime:{SplitTime}, FinishTime:{FinishTime}, Disqualified:{Disqualified})";
     }
 }
