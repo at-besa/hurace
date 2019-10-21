@@ -14,6 +14,7 @@ namespace Hurace.Dal.Domain
     // DTO/Domain Object
     public class Race
     {
+        public int Id { get; set; }
         public RaceType Type { get; set; }
         public DateTime Date { get; set; }
         public string Name { get; set; }
@@ -21,6 +22,6 @@ namespace Hurace.Dal.Domain
         public string Description { get; set; }
         
         public override string ToString() =>
-            $"Race(id:{Type}, Name:{Name}, Location:{Location}, Description:{Description}, DateOfBirth:{Date:yyyy-MM-dd})";
+            $"Race(id:{Id}, Type:{Type}, Name:{Name}, Location:{Location}, Description:{Description}, DateOfBirth:{Date:yyyy-MM-dd})";
     }
 }
