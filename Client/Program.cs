@@ -15,17 +15,17 @@ namespace Hurace.Client
 {
     class DalTester
     {
-        private readonly IPersonDao personDao;
+        private readonly ISkierDao skierDao;
 
-        public DalTester(IPersonDao personDao)
+        public DalTester(ISkierDao skierDao)
         {
-            this.personDao = personDao;
+            this.skierDao = skierDao;
         }
 
 
         public void TestFindAll()
         {
-            var persons = personDao.FindAll();
+            var persons = skierDao.FindAll();
             foreach (var p in persons)
             {
                 Console.WriteLine($"{p.Id,5} | {p.FirstName,-10} | {p.LastName,-15} | {p.DateOfBirth,10:yyyy-MM-dd}");
@@ -34,30 +34,30 @@ namespace Hurace.Client
 
         public void TestFindById()
         {
-            Skier person1 = personDao.FindById(1);
+            Skier person1 = skierDao.FindById(1);
             Console.WriteLine($"FindById(1) -> {person1?.ToString() ?? "<null>"}");
 
-            Skier person2 = personDao.FindById(99);
+            Skier person2 = skierDao.FindById(99);
             Console.WriteLine($"FindById(99) -> {person2?.ToString() ?? "<null>"}");
         }
 
         public void TestUpdate()
         {
-            Skier skier = personDao.FindById(1);
+            Skier skier = skierDao.FindById(1);
             Console.WriteLine($"before update: skier -> {skier?.ToString() ?? "<null>"}");
             if (skier == null) return;
 
             skier.DateOfBirth = DateTime.Now.AddYears(-100);
-            personDao.Update(skier);
+            skierDao.Update(skier);
 
-            skier = personDao.FindById(1);
+            skier = skierDao.FindById(1);
             Console.WriteLine($"after update:  skier -> {skier?.ToString() ?? "<null>"}");
         }
 
         public void TestTransactions()
         {
-            Skier person1 = personDao.FindById(1);
-            Skier person2 = personDao.FindById(2);
+            Skier person1 = skierDao.FindById(1);
+            Skier person2 = skierDao.FindById(2);
 
             DateTime oldDate1 = person1.DateOfBirth;
             DateTime oldDate2 = person2.DateOfBirth;
@@ -70,9 +70,9 @@ namespace Hurace.Client
                 {
                     person1.DateOfBirth = newDate1 = oldDate1.AddDays(1);
                     person2.DateOfBirth = newDate2 = oldDate2.AddDays(1);
-                    personDao.Update(person1);
+                    skierDao.Update(person1);
                     // throw new ArgumentException(); // comment this out to rollback transaction
-                    personDao.Update(person2);
+                    skierDao.Update(person2);
                     scope.Complete();
                 }
             }
@@ -80,8 +80,8 @@ namespace Hurace.Client
             {
             }
 
-            person1 = personDao.FindById(1);
-            person2 = personDao.FindById(2);
+            person1 = skierDao.FindById(1);
+            person2 = skierDao.FindById(2);
 
             if (oldDate1 == person1.DateOfBirth && oldDate2 == person2.DateOfBirth)
                 Console.WriteLine("Transaction was ROLLED BACK.");
@@ -94,37 +94,37 @@ namespace Hurace.Client
         #region Async
         //public async Task TestFindAllAsync()
         //{
-        //    (await personDao.FindAllAsync())
+        //    (await skierDao.FindAllAsync())
         //             .ToList()
         //             .ForEach(p => Console.WriteLine($"{p.Id,5} | {p.FirstName,-10} | {p.LastName,-15} | {p.DateOfBirth,10:yyyy-MM-dd}"));
         //}
 
         //public async Task TestFindByIdAsync()
         //{
-        //    Skier person1 = await personDao.FindByIdAsync(1);
+        //    Skier person1 = await skierDao.FindByIdAsync(1);
         //    Console.WriteLine($"FindById(1) -> {person1?.ToString() ?? "<null>"}");
 
-        //    Skier person2 = await personDao.FindByIdAsync(99);
+        //    Skier person2 = await skierDao.FindByIdAsync(99);
         //    Console.WriteLine($"FindById(99) -> {person2?.ToString() ?? "<null>"}");
         //}
 
         //public async Task TestUpdateAsync()
         //{
-        //    Skier person = await personDao.FindByIdAsync(1);
+        //    Skier person = await skierDao.FindByIdAsync(1);
         //    Console.WriteLine($"before update: person -> {person?.ToString() ?? "<null>"}");
         //    if (person == null) return;
 
         //    person.DateOfBirth = DateTime.Now.AddYears(-100);
-        //    await personDao.UpdateAsync(person);
+        //    await skierDao.UpdateAsync(person);
 
-        //    person = await personDao.FindByIdAsync(1);
+        //    person = await skierDao.FindByIdAsync(1);
         //    Console.WriteLine($"after update:  person -> {person?.ToString() ?? "<null>"}");
         //}
 
         //public async Task TestTransactionsAsync()
         //{
-        //    Skier person1 = await personDao.FindByIdAsync(1);
-        //    Skier person2 = await personDao.FindByIdAsync(2);
+        //    Skier person1 = await skierDao.FindByIdAsync(1);
+        //    Skier person2 = await skierDao.FindByIdAsync(2);
 
         //    DateTime oldDate1 = person1.DateOfBirth;
         //    DateTime oldDate2 = person2.DateOfBirth;
@@ -137,9 +137,9 @@ namespace Hurace.Client
         //        {
         //            person1.DateOfBirth = newDate1 = oldDate1.AddDays(1);
         //            person2.DateOfBirth = newDate2 = oldDate2.AddDays(1);
-        //            await personDao.UpdateAsync(person1);
+        //            await skierDao.UpdateAsync(person1);
         //            // throw new ArgumentException(); // comment this out to rollback transaction
-        //            await personDao.UpdateAsync(person2);
+        //            await skierDao.UpdateAsync(person2);
         //            scope.Complete();
         //        }
         //    }
@@ -147,8 +147,8 @@ namespace Hurace.Client
         //    {
         //    }
 
-        //    person1 = await personDao.FindByIdAsync(1);
-        //    person2 = await personDao.FindByIdAsync(2);
+        //    person1 = await skierDao.FindByIdAsync(1);
+        //    person2 = await skierDao.FindByIdAsync(2);
 
         //    if (oldDate1 == person1.DateOfBirth && oldDate2 == person2.DateOfBirth)
         //        Console.WriteLine("Transaction was ROLLED BACK.");
@@ -179,7 +179,7 @@ namespace Hurace.Client
             IConnectionFactory connectionFactory =
             DefaultConnectionFactory.FromConfiguration(configuration, "PersonDbConnection");
 
-            var tester2 = new DalTester(new AdoPersonDao(connectionFactory));
+            var tester2 = new DalTester(new AdoSkierDao(connectionFactory));
 
             PrintTitle("PersonDao.FindAll", 50);
             tester2.TestFindAll();

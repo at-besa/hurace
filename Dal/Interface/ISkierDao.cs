@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 
  namespace Hurace.Dal.Interface
 {
-    public interface IPersonDao
+    public interface ISkierDao
     {
         IEnumerable<Skier> FindAll();
 
         Skier FindById(int id);
 
         bool Update(Skier skier);
+        bool Insert(Skier skier);
 
     }
 }
