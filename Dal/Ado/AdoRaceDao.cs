@@ -32,28 +32,28 @@ using System.Linq;
             };
         }
 
-        public bool Update(Race Race)
+        public bool Update(Race race)
         {
             return template.Execute(@"update Race set name=@nam, location=@loc, date=@dat, description=@desc, splittimes=@spl 
                                              where id=@id",
-                                    new QueryParameter("@id", Race.Id),
-                                    new QueryParameter("@nam", Race.Name),
-                                    new QueryParameter("@loc", Race.Location),
-                                    new QueryParameter("@dat", Race.Date),
-                                    new QueryParameter("@spl", Race.Splittimes),
-                                    new QueryParameter("@desc", Race.Description)) == 1;
+                                    new QueryParameter("@id", race.Id),
+                                    new QueryParameter("@nam", race.Name),
+                                    new QueryParameter("@loc", race.Location),
+                                    new QueryParameter("@dat", race.Date),
+                                    new QueryParameter("@spl", race.Splittimes),
+                                    new QueryParameter("@desc", race.Description)) == 1;
         }
 
-        public bool Insert(Race Race)
+        public bool Insert(Race race)
         {
             return template.Execute(@"insert into Race(id, name, location, date, description, splittimes) 
                                         values (null, @fn, @ln, @dob , @nat, null)",
-                                    new QueryParameter("@id", Race.Id),
-                                    new QueryParameter("@nam", Race.Name),
-                                    new QueryParameter("@loc", Race.Location),
-                                    new QueryParameter("@dat", Race.Date),
-                                    new QueryParameter("@spl", Race.Splittimes),
-                                    new QueryParameter("@desc", Race.Description)) == 1;
+                                    new QueryParameter("@id", race.Id),
+                                    new QueryParameter("@nam", race.Name),
+                                    new QueryParameter("@loc", race.Location),
+                                    new QueryParameter("@dat", race.Date),
+                                    new QueryParameter("@spl", race.Splittimes),
+                                    new QueryParameter("@desc", race.Description)) == 1;
         }
         
         public IEnumerable<Race> FindAll()
