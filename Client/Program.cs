@@ -20,7 +20,6 @@ namespace Hurace.Client
             this.skierDao = skierDao;
         }
 
-
         public void TestFindAll()
         {
             var persons = skierDao.FindAll();

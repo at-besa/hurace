@@ -40,6 +40,7 @@ using System.Linq;
                                              new QueryParameter("@ln", skier.LastName),
                                              new QueryParameter("@dob", skier.DateOfBirth),
                                              new QueryParameter("@nat", skier.Nation)) == 1;
+            
         }
 
         public bool Insert(Skier skier)
