@@ -8,7 +8,7 @@ namespace Hurace.Dal.Common
 
     public static IConfiguration GetConfiguration() =>
       configuration ??= new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", false)
+        .AddJsonFile("Client/appsettings.json", false)
         .Build();
 
     public static (string connectionString, string providerName) GetConnectionParameters(string configName)

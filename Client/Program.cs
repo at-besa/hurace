@@ -1,7 +1,5 @@
 ﻿﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Transactions;
+ using System.Transactions;
  using Hurace.Dal.Ado;
  using Hurace.Dal.Common;
  using Hurace.Dal.Domain;
@@ -56,8 +54,8 @@ namespace Hurace.Client
 
         public void TestTransactions()
         {
-            Skier person1 = skierDao.FindById(1);
-            Skier person2 = skierDao.FindById(2);
+            Skier person1 = skierDao.FindById(0);
+            Skier person2 = skierDao.FindById(1);
 
             DateTime oldDate1 = person1.DateOfBirth;
             DateTime oldDate2 = person2.DateOfBirth;
@@ -168,16 +166,16 @@ namespace Hurace.Client
             int postLen = length - (preLen + text.Length + 2);
             Console.WriteLine($"{new String(ch, preLen)} {text} {new String(ch, postLen)}");
         }
-
-
         
         private static void Main()
         // private static async Task Main()
         {
 
+            
+            
             IConfiguration configuration = ConfigurationUtil.GetConfiguration();
             IConnectionFactory connectionFactory =
-            DefaultConnectionFactory.FromConfiguration(configuration, "PersonDbConnection");
+            DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
 
             var tester2 = new DalTester(new AdoSkierDao(connectionFactory));
 

@@ -13,7 +13,9 @@ namespace Hurace.Dal.Common
         case "Microsoft.Data.SqlClient": return Microsoft.Data.SqlClient.SqlClientFactory.Instance;
         // "System.Data.SqlClient" => System.Data.SqlClient.SqlClientFactory.Instance,
         case "MySql.Data.MySqlClient":  return MySql.Data.MySqlClient.MySqlClientFactory.Instance;
-        default: throw new ArgumentException("Invalid provider name \"{providerName}\"");
+		case "System.Data.SQLite": return Microsoft.Data.Sqlite.SqliteFactory.Instance;
+
+		default: throw new ArgumentException("Invalid provider name \"{providerName}\"");
       }
     }
 #endif

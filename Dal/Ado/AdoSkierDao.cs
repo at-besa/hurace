@@ -23,11 +23,11 @@ using System.Linq;
         {
             return new Skier
             {
-                Id = (int)row["id"],
+                Id = (int)(long)row["id"],
                 FirstName = (string)row["firstname"],
                 LastName = (string)row["lastname"],
-                DateOfBirth = (DateTime)row["dateofbirth"],
-                Nation = (string)row["nation"]
+                DateOfBirth = DateTime.Parse((string)row["dateofbirth"]),
+				Nation = (string)row["nation"]
             };
         }
 
