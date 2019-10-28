@@ -1,5 +1,6 @@
 ﻿﻿using System;
- using System.Transactions;
+using System.Collections.Generic;
+using System.Transactions;
  using Hurace.Dal.Ado;
  using Hurace.Dal.Common;
  using Hurace.Dal.Domain;
@@ -176,19 +177,22 @@ namespace Hurace.Client
             IConnectionFactory connectionFactory =
             DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
 
-            var tester2 = new DalTester(new AdoSkierDao(connectionFactory));
+            //var tester2 = new DalTester(new AdoSkierDao(connectionFactory));
 
-            PrintTitle("PersonDao.FindAll", 50);
-            tester2.TestFindAll();
 
-            PrintTitle("PersonDao.FindById", 50);
-            tester2.TestFindById();
+            //PrintTitle("PersonDao.FindAll", 50);
+            //tester2.TestFindAll();
 
-            PrintTitle("PersonDao.Update", 50);
-            tester2.TestUpdate();
+            //PrintTitle("PersonDao.FindById", 50);
+            //tester2.TestFindById();
 
-            PrintTitle("Transactions", 50);
-            tester2.TestTransactions();
+            //PrintTitle("PersonDao.Update", 50);
+            //tester2.TestUpdate();
+
+            //PrintTitle("Transactions", 50);
+            //tester2.TestTransactions();
+
+            var startListInserter = new StartListInserter(connectionFactory);
 
             #region Async
             //PrintTitle("PersonDao.FindAllAsync", 50);
@@ -203,6 +207,42 @@ namespace Hurace.Client
             //PrintTitle("TransactionsAsync", 50);
             //await tester2.TestTransactionsAsync();
             #endregion
+        }
+
+    }
+
+    internal class StartListInserter
+    {
+        private IEnumerable<Race> races;
+        private IEnumerable<Skier> skiers;
+        private IEnumerable<StartList> startListList = new List<StartList>();
+        private AdoRaceDao adoRaceDao;
+        private AdoSkierDao adoSkierDao;
+        public StartListInserter(IConnectionFactory connectionFactory)
+        {
+            adoRaceDao = new AdoRaceDao(connectionFactory);
+            adoSkierDao = new AdoSkierDao(connectionFactory);
+        }
+
+        public void getRaceData()
+        {
+            races = adoRaceDao.FindAll();
+        }
+
+        public void getSkierData()
+        {
+            skiers = adoSkierDao.FindAll();
+        }
+
+        public void insertStartlist()
+        {
+            foreach (var race in races)
+            {
+                foreach (var skier in skiers)
+                {
+                    //TODO
+                }
+            }
         }
 
     }
