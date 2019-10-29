@@ -193,6 +193,9 @@ namespace Hurace.Client
             //tester2.TestTransactions();
 
             var startListInserter = new StartListInserter(connectionFactory);
+            startListInserter.getRaceData();
+            startListInserter.getSkierData();
+            //startListInserter.insertStartlist();
 
             #region Async
             //PrintTitle("PersonDao.FindAllAsync", 50);
@@ -213,37 +216,59 @@ namespace Hurace.Client
 
     internal class StartListInserter
     {
-        private IEnumerable<Race> races;
-        private IEnumerable<Skier> skiers;
-        private IEnumerable<StartList> startListList = new List<StartList>();
+        private IList<Race> races;
+        private IList<Skier> skiers;
         private AdoRaceDao adoRaceDao;
         private AdoSkierDao adoSkierDao;
+        public IList<StartList> StartListList { get; set; } = new List<StartList>();
         public StartListInserter(IConnectionFactory connectionFactory)
         {
             adoRaceDao = new AdoRaceDao(connectionFactory);
             adoSkierDao = new AdoSkierDao(connectionFactory);
         }
 
+
         public void getRaceData()
         {
-            races = adoRaceDao.FindAll();
+            races = new List<Race>(adoRaceDao.FindAll());
         }
 
         public void getSkierData()
         {
-            skiers = adoSkierDao.FindAll();
+            skiers = new List<Skier>(adoSkierDao.FindAll());
         }
 
         public void insertStartlist()
         {
             foreach (var race in races)
             {
+                StartList startList = new StartList { Race = race };
+                Random random = new Random();
+                int numberOfStartPositions = random.Next(25, 36);
+                List<int> startPosList = generateStartPosList(numberOfStartPositions);
                 foreach (var skier in skiers)
                 {
-                    //TODO
+                    startList.SkierId = skier.Id;
+                    var index = random.Next(0, startPosList.Count);
+                    startList.StartPos = startPosList[index];
+                    startPosList.RemoveAt(index);
+                    if (StartListList.Count != 0)
+                    {
+                        StartListList.Add(startList);
+                    }
                 }
             }
+                Console.WriteLine(StartListList);
         }
 
+        private List<int> generateStartPosList(int numberOfStartPositions)
+        {
+            var list = new List<int>();
+            for (int i = 1; i < numberOfStartPositions + 1; i++)
+            {
+                list.Add(i);
+            }
+            return list;
+        }
     }
 }
