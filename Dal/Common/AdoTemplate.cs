@@ -76,11 +76,11 @@ namespace Hurace.Dal.Common
                 using (DbCommand command = connection.CreateCommand())
                 {
                     command.CommandText = sql;
-                    DbTransaction transaction = connection.BeginTransaction();
+                    command.Transaction = connection.BeginTransaction();
                     AddParameters(command, parameters);
 
                     int rows = command.ExecuteNonQuery();
-                    transaction.Commit();
+                    command.Transaction.Commit();
                     
                     return rows;
                 }
