@@ -8,6 +8,7 @@ using System.Linq;
  using Hurace.Dal.Domain;
  using Hurace.Dal.Interface;
  using Microsoft.Extensions.Configuration;
+using Hurace.Dal.Importer;
 
 //using PersonAdmin.Dal.Interface;
 //using PersonAdmin.Domain;
@@ -194,10 +195,8 @@ namespace Hurace.Client
             //PrintTitle("Transactions", 50);
             //tester2.TestTransactions();
 
-            var startListInserter = new StartListInserter(connectionFactory);
-            startListInserter.getRaceData();
-            startListInserter.getSkierData();
-            startListInserter.insertStartlist();
+            var startListsImporter = new StartListsImporter(connectionFactory);
+            startListsImporter.import();
 
             #region Async
             //PrintTitle("PersonDao.FindAllAsync", 50);
@@ -216,93 +215,4 @@ namespace Hurace.Client
 
     }
 
-    internal class StartListInserter
-    {
-        private IList<Race> races;
-        private IList<Skier> skiers;
-        private AdoRaceDao adoRaceDao;
-        private AdoSkierDao adoSkierDao;
-        private AdoStartListDao adoStartListDao;
-        public IList<StartList> StartListList { get; set; } = new List<StartList>();
-        public StartListInserter(IConnectionFactory connectionFactory)
-        {
-            adoRaceDao = new AdoRaceDao(connectionFactory);
-            adoSkierDao = new AdoSkierDao(connectionFactory);
-            adoStartListDao = new AdoStartListDao(connectionFactory);
-        }
-
-
-        public void getRaceData()
-        {
-            races = new List<Race>(adoRaceDao.FindAll());
-        }
-
-        public void getSkierData()
-        {
-            skiers = new List<Skier>(adoSkierDao.FindAll());
-        }
-
-        public void insertStartlist()
-        {
-            int i;
-            foreach (var race in races)
-            {
-                i = 1;
-                while (i < getNumberOfStarters()+1)
-                {
-                    StartList startList = new StartList { Race = race };
-                    startList.SkierId = getNewRandomSkierIdForRace(race.Id);
-                    startList.StartPos = i;
-                    StartListList.Add(startList);
-                    i++;
-                }
-            }
-            foreach (var startList in StartListList)
-            {
-                Console.WriteLine(startList);
-                
-            }
-            Console.WriteLine();
-            Console.WriteLine("#####################");
-            Console.WriteLine();
-            
-            IEnumerable<IGrouping<int, StartList>> startListsGroupedByRaceId = StartListList.GroupBy(startList => startList.Race.Id);
-            foreach (var item in startListsGroupedByRaceId)
-            {
-                Console.WriteLine(item);
-            }
-        }
-
-        private int getNewRandomSkierIdForRace(int raceId)
-        {
-            Skier[] skierArray = adoSkierDao.FindAll().ToArray();
-            List<StartList> startListsByRaceId = adoStartListDao.FindById(raceId).ToList();
-            Random random = new Random();
-            int index = random.Next(0, skierArray.Length);
-            while (startListContainsSkierId(startListsByRaceId, skierArray[index].Id))
-            {
-                index = random.Next(0, skierArray.Length);
-            }
-            return skierArray[index].Id;
-        }
-
-        private bool startListContainsSkierId(List<StartList> startListsByRaceId, int id)
-        {
-            bool contains = false;
-            foreach (var startList in startListsByRaceId)
-            {
-                if(startList.SkierId == id)
-                {
-                    contains = true;
-                }
-            }
-            return contains;
-        }
-
-        private int getNumberOfStarters()
-        {
-            Random random = new Random();
-            return random.Next(25, 36);
-        }
-    }
 }
