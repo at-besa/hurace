@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
+using Microsoft.Data.SqlClient;
 
 namespace Hurace.Dal.Common
 {
@@ -74,9 +76,13 @@ namespace Hurace.Dal.Common
                 using (DbCommand command = connection.CreateCommand())
                 {
                     command.CommandText = sql;
+                    DbTransaction transaction = connection.BeginTransaction();
                     AddParameters(command, parameters);
 
-                    return command.ExecuteNonQuery();
+                    int rows = command.ExecuteNonQuery();
+                    transaction.Commit();
+                    
+                    return rows;
                 }
             }
         }
