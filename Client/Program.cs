@@ -196,7 +196,7 @@ namespace Hurace.Client
             //tester2.TestTransactions();
 
             var startListsImporter = new StartListsImporter(connectionFactory);
-            startListsImporter.import();
+            startListsImporter.Import();
 
             #region Async
             //PrintTitle("PersonDao.FindAllAsync", 50);

@@ -22,30 +22,30 @@ namespace Hurace.Dal.Importer
             adoStartListDao = new AdoStartListDao(connectionFactory);
         }
 
-        public void import()
+        public void Import()
         {
             if(adoStartListDao.FindAll().Count() != 0)
             {
                 throw new Exception("Already data in StartList");
             }
-            generateStartLists();
+            GenerateStartLists();
             foreach (var startList in StartLists)
             {
-                adoStartListDao.Insert(startList);
+                Console.WriteLine($"Inserting worked: {adoStartListDao.Insert(startList)} for: {startList}");
             }
         }
 
-        private void generateStartLists()
+        private void GenerateStartLists()
         {
             int i;
             IList<Race> races = new List<Race>(adoRaceDao.FindAll());
             foreach (var race in races)
             {
                 i = 1;
-                while (i < getNumberOfStarters() + 1)
+                while (i < GetNumberOfStarters() + 1)
                 {
                     StartList startList = new StartList { Race = race };
-                    startList.SkierId = getNewRandomSkierIdForRace(race.Id);
+                    startList.SkierId = GetNewRandomSkierIdForRace(race.Id);
                     startList.StartPos = i;
                     StartLists.Add(startList);
                     i++;
@@ -68,25 +68,24 @@ namespace Hurace.Dal.Importer
             //}
         }
 
-        private int getNewRandomSkierIdForRace(int raceId)
+        private int GetNewRandomSkierIdForRace(int raceId)
         {
             Skier[] skierArray = adoSkierDao.FindAll().ToArray();
-            List<StartList> startListsByRaceId = adoStartListDao.FindById(raceId).ToList();
             Random random = new Random();
             int index = random.Next(0, skierArray.Length);
-            while (startListContainsSkierId(startListsByRaceId, skierArray[index].Id))
+            while (StartListContainsSkierId(raceId, skierArray[index].Id))
             {
                 index = random.Next(0, skierArray.Length);
             }
             return skierArray[index].Id;
         }
 
-        private bool startListContainsSkierId(List<StartList> startListsByRaceId, int id)
+        private bool StartListContainsSkierId(int raceId, int skierId)
         {
             bool contains = false;
-            foreach (var startList in startListsByRaceId)
+            foreach (var startList in StartLists)
             {
-                if (startList.SkierId == id)
+                if (startList.SkierId == skierId && startList.Race.Id == raceId)
                 {
                     contains = true;
                 }
@@ -94,7 +93,7 @@ namespace Hurace.Dal.Importer
             return contains;
         }
 
-        private int getNumberOfStarters()
+        private int GetNumberOfStarters()
         {
             Random random = new Random();
             return random.Next(25, 36);
