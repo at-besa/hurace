@@ -38,6 +38,13 @@ namespace Hurace.Dal.Ado
                                 new QueryParameter("@skierId", skierId));
         }
 
+        internal IEnumerable<StartList> FindById(int raceId)
+        {
+            return template.Query(@"select * from startlist 
+                                    where raceId=@raceId",
+                                MapRowToStartList,
+                                new QueryParameter("@raceId", raceId));
+        }
         public bool Insert(StartList startList)
         {
             return template.Execute(@"insert into startlist(raceId, skierId, startpos) 
@@ -55,5 +62,6 @@ namespace Hurace.Dal.Ado
                                     new QueryParameter("@skierId", startList.SkierId),
                                     new QueryParameter("@startpos", startList.StartPos)) == 1;
         }
+
     }
 }

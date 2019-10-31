@@ -1,6 +1,8 @@
 ﻿﻿using System;
 using System.Collections.Generic;
 using System.Transactions;
+using System.Linq;
+
  using Hurace.Dal.Ado;
  using Hurace.Dal.Common;
  using Hurace.Dal.Domain;
@@ -195,7 +197,7 @@ namespace Hurace.Client
             var startListInserter = new StartListInserter(connectionFactory);
             startListInserter.getRaceData();
             startListInserter.getSkierData();
-            //startListInserter.insertStartlist();
+            startListInserter.insertStartlist();
 
             #region Async
             //PrintTitle("PersonDao.FindAllAsync", 50);
@@ -220,11 +222,13 @@ namespace Hurace.Client
         private IList<Skier> skiers;
         private AdoRaceDao adoRaceDao;
         private AdoSkierDao adoSkierDao;
+        private AdoStartListDao adoStartListDao;
         public IList<StartList> StartListList { get; set; } = new List<StartList>();
         public StartListInserter(IConnectionFactory connectionFactory)
         {
             adoRaceDao = new AdoRaceDao(connectionFactory);
             adoSkierDao = new AdoSkierDao(connectionFactory);
+            adoStartListDao = new AdoStartListDao(connectionFactory);
         }
 
 
@@ -240,35 +244,65 @@ namespace Hurace.Client
 
         public void insertStartlist()
         {
+            int i;
             foreach (var race in races)
             {
-                StartList startList = new StartList { Race = race };
-                Random random = new Random();
-                int numberOfStartPositions = random.Next(25, 36);
-                List<int> startPosList = generateStartPosList(numberOfStartPositions);
-                foreach (var skier in skiers)
+                i = 1;
+                while (i < getNumberOfStarters()+1)
                 {
-                    startList.SkierId = skier.Id;
-                    var index = random.Next(0, startPosList.Count);
-                    startList.StartPos = startPosList[index];
-                    startPosList.RemoveAt(index);
-                    if (StartListList.Count != 0)
-                    {
-                        StartListList.Add(startList);
-                    }
+                    StartList startList = new StartList { Race = race };
+                    startList.SkierId = getNewRandomSkierIdForRace(race.Id);
+                    startList.StartPos = i;
+                    StartListList.Add(startList);
+                    i++;
                 }
             }
-                Console.WriteLine(StartListList);
+            foreach (var startList in StartListList)
+            {
+                Console.WriteLine(startList);
+                
+            }
+            Console.WriteLine();
+            Console.WriteLine("#####################");
+            Console.WriteLine();
+            
+            IEnumerable<IGrouping<int, StartList>> startListsGroupedByRaceId = StartListList.GroupBy(startList => startList.Race.Id);
+            foreach (var item in startListsGroupedByRaceId)
+            {
+                Console.WriteLine(item);
+            }
         }
 
-        private List<int> generateStartPosList(int numberOfStartPositions)
+        private int getNewRandomSkierIdForRace(int raceId)
         {
-            var list = new List<int>();
-            for (int i = 1; i < numberOfStartPositions + 1; i++)
+            Skier[] skierArray = adoSkierDao.FindAll().ToArray();
+            List<StartList> startListsByRaceId = adoStartListDao.FindById(raceId).ToList();
+            Random random = new Random();
+            int index = random.Next(0, skierArray.Length);
+            while (startListContainsSkierId(startListsByRaceId, skierArray[index].Id))
             {
-                list.Add(i);
+                index = random.Next(0, skierArray.Length);
             }
-            return list;
+            return skierArray[index].Id;
+        }
+
+        private bool startListContainsSkierId(List<StartList> startListsByRaceId, int id)
+        {
+            bool contains = false;
+            foreach (var startList in startListsByRaceId)
+            {
+                if(startList.SkierId == id)
+                {
+                    contains = true;
+                }
+            }
+            return contains;
+        }
+
+        private int getNumberOfStarters()
+        {
+            Random random = new Random();
+            return random.Next(25, 36);
         }
     }
 }

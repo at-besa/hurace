@@ -11,6 +11,6 @@ namespace Hurace.Dal.Domain
         public int StartPos { get; set; }
         
         public override string ToString() =>
-            $"StartList(id:{SkierId}, Name:{Race.Name}, StartPos:{StartPos})";
+            $"StartList(raceId: {Race.Id}, Name:{Race.Name}, skierId:{SkierId}, StartPos:{StartPos})";
     }
 }
