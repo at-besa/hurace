@@ -51,21 +51,6 @@ namespace Hurace.Dal.Importer
                     i++;
                 }
             }
-
-            //foreach (var startList in StartLists)
-            //{
-            //    Console.WriteLine(startList);
-
-            //}
-            //Console.WriteLine();
-            //Console.WriteLine("#####################");
-            //Console.WriteLine();
-
-            //IEnumerable<IGrouping<int, StartList>> startListsGroupedByRaceId = StartLists.GroupBy(startList => startList.Race.Id);
-            //foreach (var item in startListsGroupedByRaceId)
-            //{
-            //    Console.WriteLine(item);
-            //}
         }
 
         private int GetNewRandomSkierIdForRace(Race race)
