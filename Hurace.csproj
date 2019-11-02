@@ -9,6 +9,9 @@
     <Compile Remove="HuraceTest\**" />
     <EmbeddedResource Remove="HuraceTest\**" />
     <None Remove="HuraceTest\**" />
+    <None Update="DB\data.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
