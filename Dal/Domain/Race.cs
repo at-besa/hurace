@@ -2,15 +2,7 @@
 
 namespace Hurace.Dal.Domain
 {
-    public enum RaceType
-    {
-        Downhill,
-        SuperG,
-        Slalom,
-        GiantSlalom,
-        AlpineCombined
-    }
-    
+
     // DTO/Domain Object
     public class Race
     {

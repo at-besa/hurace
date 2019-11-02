@@ -77,6 +77,9 @@ namespace Hurace.Dal.Common
                 {
                     command.CommandText = sql;
                     command.Transaction = connection.BeginTransaction();
+
+                    DbTransaction transaction = connection.BeginTransaction();
+                    
                     AddParameters(command, parameters);
 
                     int rows = command.ExecuteNonQuery();
