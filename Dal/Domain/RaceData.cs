@@ -14,6 +14,6 @@ namespace Hurace.Dal.Domain
         
         
         public override string ToString() =>
-            $"RaceData(id:{SkierId}, Race:{Race}, Run1:( {Splittime[1]}), Run2:({Splittime[2]}), Disqualified:{Disqualified})";
+            $"RaceData(id:{SkierId}, Race:{Race}, Run1:( {Splittime[0]}), Run2:({Splittime[1]}), Disqualified:{Disqualified})";
     }
 }

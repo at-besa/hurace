@@ -27,31 +27,34 @@ using System.Linq;
                 FirstName = (string)row["firstname"],
                 LastName = (string)row["lastname"],
                 DateOfBirth = DateTime.Parse((string)row["dateofbirth"]),
-				Nation = (string)row["nation"]
+				Nation = (string)row["nation"],
+                Sex = (string)row["sex"]
             };
         }
 
         public bool Update(Skier skier)
         {
-            return template.Execute(@"update skier set firstname=@fn, lastname=@ln, dateofbirth=@dob , nation=@nat 
+            return template.Execute(@"update skier set firstname=@fn, lastname=@ln, dateofbirth=@dob , nation=@nat, sex=@sex 
                                              where id=@id",
                                              new QueryParameter("@id", skier.Id),
                                              new QueryParameter("@fn", skier.FirstName),
                                              new QueryParameter("@ln", skier.LastName),
                                              new QueryParameter("@dob", skier.DateOfBirth),
-                                             new QueryParameter("@nat", skier.Nation)) == 1;
+                                             new QueryParameter("@nat", skier.Nation),
+                                             new QueryParameter("@sex", skier.Sex)) == 1;
             
         }
 
         public bool Insert(Skier skier)
         {
-            return template.Execute(@"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage) 
-                                        values (null, @fn, @ln, @dob , @nat, null)",
+            return template.Execute(@"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) 
+                                        values (null, @fn, @ln, @dob , @nat, null, @sex)",
                        new QueryParameter("@id", skier.Id),
                                        new QueryParameter("@fn", skier.FirstName),
                                        new QueryParameter("@ln", skier.LastName),
                                        new QueryParameter("@dob", skier.DateOfBirth),
-                                       new QueryParameter("@nat", skier.Nation)) == 1;
+                                       new QueryParameter("@nat", skier.Nation),
+                                       new QueryParameter("@sex", skier.Sex)) == 1;
         }
         
         public IEnumerable<Skier> FindAll()
