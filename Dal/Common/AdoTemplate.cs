@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -71,19 +72,51 @@ namespace Hurace.Dal.Common
 
         public int Execute(string sql, params QueryParameter[] parameters)
         {
+            int rows = 0;
             using (DbConnection connection = connectionFactory.CreateConnection())
             {
+                connection.Open();
+
                 using (DbCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = sql;
-                    command.Transaction = connection.BeginTransaction();
-
+                    command.Connection = connection;
                     DbTransaction transaction = connection.BeginTransaction();
+                    command.Transaction = transaction;
                     
-                    AddParameters(command, parameters);
 
-                    int rows = command.ExecuteNonQuery();
-                    command.Transaction.Commit();
+                    try
+                    {
+                        command.CommandText = sql;
+                        AddParameters(command, parameters);
+                        rows = command.ExecuteNonQuery();
+                        transaction.Commit();
+                        Console.WriteLine("Written to the DB");
+                        connection.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
+                        Console.WriteLine("  Message: {0}", ex.Message);
+
+                        // Attempt to roll back the transaction.
+                        try
+                        {
+                            transaction.Rollback();
+                        }
+                        catch (Exception ex2)
+                        {
+                            // This catch block will handle any errors that may have occurred
+                            // on the server that would cause the rollback to fail, such as
+                            // a closed connection.
+                            Console.WriteLine("Rollback Exception Type: {0}", ex2.GetType());
+                            Console.WriteLine("  Message: {0}", ex2.Message);
+                        }
+                    }
+                    //DbTransaction transaction = connection.BeginTransaction();
+                    
+
                     
                     return rows;
                 }
