@@ -12,9 +12,9 @@ namespace Hurace.Dal.Domain
         public string Name { get; set; }
         public string Location { get; set; }
         public int Splittimes { get; set; }
-        public string Description { get; set; }
+        public string Sex { get; set;  }
         
         public override string ToString() =>
-            $"Race(id:{Id}, Type:{Type}, Name:{Name}, Location:{Location}, Description:{Description}, DateOfBirth:{Date:yyyy-MM-dd})";
+            $"Race(id:{Id}, Type:{Type}, Name:{Name}, Location:{Location}, Sex:{Sex}, Date:{Date:yyyy-MM-dd})";
     }
 }

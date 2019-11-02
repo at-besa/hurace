@@ -12,6 +12,7 @@
         public DateTime DateOfBirth { get; set; }
         public string Nation { get; set; }
         public Object ProfileImage { get; set; }
+        public string Sex { get; set; }
         
         
         // BeSa predefined data for WorldCup
@@ -19,6 +20,6 @@
 //        public int Points { get; set; }
         
         public override string ToString() =>
-          $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";
+          $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Sex:{Sex}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";
     }
 }

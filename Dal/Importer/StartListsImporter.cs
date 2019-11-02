@@ -45,7 +45,7 @@ namespace Hurace.Dal.Importer
                 while (i < GetNumberOfStarters() + 1)
                 {
                     StartList startList = new StartList { Race = race };
-                    startList.SkierId = GetNewRandomSkierIdForRace(race.Id);
+                    startList.SkierId = GetNewRandomSkierIdForRace(race);
                     startList.StartPos = i;
                     StartLists.Add(startList);
                     i++;
@@ -68,29 +68,31 @@ namespace Hurace.Dal.Importer
             //}
         }
 
-        private int GetNewRandomSkierIdForRace(int raceId)
+        private int GetNewRandomSkierIdForRace(Race race)
         {
             Skier[] skierArray = adoSkierDao.FindAll().ToArray();
             Random random = new Random();
             int index = random.Next(0, skierArray.Length);
-            while (StartListContainsSkierId(raceId, skierArray[index].Id))
+            while (!SkierAllowedForRace(race, skierArray[index]))
             {
                 index = random.Next(0, skierArray.Length);
             }
             return skierArray[index].Id;
         }
 
-        private bool StartListContainsSkierId(int raceId, int skierId)
+        private bool SkierAllowedForRace(Race race, Skier skier)
         {
-            bool contains = false;
+            bool allowed = true;
             foreach (var startList in StartLists)
             {
-                if (startList.SkierId == skierId && startList.Race.Id == raceId)
+                if ((startList.SkierId == skier.Id && 
+                    startList.Race.Id == race.Id) ||
+                    skier.Sex != race.Sex)
                 {
-                    contains = true;
+                    allowed = false;
                 }
             }
-            return contains;
+            return allowed;
         }
 
         private int GetNumberOfStarters()

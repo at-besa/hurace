@@ -28,32 +28,32 @@ using System.Linq;
                 Location = (string)row["location"],
                 Date = DateTime.Parse((string)row["date"]),
                 Splittimes = (int)(long)row["splittimes"],
-                Description = row.IsDBNull(row.GetOrdinal("description")) ? "" : (string)row["description"]
+                Sex = row.IsDBNull(row.GetOrdinal("sex")) ? "" : (string)row["sex"]
             };
         }
 
         public bool Update(Race race)
         {
-            return template.Execute(@"update Race set name=@nam, location=@loc, date=@dat, description=@desc, splittimes=@spl 
+            return template.Execute(@"update Race set name=@nam, location=@loc, date=@dat, sex=@sex, splittimes=@spl 
                                              where id=@id",
                                     new QueryParameter("@id", race.Id),
                                     new QueryParameter("@nam", race.Name),
                                     new QueryParameter("@loc", race.Location),
                                     new QueryParameter("@dat", race.Date),
                                     new QueryParameter("@spl", race.Splittimes),
-                                    new QueryParameter("@desc", race.Description)) == 1;
+                                    new QueryParameter("@sex", race.Sex)) == 1;
         }
 
         public bool Insert(Race race)
         {
-            return template.Execute(@"insert into Race(id, name, location, date, description, splittimes) 
+            return template.Execute(@"insert into Race(id, name, location, date, sex, splittimes) 
                                         values (null, @fn, @ln, @dob , @nat, null)",
                                     new QueryParameter("@id", race.Id),
                                     new QueryParameter("@nam", race.Name),
                                     new QueryParameter("@loc", race.Location),
                                     new QueryParameter("@dat", race.Date),
                                     new QueryParameter("@spl", race.Splittimes),
-                                    new QueryParameter("@desc", race.Description)) == 1;
+                                    new QueryParameter("@sex", race.Sex)) == 1;
         }
         
         public IEnumerable<Race> FindAll()
