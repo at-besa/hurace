@@ -1,10 +1,9 @@
-﻿using Hurace.Dal.Common;
-using Hurace.Dal.Domain;
-using Hurace.Dal.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Hurace.Dal.Interface;
 
 namespace Hurace.Dal.Ado
 {
@@ -19,9 +18,9 @@ namespace Hurace.Dal.Ado
         {
             return new StartList
             {
-                Race = new Race { Id = (int)(long)row["raceId"] },
-                SkierId = (int)(long)row["skierId"],
-                StartPos = (int)(long)row["startpos"]
+                Race = new AdoRaceDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["raceId"])),
+                SkierId = Convert.ToInt32(row["skierId"]),
+                StartPos = Convert.ToInt32(row["startpos"])
             };
         }
         public IEnumerable<StartList> FindAll()
@@ -47,8 +46,7 @@ namespace Hurace.Dal.Ado
         }
         public bool Insert(StartList startList)
         {
-            return template.Execute(@"insert into startlist(raceId, skierId, startpos) 
-                                        values (@raceId, @skierId, @startpos)",
+            return template.Execute(@"insert into startlist(raceId, skierId, startpos) values (@raceId, @skierId, @startpos)",
                                        new QueryParameter("@raceId", startList.Race.Id),
                                        new QueryParameter("@skierId", startList.SkierId),
                                        new QueryParameter("@startpos", startList.StartPos)) == 1;

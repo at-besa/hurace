@@ -24,14 +24,15 @@ namespace Hurace.Dal.Importer
 
         public void Import()
         {
-            if(adoStartListDao.FindAll().Count() != 0)
+            if(!adoStartListDao.FindAll().Any())
             {
-                throw new Exception("Already data in StartList");
-            }
-            GenerateStartLists();
-            foreach (var startList in StartLists)
-            {
-                Console.WriteLine($"Inserting worked: {adoStartListDao.Insert(startList)} for: {startList}");
+                GenerateStartLists();
+            
+                foreach (var startList in StartLists)
+                {
+                    adoStartListDao.Insert(startList);
+//                Console.WriteLine($"Inserting worked: {adoStartListDao.Insert(startList)} for: {startList}");
+                }
             }
         }
 

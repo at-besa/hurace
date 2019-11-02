@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hurace.Dal.Domain
+﻿namespace Hurace.Dal.Domain
 {
     // DTO/Domain Object
     public class RaceData 

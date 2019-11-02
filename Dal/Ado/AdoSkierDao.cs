@@ -23,12 +23,12 @@ using System.Linq;
         {
             return new Skier
             {
-                Id = (int)(long)row["id"],
-                FirstName = (string)row["firstname"],
-                LastName = (string)row["lastname"],
-                DateOfBirth = DateTime.Parse((string)row["dateofbirth"]),
-				Nation = (string)row["nation"],
-                Sex = (string)row["sex"]
+                Id = Convert.ToInt32(row["id"]),
+                FirstName = Convert.ToString(row["firstname"]),
+                LastName = Convert.ToString(row["lastname"]),
+                DateOfBirth = DateTime.Parse(Convert.ToString(row["dateofbirth"])),
+				Nation = Convert.ToString(row["nation"]),
+                Sex = Convert.ToString(row["sex"])
             };
         }
 

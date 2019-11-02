@@ -23,9 +23,9 @@ namespace Hurace.Dal.Ado
         {
             return new RaceType
             {
-                Id = (int) (long) row["id"],
-                Type = (string) row["type"],
-                NumberOfRuns = (int) row["numberOfRuns"]
+                Id = Convert.ToInt32(row["id"]),
+                Type = Convert.ToString(row["type"]),
+                NumberOfRuns = Convert.ToInt32(row["numberOfRuns"])
             };
         }
 

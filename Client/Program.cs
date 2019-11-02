@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Transactions;
 using System.Linq;
-
+ using System.Net;
  using Hurace.Dal.Ado;
  using Hurace.Dal.Common;
  using Hurace.Dal.Domain;
@@ -173,27 +173,14 @@ namespace Hurace.Client
         private static void Main()
         // private static async Task Main()
         {
-
-            
-            
             IConfiguration configuration = ConfigurationUtil.GetConfiguration();
             IConnectionFactory connectionFactory =
             DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
 
-            //var tester2 = new DalTester(new AdoSkierDao(connectionFactory));
+            DalTester dalTester = new DalTester(new AdoSkierDao(connectionFactory));
+            dalTester.TestFindById();
 
-
-            //PrintTitle("PersonDao.FindAll", 50);
-            //tester2.TestFindAll();
-
-            //PrintTitle("PersonDao.FindById", 50);
-            //tester2.TestFindById();
-
-            //PrintTitle("PersonDao.Update", 50);
-            //tester2.TestUpdate();
-
-            //PrintTitle("Transactions", 50);
-            //tester2.TestTransactions();
+            dalTester.TestUpdate();
 
             new StartListsImporter(connectionFactory).Import();
             new RaceDataImporter(connectionFactory).Import();

@@ -23,12 +23,12 @@ using System.Linq;
         {
             return new Race
             {
-                Id = (int)(long)row["id"],
-                Name = (string)row["name"],
-                Location = (string)row["location"],
-                Date = DateTime.Parse((string)row["date"]),
-                Splittimes = (int)(long)row["splittimes"],
-                Sex = row.IsDBNull(row.GetOrdinal("sex")) ? "" : (string)row["sex"]
+                Id = Convert.ToInt32(row["id"]),
+                Name = Convert.ToString(row["name"]),
+                Location = Convert.ToString(row["location"]),
+                Date = DateTime.Parse(Convert.ToString(row["date"])),
+                Splittimes = Convert.ToInt32(row["splittimes"]),
+                Sex = row.IsDBNull(row.GetOrdinal("sex")) ? "" : Convert.ToString(row["sex"])
             };
         }
 

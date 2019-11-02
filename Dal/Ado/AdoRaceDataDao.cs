@@ -1,9 +1,6 @@
 ﻿﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+ using System.Collections.Generic;
  using System.Data;
-using System.Data.Common;
-using System.Linq;
  using Hurace.Dal.Common;
  using Hurace.Dal.Domain;
  using Hurace.Dal.Interface;
@@ -23,10 +20,10 @@ using System.Linq;
         {
             return new RaceData
             {
-                Id = (int)row["Id"],
-                Race = (Race)row["race"],            // TODO get real race -> this cast will throw an exception
-                SkierId = (int)row["skierId"],
-                Disqualified = (bool)row["date"]
+                Id = Convert.ToInt32(row["id"]),
+                Race = new AdoRaceDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["raceId"])),
+                SkierId = Convert.ToInt32(row["skierId"]),
+                Disqualified = Convert.ToBoolean(row["disqualified"])
             };
         }
 

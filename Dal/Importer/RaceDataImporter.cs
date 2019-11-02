@@ -1,10 +1,9 @@
-﻿using Hurace.Dal.Ado;
-using Hurace.Dal.Common;
-using Hurace.Dal.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Hurace.Dal.Ado;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
 
 namespace Hurace.Dal.Importer
 {
@@ -22,14 +21,13 @@ namespace Hurace.Dal.Importer
 
         public void Import()
         {
-            if(AdoRaceDataDao.FindAll().Count() != 0)
+            if(!AdoRaceDataDao.FindAll().Any())
             {
-                throw new Exception("Already data in RaceData");
-            }
-            RaceDatas = GenerateRaceDatas();
-            foreach (var raceData in RaceDatas)
-            {
-                Console.WriteLine($"Inserting worked: {AdoRaceDataDao.Insert(raceData)} for: {raceData}"); 
+                RaceDatas = GenerateRaceDatas();
+                foreach (var raceData in RaceDatas)
+                {
+                    AdoRaceDataDao.Insert(raceData); 
+                }
             }
         }
 
