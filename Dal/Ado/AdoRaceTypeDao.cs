@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Data;
@@ -31,22 +31,22 @@ namespace Hurace.Dal.Ado
 
         public bool Update(RaceType raceType)
         {
-            return template.Execute(@"update racetype set type=@typ, numberOfRuns=@num
-                                             where id=@id",
-                                    new QueryParameter("@id", raceType.Id),
-                                    new QueryParameter("@typ", raceType.Type),
-                                    new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
+            return template.Execute(
+                       @"update racetype set type=@typ, numberOfRuns=@num where id=@id",
+                       new QueryParameter("@id", raceType.Id),
+                       new QueryParameter("@typ", raceType.Type),
+                       new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
         }
 
         public bool Insert(RaceType raceType)
         {
-            return template.Execute(@"insert into racetype(id, type, numberOfRuns) 
-                                        values (null, @typ, @num)",
-                                    new QueryParameter("@id", raceType.Id),
-                                    new QueryParameter("@typ", raceType.Type),
-                                    new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
+            return template.Execute(
+                       @"insert into racetype(id, type, numberOfRuns)  values (null, @typ, @num)",
+                       new QueryParameter("@id", raceType.Id),
+                       new QueryParameter("@typ", raceType.Type),
+                       new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
         }
-        
+
         public IEnumerable<RaceType> FindAll()
         {
             return template.Query("select * from racetype", MapRowToRaceType);
@@ -59,5 +59,4 @@ namespace Hurace.Dal.Ado
                 new QueryParameter("@id", id));
         }
     }
-
 }

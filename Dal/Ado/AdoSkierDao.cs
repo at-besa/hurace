@@ -1,14 +1,14 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
- using System.Data;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
- using Hurace.Dal.Common;
- using Hurace.Dal.Domain;
- using Hurace.Dal.Interface;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Hurace.Dal.Interface;
 
- namespace Hurace.Dal.Ado
+namespace Hurace.Dal.Ado
 {
     public class AdoSkierDao : ISkierDao
     {
@@ -26,37 +26,36 @@ using System.Linq;
                 Id = Convert.ToInt32(row["id"]),
                 FirstName = Convert.ToString(row["firstname"]),
                 LastName = Convert.ToString(row["lastname"]),
-                DateOfBirth = DateTime.Parse(Convert.ToString(row["dateofbirth"])),
-				Nation = Convert.ToString(row["nation"]),
+                DateOfBirth = Convert.ToDateTime(row["dateofbirth"]),
+                Nation = Convert.ToString(row["nation"]),
                 Sex = Convert.ToString(row["sex"])
             };
         }
 
         public bool Update(Skier skier)
         {
-            return template.Execute(@"update skier set firstname=@fn, lastname=@ln, dateofbirth=@dob , nation=@nat, sex=@sex 
-                                             where id=@id",
-                                             new QueryParameter("@id", skier.Id),
-                                             new QueryParameter("@fn", skier.FirstName),
-                                             new QueryParameter("@ln", skier.LastName),
-                                             new QueryParameter("@dob", skier.DateOfBirth),
-                                             new QueryParameter("@nat", skier.Nation),
-                                             new QueryParameter("@sex", skier.Sex)) == 1;
-            
+            return template.Execute(
+                       @"update skier set firstname=@fn, lastname=@ln, dateofbirth=@dob , nation=@nat, sex=@sex where id=@id",
+                       new QueryParameter("@id", skier.Id),
+                       new QueryParameter("@fn", skier.FirstName),
+                       new QueryParameter("@ln", skier.LastName),
+                       new QueryParameter("@dob", skier.DateOfBirth.ToString("yyyy-M-d")),
+                       new QueryParameter("@nat", skier.Nation),
+                       new QueryParameter("@sex", skier.Sex)) == 1;
         }
 
         public bool Insert(Skier skier)
         {
-            return template.Execute(@"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) 
-                                        values (null, @fn, @ln, @dob , @nat, null, @sex)",
+            return template.Execute(
+                       @"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) values (null, @fn, @ln, @dob , @nat, null, @sex)",
                        new QueryParameter("@id", skier.Id),
-                                       new QueryParameter("@fn", skier.FirstName),
-                                       new QueryParameter("@ln", skier.LastName),
-                                       new QueryParameter("@dob", skier.DateOfBirth),
-                                       new QueryParameter("@nat", skier.Nation),
-                                       new QueryParameter("@sex", skier.Sex)) == 1;
+                       new QueryParameter("@fn", skier.FirstName),
+                       new QueryParameter("@ln", skier.LastName),
+                       new QueryParameter("@dob", skier.DateOfBirth.ToString("yyyy-M-d")),
+                       new QueryParameter("@nat", skier.Nation),
+                       new QueryParameter("@sex", skier.Sex)) == 1;
         }
-        
+
         public IEnumerable<Skier> FindAll()
         {
             return template.Query("select * from skier", MapRowToSkier);

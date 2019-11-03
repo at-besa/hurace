@@ -1,11 +1,11 @@
-﻿﻿using System;
- using System.Collections.Generic;
- using System.Data;
- using Hurace.Dal.Common;
- using Hurace.Dal.Domain;
- using Hurace.Dal.Interface;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Hurace.Dal.Interface;
 
- namespace Hurace.Dal.Ado
+namespace Hurace.Dal.Ado
 {
     public class AdoRaceDataDao : IRaceDataDao
     {
@@ -22,9 +22,9 @@
             IEnumerable<Splittime>[] runs = new IEnumerable<Splittime>[2];
             for (int i = 0; i <= 1; i++)
             {
-                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceRun(id, i+1);
+                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceRun(id, i + 1);
             }
-            
+
             return new RaceData
             {
                 Id = id,
@@ -37,24 +37,24 @@
 
         public bool Update(RaceData raceData)
         {
-            return template.Execute(@"update RaceData set id=@id, raceId=@rid, skierId=@skid, disqualified=@dis
-                                             where id=@id",
-                                    new QueryParameter("@id", raceData.Id),
-                                    new QueryParameter("@rid", raceData.Race.Id),
-                                    new QueryParameter("@skid", raceData.SkierId),
-                                    new QueryParameter("@dis", raceData.Disqualified)) == 1;
+            return template.Execute(
+                       @"update RaceData set id=@id, raceId=@rid, skierId=@skid, disqualified=@dis where id=@id",
+                       new QueryParameter("@id", raceData.Id),
+                       new QueryParameter("@rid", raceData.Race.Id),
+                       new QueryParameter("@skid", raceData.SkierId),
+                       new QueryParameter("@dis", raceData.Disqualified)) == 1;
         }
 
         public bool Insert(RaceData raceData)
         {
-            return template.Execute(@"insert into RaceData(id, raceId, skierId, disqualified) 
-                                        values (null, @rid, @skid, @dis )",
-                                    new QueryParameter("@id", raceData.Id),
-                                    new QueryParameter("@rid", raceData.Race.Id),
-                                    new QueryParameter("@skid", raceData.SkierId),
-                                    new QueryParameter("@dis", raceData.Disqualified)) == 1;
+            return template.Execute(
+                       @"insert into RaceData(id, raceId, skierId, disqualified) values (null, @rid, @skid, @dis )",
+                       new QueryParameter("@id", raceData.Id),
+                       new QueryParameter("@rid", raceData.Race.Id),
+                       new QueryParameter("@skid", raceData.SkierId),
+                       new QueryParameter("@dis", raceData.Disqualified)) == 1;
         }
-        
+
         public IEnumerable<RaceData> FindAll()
         {
             return template.Query("select * from RaceData", MapRowToRaceData);
@@ -67,5 +67,4 @@
                 new QueryParameter("@id", id));
         }
     }
-
 }

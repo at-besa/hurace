@@ -1,14 +1,14 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
- using System.Data;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
- using Hurace.Dal.Common;
- using Hurace.Dal.Domain;
- using Hurace.Dal.Interface;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Hurace.Dal.Interface;
 
- namespace Hurace.Dal.Ado
+namespace Hurace.Dal.Ado
 {
     public class AdoRaceDao : IRaceDao
     {
@@ -26,7 +26,7 @@ using System.Linq;
                 Id = Convert.ToInt32(row["id"]),
                 Name = Convert.ToString(row["name"]),
                 Location = Convert.ToString(row["location"]),
-                Date = DateTime.Parse(Convert.ToString(row["date"])),
+                Date = Convert.ToDateTime(row["date"]),
                 Splittimes = Convert.ToInt32(row["splittimes"]),
                 Sex = row.IsDBNull(row.GetOrdinal("sex")) ? "" : Convert.ToString(row["sex"])
             };
@@ -34,28 +34,28 @@ using System.Linq;
 
         public bool Update(Race race)
         {
-            return template.Execute(@"update Race set name=@nam, location=@loc, date=@dat, sex=@sex, splittimes=@spl 
-                                             where id=@id",
-                                    new QueryParameter("@id", race.Id),
-                                    new QueryParameter("@nam", race.Name),
-                                    new QueryParameter("@loc", race.Location),
-                                    new QueryParameter("@dat", race.Date),
-                                    new QueryParameter("@spl", race.Splittimes),
-                                    new QueryParameter("@sex", race.Sex)) == 1;
+            return template.Execute(
+                       @"update Race set name=@nam, location=@loc, date=@dat, sex=@sex, splittimes=@spl where id=@id",
+                       new QueryParameter("@id", race.Id),
+                       new QueryParameter("@nam", race.Name),
+                       new QueryParameter("@loc", race.Location),
+                       new QueryParameter("@dat", race.Date.ToString("s")),
+                       new QueryParameter("@spl", race.Splittimes),
+                       new QueryParameter("@sex", race.Sex)) == 1;
         }
 
         public bool Insert(Race race)
         {
-            return template.Execute(@"insert into Race(id, name, location, date, sex, splittimes) 
-                                        values (null, @fn, @ln, @dob , @nat, null)",
-                                    new QueryParameter("@id", race.Id),
-                                    new QueryParameter("@nam", race.Name),
-                                    new QueryParameter("@loc", race.Location),
-                                    new QueryParameter("@dat", race.Date),
-                                    new QueryParameter("@spl", race.Splittimes),
-                                    new QueryParameter("@sex", race.Sex)) == 1;
+            return template.Execute(
+                       @"insert into Race(id, name, location, date, sex, splittimes) values (null, @fn, @ln, @dob , @nat, null)",
+                       new QueryParameter("@id", race.Id),
+                       new QueryParameter("@nam", race.Name),
+                       new QueryParameter("@loc", race.Location),
+                       new QueryParameter("@dat", race.Date.ToString("s")),
+                       new QueryParameter("@spl", race.Splittimes),
+                       new QueryParameter("@sex", race.Sex)) == 1;
         }
-        
+
         public IEnumerable<Race> FindAll()
         {
             return template.Query("select * from race", MapRowToRace);
@@ -68,5 +68,4 @@ using System.Linq;
                 new QueryParameter("@id", id));
         }
     }
-
 }
