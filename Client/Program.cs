@@ -25,7 +25,7 @@ namespace Hurace.Client
             Console.WriteLine($"{new String(ch, preLen)} {text} {new String(ch, postLen)}");
         }
 
-        private static void Main()
+        public static void Main(string[] args)
             // private static async Task Main()
         {
             IConfiguration configuration = ConfigurationUtil.GetConfiguration();

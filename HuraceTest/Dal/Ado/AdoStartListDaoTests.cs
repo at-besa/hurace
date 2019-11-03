@@ -1,35 +1,34 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
-namespace Hurace.Tests
+namespace HuraceTest.Dal.Ado
 {
-	[TestClass]
 	public class AdoStartListDaoTests
 	{
-		[TestMethod]
+		[Test]
 		public void AdoStartListDaoTest()
 		{
 			Assert.Fail();
 		}
 
-		[TestMethod]
+		[Test]
 		public void FindAllTest()
 		{
 			Assert.Fail();
 		}
 
-		[TestMethod]
+		[Test]
 		public void FindByIdsTest()
 		{
 			Assert.Fail();
 		}
 
-		[TestMethod]
+		[Test]
 		public void InsertTest()
 		{
 			Assert.Fail();
 		}
 
-		[TestMethod]
+		[Test]
 		public void UpdateTest()
 		{
 			Assert.Fail();

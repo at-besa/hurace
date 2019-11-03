@@ -54,7 +54,7 @@ namespace Hurace.Dal.Common
 
         public int Execute(string sql, params QueryParameter[] parameters)
         {
-            int rows = 0;
+            int retval = 0;
             using DbConnection connection = connectionFactory.CreateConnection();
             connection.Open();
 
@@ -67,7 +67,7 @@ namespace Hurace.Dal.Common
             {
                 command.CommandText = sql;
                 AddParameters(command, parameters);
-                rows = command.ExecuteNonQuery();
+                retval = Convert.ToInt32(command.ExecuteScalar());
                 transaction.Commit();
                 connection.Close();
             }
@@ -92,7 +92,7 @@ namespace Hurace.Dal.Common
                 }
             }
                     
-            return rows;
+            return retval;
         }
     }
 }

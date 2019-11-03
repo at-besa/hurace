@@ -11,7 +11,7 @@ using System.Threading.Tasks;
         Race FindById(int id);
 
         bool Update(Race race);
-        bool Insert(Race race);
+        int Insert(Race race);
 
     }
 }

@@ -24,6 +24,7 @@ namespace Hurace.Dal.Ado
             return new Race
             {
                 Id = Convert.ToInt32(row["id"]),
+                Type = new AdoRaceTypeDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["typeId"])),
                 Name = Convert.ToString(row["name"]),
                 Location = Convert.ToString(row["location"]),
                 Date = Convert.ToDateTime(row["date"]),
@@ -35,8 +36,9 @@ namespace Hurace.Dal.Ado
         public bool Update(Race race)
         {
             return template.Execute(
-                       @"update Race set name=@nam, location=@loc, date=@dat, sex=@sex, splittimes=@spl where id=@id",
+                       @"update Race set typeId=@type, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex where id=@id",
                        new QueryParameter("@id", race.Id),
+                       new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@nam", race.Name),
                        new QueryParameter("@loc", race.Location),
                        new QueryParameter("@dat", race.Date.ToString("s")),
@@ -44,16 +46,17 @@ namespace Hurace.Dal.Ado
                        new QueryParameter("@sex", race.Sex)) == 1;
         }
 
-        public bool Insert(Race race)
+        public int Insert(Race race)
         {
             return template.Execute(
-                       @"insert into Race(id, name, location, date, sex, splittimes) values (null, @fn, @ln, @dob , @nat, null)",
-                       new QueryParameter("@id", race.Id),
+                       @"insert into Race(id, typeId, name, location, date, splittimes, sex) values (null, @type, @nam, @loc, @dat , @spl, @sex); SELECT last_insert_rowid();",
+                       new QueryParameter("@id", race.Id),             // TODO check the insertion of the ID 
+                       new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@nam", race.Name),
                        new QueryParameter("@loc", race.Location),
                        new QueryParameter("@dat", race.Date.ToString("s")),
                        new QueryParameter("@spl", race.Splittimes),
-                       new QueryParameter("@sex", race.Sex)) == 1;
+                       new QueryParameter("@sex", race.Sex));
         }
 
         public IEnumerable<Race> FindAll()
