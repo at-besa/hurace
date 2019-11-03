@@ -11,11 +11,11 @@ namespace Hurace.Dal.Common
       switch (providerName)
       {
         case "Microsoft.Data.SqlClient": return Microsoft.Data.SqlClient.SqlClientFactory.Instance;
-        // "System.Data.SqlClient" => System.Data.SqlClient.SqlClientFactory.Instance,
+        // "System.Data.SqlClient" => System.Time.SqlClient.SqlClientFactory.Instance,
         case "MySql.Data.MySqlClient":  return MySql.Data.MySqlClient.MySqlClientFactory.Instance;
-		case "System.Data.SQLite": return Microsoft.Data.Sqlite.SqliteFactory.Instance;
+		    case "System.Data.SQLite": return Microsoft.Data.Sqlite.SqliteFactory.Instance;
 
-		default: throw new ArgumentException("Invalid provider name \"{providerName}\"");
+		    default: throw new ArgumentException("Invalid provider name \"{providerName}\"");
       }
     }
 #endif
@@ -24,9 +24,9 @@ namespace Hurace.Dal.Common
     public static void RegisterAdoProviders()
     {
       // Use new Implementation of MS SQL Provider
-      DbProviderFactories.RegisterFactory("Microsoft.Data.SqlClient", Microsoft.Data.SqlClient.SqlClientFactory.Instance);
-      // DbProviderFactories.RegisterFactory("System.Data.SqlClient", System.Data.SqlClient.SqlClientFactory.Instance);
-      DbProviderFactories.RegisterFactory("MySql.Data.MySqlClient", MySql.Data.MySqlClient.MySqlClientFactory.Instance);
+      DbProviderFactories.RegisterFactory("Microsoft.Time.SqlClient", Microsoft.Time.SqlClient.SqlClientFactory.Instance);
+      // DbProviderFactories.RegisterFactory("System.Time.SqlClient", System.Time.SqlClient.SqlClientFactory.Instance);
+      DbProviderFactories.RegisterFactory("MySql.Time.MySqlClient", MySql.Time.MySqlClient.MySqlClientFactory.Instance);
     }
 #endif
   }

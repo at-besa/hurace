@@ -18,12 +18,20 @@
 
         private RaceData MapRowToRaceData(IDataRecord row)
         {
+            int id = Convert.ToInt32(row["id"]);
+            IEnumerable<Splittime>[] runs = new IEnumerable<Splittime>[2];
+            for (int i = 0; i <= 1; i++)
+            {
+                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceRun(id, i+1);
+            }
+            
             return new RaceData
             {
-                Id = Convert.ToInt32(row["id"]),
+                Id = id,
                 Race = new AdoRaceDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["raceId"])),
                 SkierId = Convert.ToInt32(row["skierId"]),
-                Disqualified = Convert.ToBoolean(row["disqualified"])
+                Disqualified = Convert.ToBoolean(row["disqualified"]),
+                Splittime = runs
             };
         }
 

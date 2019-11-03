@@ -1,17 +1,21 @@
-﻿namespace Hurace.Dal.Domain
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Hurace.Dal.Domain
 {
     // DTO/Domain Object
-    public class RaceData 
+    public class RaceData
     {
+        private const string seperator = " - ";
+        private Func<IEnumerable<Splittime>, string> splitter = splittimes => String.Join(seperator, splittimes); 
         public int Id { get; set; }
         public Race Race { get; set; }
         public int SkierId { get; set; }
         public bool Disqualified { get; set; }
-        
-        public Splittime[] Splittime { get; set; } = new Splittime[2];
-        
+        public IEnumerable<Splittime>[] Splittime { get; set; }
         
         public override string ToString() =>
-            $"RaceData(id:{SkierId}, Race:{Race}, Run1:( {Splittime[0]}), Run2:({Splittime[1]}), Disqualified:{Disqualified})";
+            $"RaceData(id:{SkierId}, Race:{Race}, Runs: [1: {splitter(Splittime[0])} 2: {splitter(Splittime[1])}], Disqualified:{Disqualified})";
     }
 }

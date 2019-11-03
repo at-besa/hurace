@@ -26,8 +26,8 @@ namespace Hurace.Client
 
         public void TestFindAll()
         {
-            var persons = skierDao.FindAll();
-            foreach (var p in persons)
+            var skiers = skierDao.FindAll();
+            foreach (var p in skiers)
             {
                 Console.WriteLine($"{p.Id,5} | {p.FirstName,-10} | {p.LastName,-15} | {p.DateOfBirth,10:yyyy-MM-dd}");
             }
@@ -179,8 +179,12 @@ namespace Hurace.Client
 
             DalTester dalTester = new DalTester(new AdoSkierDao(connectionFactory));
             dalTester.TestFindById();
-
             dalTester.TestUpdate();
+
+            IRaceDataDao raceDataDao = new AdoRaceDataDao(connectionFactory);
+            Console.WriteLine(String.Join("\n", raceDataDao.FindAll()));
+
+
 
             new StartListsImporter(connectionFactory).Import();
             new RaceDataImporter(connectionFactory).Import();

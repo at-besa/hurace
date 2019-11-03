@@ -5,11 +5,11 @@ namespace Hurace.Dal.Domain
     // DTO/Domain Object
     public class Splittime
     {
-        private const int Splittimes = 5;
-        public int Run { get; set; }
-        public DateTime[] SplitTime { get; set; } = new DateTime[Splittimes];
-        public DateTime FinishTime { get; set; }
+        public int RaceDataId { get; set; }
+        public int RunNo { get; set; }
+        public int SplittimeNo { get; set; }
+        public DateTime Time { get; set; }
         public override string ToString() =>
-            $"RaceData(Run:{Run}, SplitTime:{SplitTime}, FinishTime:{FinishTime})";
+            $"Splittime(RaceDataId:{RaceDataId}, RunNo:{RunNo}, SplittimeNo:{SplittimeNo}, Time:{Time})";
     }
 }
