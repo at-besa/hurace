@@ -7,7 +7,7 @@ using Hurace.Dal.Domain;
 
 namespace Hurace.Dal.Importer
 {
-    class RaceDataImporter
+    class RaceDataImporter : IImporter
     {
         private const int DISQUALIFIED_PERCENTAGE = 80;
         private AdoRaceDataDao AdoRaceDataDao { get; set; }

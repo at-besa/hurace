@@ -1,7 +1,9 @@
 ﻿using Hurace.Dal.Ado;
 using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hurace.Dal.Importer
@@ -29,9 +31,29 @@ namespace Hurace.Dal.Importer
                         //insert numberOf runs times
                             //insert number of splittimes
                                 //get splittime with random variance
-            throw new NotImplementedException();
+            
+            JoinRaceDataAndRace();
         }
 
+        private void JoinRaceDataAndRace()
+        {
+            var raceDataList = new List<RaceData>(adoRaceDataDao.FindAll());
+            var raceList = new List<Race>(adoRaceDao.FindAll());
 
+            var raceDataJoinRace = from raceData in raceDataList
+                                   join race in raceList
+                                   on raceData.Race equals race
+                                   select new
+                                   {
+                                       Id = raceData.Id,
+                                       RaceId = race.Id,
+                                       SkierId = raceData.SkierId,
+                                       Disqualified = raceData.Disqualified
+                                   };
+            foreach (var item in raceDataJoinRace)
+            {
+                Console.WriteLine($"{item.Id},\t{item.RaceId},\t{item.SkierId},\t{item.Disqualified}");
+            }
+        }
     }
 }

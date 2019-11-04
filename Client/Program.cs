@@ -56,6 +56,8 @@ namespace Hurace.Client
             new StartListsImporter(connectionFactory).Import();
             new RaceDataImporter(connectionFactory).Import();
 
+            //new SplittimesImporter(connectionFactory).Import();
+
             #region Async
 
             //PrintTitle("PersonDao.FindAllAsync", 50);
