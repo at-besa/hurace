@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Hurace.Dal.Importer
 {
-    class StartListsImporter
+    class StartListsImporter : IImporter
     {
 
         private AdoRaceDao adoRaceDao;
