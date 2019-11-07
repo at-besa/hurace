@@ -11,49 +11,82 @@ namespace Hurace.Dal.Importer
     class SplittimesImporter : IImporter
     {
         private AdoRaceDataDao adoRaceDataDao;
-        private AdoRaceDao adoRaceDao;
-        private AdoRaceTypeDao adoRaceTypeDao;
+        private AdoSplittimeDao adoSplittimeDao;
+        private IList<Splittime> Splittimes { get; set; } = new List<Splittime>();
+
+        public DateTime[] BaseTimeForRaceType { get; set; }
         public SplittimesImporter(IConnectionFactory connectionfactroy)
         {
             adoRaceDataDao = new AdoRaceDataDao(connectionfactroy);
-            adoRaceDao = new AdoRaceDao(connectionfactroy);
-            adoRaceTypeDao = new AdoRaceTypeDao(connectionfactroy);
+            adoSplittimeDao = new AdoSplittimeDao(connectionfactroy);
+            BaseTimeForRaceType = new DateTime[]{
+                    new DateTime().AddSeconds(30).AddMilliseconds(300),
+                    new DateTime().AddSeconds(28).AddMilliseconds(100),
+                    new DateTime().AddSeconds(32).AddMilliseconds(800),
+                    new DateTime().AddSeconds(35).AddMilliseconds(800),
+                    new DateTime().AddSeconds(29).AddMilliseconds(500),
+                    new DateTime().AddSeconds(25).AddMilliseconds(500)
+            };
         }
         public void Import()
         {
-            //get all racedata
-            //join with race on raceId for typeId and splittimes 
-            //join with racetype on typeId for numberOf runs
-
-                //insert into splittime foreach racedata
-                    //check if skier is disqualified for this race
-                        // if so calculate random splittime of random run when he is disqualified
-                        //insert numberOf runs times
-                            //insert number of splittimes
-                                //get splittime with random variance
-            
-            JoinRaceDataAndRace();
+            GenerateSplittimes();
+            foreach (var splittime in Splittimes)
+            {
+                Console.WriteLine(splittime);
+                //adoSplittimeDao.Insert(splittime);
+            }
         }
 
-        private void JoinRaceDataAndRace()
+        private void GenerateSplittimes()
         {
-            var raceDataList = new List<RaceData>(adoRaceDataDao.FindAll());
-            var raceList = new List<Race>(adoRaceDao.FindAll());
-
-            var raceDataJoinRace = from raceData in raceDataList
-                                   join race in raceList
-                                   on raceData.Race equals race
-                                   select new
-                                   {
-                                       Id = raceData.Id,
-                                       RaceId = race.Id,
-                                       SkierId = raceData.SkierId,
-                                       Disqualified = raceData.Disqualified
-                                   };
-            foreach (var item in raceDataJoinRace)
+            var raceDatas = new List<RaceData>(adoRaceDataDao.FindAll());
+            foreach (var raceData in raceDatas)
             {
-                Console.WriteLine($"{item.Id},\t{item.RaceId},\t{item.SkierId},\t{item.Disqualified}");
+                var splittime = new Splittime();
+                if (raceData.Disqualified)
+                {
+                    // do not add all splitttimes
+                }
+                else
+                {
+                    splittime.RaceDataId = raceData.Id;
+                    for (int runNo = 0; runNo < raceData.Race.Type.NumberOfRuns; runNo++)
+                    {
+                        splittime.RunNo = runNo + 1;
+                        for (int splittimeNo = 0; splittimeNo < raceData.Race.Splittimes; splittimeNo++)
+                        {
+                            splittime.SplittimeNo = splittimeNo + 1;
+                            splittime.Time = GetCorrectSplittime(raceData.Race.Type.Id, runNo, splittimeNo);
+                            Splittimes.Add(splittime);
+                        }
+
+                    }
+
+                }
+
+
             }
+
+        }
+
+        private DateTime GetCorrectSplittime(int raceTypeId, int runNo, int splittimeNo)
+        {
+            var random = new Random();
+            DateTime splittime = GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo + 1);
+            for (int i = 0; i < splittimeNo + 1; i++)
+            {
+                splittime.AddSeconds(splittime.Second);
+                splittime.AddMilliseconds(splittime.Millisecond);
+            }
+            splittime.AddMilliseconds(random.Next(0, 1501));
+
+            return splittime;
+        }
+
+        private DateTime GetBaseSplittimeForRaceType(int raceTypeId)
+        {
+            return BaseTimeForRaceType[raceTypeId];
         }
     }
 }

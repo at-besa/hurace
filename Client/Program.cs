@@ -32,31 +32,31 @@ namespace Hurace.Client
             IConnectionFactory connectionFactory =
                 DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
 
-            DalTester dalTester = new DalTester(new AdoSkierDao(connectionFactory));
-            dalTester.TestFindById();
-            dalTester.TestUpdate();
+            //            DalTester dalTester = new DalTester(new AdoSkierDao(connectionFactory));
+            //            dalTester.TestFindById();
+            //            dalTester.TestUpdate();
 
-            IRaceDataDao raceDataDao = new AdoRaceDataDao(connectionFactory);
-//            Console.WriteLine(String.Join("\n", raceDataDao.FindAll()));
+            //            IRaceDataDao raceDataDao = new AdoRaceDataDao(connectionFactory);
+            ////            Console.WriteLine(String.Join("\n", raceDataDao.FindAll()));
 
-            AdoSkierDao skierDao = new AdoSkierDao(connectionFactory);
-            foreach (var skier in skierDao.FindAll())
-            {
-                skierDao.Update(skier);
-                Console.WriteLine($"udpated {skier}");
-            }
+            //            AdoSkierDao skierDao = new AdoSkierDao(connectionFactory);
+            //            foreach (var skier in skierDao.FindAll())
+            //            {
+            //                skierDao.Update(skier);
+            //                Console.WriteLine($"udpated {skier}");
+            //            }
 
-            AdoRaceDao raceDao = new AdoRaceDao(connectionFactory);
-            foreach (var race in raceDao.FindAll())
-            {
-                raceDao.Update(race);
-                Console.WriteLine($"udpated {race}");
-            }
+            //            AdoRaceDao raceDao = new AdoRaceDao(connectionFactory);
+            //            foreach (var race in raceDao.FindAll())
+            //            {
+            //                raceDao.Update(race);
+            //                Console.WriteLine($"udpated {race}");
+            //            }
 
-            new StartListsImporter(connectionFactory).Import();
-            new RaceDataImporter(connectionFactory).Import();
+            //new StartListsImporter(connectionFactory).Import();
+            //new RaceDataImporter(connectionFactory).Import();
 
-            //new SplittimesImporter(connectionFactory).Import();
+            new SplittimesImporter(connectionFactory).Import();
 
             #region Async
 
