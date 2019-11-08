@@ -51,14 +51,14 @@ namespace Hurace.Dal.Ado
                 new QueryParameter("@splittimeNo", splittimeNo));
         }
 
-        public bool Insert(Splittime splittime)
+        public int Insert(Splittime splittime)
         {
             return template.Execute(
-                       @"insert into Splittime(racedataId, runNo, splittimeNo, splittime) values (@racedataId, @runNo, @splittimeNo, @splittime)",
+                       @"insert into Splittime(racedataId, runNo, splittimeNo, splittime) values (@racedataId, @runNo, @splittimeNo, @splittime); SELECT last_insert_rowid();",
                        new QueryParameter("@racedataId", splittime.RaceDataId),
                        new QueryParameter("@runNo", splittime.RunNo),
                        new QueryParameter("@splittimeNo", splittime.SplittimeNo),
-                       new QueryParameter("@splittime", splittime.Time)) == 1;
+                       new QueryParameter("@splittime", splittime.Time.ToLongTimeString()));
         }
 
         public bool Update(Splittime splittime)

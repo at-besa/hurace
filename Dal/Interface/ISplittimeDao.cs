@@ -10,7 +10,7 @@ namespace Hurace.Dal.Interface
         IEnumerable<Splittime> FindAll();
         IEnumerable<Splittime> FindByRaceRun(int raceDataId, int runNo);
         Splittime FindByIds(int raceDataId, int runNo, int splittimeNo);
-        bool Insert(Splittime splittime);
+        int Insert(Splittime splittime);
         bool Update(Splittime splittime);
     }
 }

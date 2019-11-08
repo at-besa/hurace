@@ -2,6 +2,6 @@
 {
     internal interface IImporter
     {
-        public void Import();
+        void Import();
     }
 }

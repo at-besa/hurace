@@ -33,8 +33,8 @@ namespace Hurace.Dal.Importer
             GenerateSplittimes();
             foreach (var splittime in Splittimes)
             {
-                Console.WriteLine(splittime);
-                adoSplittimeDao.Insert(splittime);
+                //Console.WriteLine(splittime);
+                Console.WriteLine($"Inserting worked: {adoSplittimeDao.Insert(splittime)}"); 
             }
         }
 
