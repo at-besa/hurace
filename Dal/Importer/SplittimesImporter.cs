@@ -43,20 +43,63 @@ namespace Hurace.Dal.Importer
             var raceDatas = new List<RaceData>(adoRaceDataDao.FindAll());
             foreach (var raceData in raceDatas)
             {
-                var splittime = new Splittime();
                 if (raceData.Disqualified)
                 {
                     // do not add all splitttimes
+                    Console.WriteLine($"skier {raceData.SkierId} is disqualified in race: {raceData.Race.Id} ");
+                    var random = new Random();
+                    var runs = random.Next(1, raceData.Race.Type.NumberOfRuns + 1);
+                    if (runs == 1)
+                    {
+                        var splittimes = random.Next(1, raceData.Race.Splittimes + 1);
+
+                        for (int splittimeNo = 1; splittimeNo <= splittimes; splittimeNo++)
+                        {
+                            var splittime = new Splittime();
+                            splittime.RunNo = 1;
+                            splittime.RaceDataId = raceData.Id;
+                            splittime.SplittimeNo = splittimeNo;
+                            splittime.Time = GetCorrectSplittime(raceData.Race.Type.Id, 1, splittimeNo);
+                            Splittimes.Add(splittime);
+                        }
+                    }
+                    else
+                    {
+                        for (int runNo = 1; runNo <= raceData.Race.Type.NumberOfRuns; runNo++)
+                        {
+                            int splittimes;
+                            if(runNo == 1)
+                            {
+                                splittimes = raceData.Race.Splittimes;
+                            }
+                            else
+                            {
+                                splittimes = random.Next(1, raceData.Race.Splittimes + 1);
+                            }
+                            for (int splittimeNo = 1; splittimeNo <= splittimes; splittimeNo++)
+                            {
+                                var splittime = new Splittime();
+                                splittime.RunNo = runNo;
+                                splittime.RaceDataId = raceData.Id;
+                                splittime.SplittimeNo = splittimeNo;
+                                splittime.Time = GetCorrectSplittime(raceData.Race.Type.Id, runNo, splittimeNo);
+                                Splittimes.Add(splittime);
+                            }
+
+                        }
+                    }
+
                 }
                 else
                 {
-                    splittime.RaceDataId = raceData.Id;
-                    for (int runNo = 0; runNo < raceData.Race.Type.NumberOfRuns; runNo++)
+                    for (int runNo = 1; runNo <= raceData.Race.Type.NumberOfRuns; runNo++)
                     {
-                        splittime.RunNo = runNo + 1;
-                        for (int splittimeNo = 0; splittimeNo < raceData.Race.Splittimes; splittimeNo++)
+                        for (int splittimeNo = 1; splittimeNo <= raceData.Race.Splittimes; splittimeNo++)
                         {
-                            splittime.SplittimeNo = splittimeNo + 1;
+                            var splittime = new Splittime();
+                            splittime.RunNo = runNo;
+                            splittime.RaceDataId = raceData.Id;
+                            splittime.SplittimeNo = splittimeNo;
                             splittime.Time = GetCorrectSplittime(raceData.Race.Type.Id, runNo, splittimeNo);
                             Splittimes.Add(splittime);
                         }
