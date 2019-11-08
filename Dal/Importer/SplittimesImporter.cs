@@ -34,7 +34,7 @@ namespace Hurace.Dal.Importer
             foreach (var splittime in Splittimes)
             {
                 Console.WriteLine(splittime);
-                //adoSplittimeDao.Insert(splittime);
+                adoSplittimeDao.Insert(splittime);
             }
         }
 
@@ -45,8 +45,6 @@ namespace Hurace.Dal.Importer
             {
                 if (raceData.Disqualified)
                 {
-                    // do not add all splitttimes
-                    Console.WriteLine($"skier {raceData.SkierId} is disqualified in race: {raceData.Race.Id} ");
                     var random = new Random();
                     var runs = random.Next(1, raceData.Race.Type.NumberOfRuns + 1);
                     if (runs == 1)
@@ -116,14 +114,13 @@ namespace Hurace.Dal.Importer
         private DateTime GetCorrectSplittime(int raceTypeId, int runNo, int splittimeNo)
         {
             var random = new Random();
-            DateTime splittime = GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo + 1);
-            for (int i = 0; i < splittimeNo + 1; i++)
+            DateTime splittime = GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo);
+            for (int i = 1; i < splittimeNo; i++)
             {
-                splittime.AddSeconds(splittime.Second);
-                splittime.AddMilliseconds(splittime.Millisecond);
+                splittime = splittime.Add(new TimeSpan(0,0,0, 
+                    GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo).Second, 
+                    GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo).Millisecond + random.Next(0, 1501)));
             }
-            splittime.AddMilliseconds(random.Next(0, 1501));
-
             return splittime;
         }
 
