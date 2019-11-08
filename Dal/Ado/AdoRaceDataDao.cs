@@ -42,17 +42,17 @@ namespace Hurace.Dal.Ado
                        new QueryParameter("@id", raceData.Id),
                        new QueryParameter("@rid", raceData.Race.Id),
                        new QueryParameter("@skid", raceData.SkierId),
-                       new QueryParameter("@dis", raceData.Disqualified)) == 1;
+                       new QueryParameter("@dis", raceData.Disqualified)) >= 0;
         }
 
-        public bool Insert(RaceData raceData)
+        public int Insert(RaceData raceData)
         {
             return template.Execute(
-                       @"insert into RaceData(id, raceId, skierId, disqualified) values (null, @rid, @skid, @dis )",
+                       @"insert into RaceData(id, raceId, skierId, disqualified) values (null, @rid, @skid, @dis); SELECT last_insert_rowid();",
                        new QueryParameter("@id", raceData.Id),
                        new QueryParameter("@rid", raceData.Race.Id),
                        new QueryParameter("@skid", raceData.SkierId),
-                       new QueryParameter("@dis", raceData.Disqualified)) == 1;
+                       new QueryParameter("@dis", raceData.Disqualified));
         }
 
         public IEnumerable<RaceData> FindAll()

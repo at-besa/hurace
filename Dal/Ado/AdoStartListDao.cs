@@ -48,13 +48,13 @@ namespace Hurace.Dal.Ado
                 new QueryParameter("@raceId", raceId));
         }
 
-        public bool Insert(StartList startList)
+        public int Insert(StartList startList)
         {
             return template.Execute(
-                       @"insert into startlist(raceId, skierId, startpos) values (@raceId, @skierId, @startpos)",
+                       @"insert into startlist(raceId, skierId, startpos) values (@raceId, @skierId, @startpos); SELECT last_insert_rowid();",
                        new QueryParameter("@raceId", startList.Race.Id),
                        new QueryParameter("@skierId", startList.SkierId),
-                       new QueryParameter("@startpos", startList.StartPos)) == 1;
+                       new QueryParameter("@startpos", startList.StartPos));
         }
 
         public bool Update(StartList startList)

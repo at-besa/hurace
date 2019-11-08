@@ -11,7 +11,7 @@ using System.Threading.Tasks;
         Skier FindById(int id);
 
         bool Update(Skier skier);
-        bool Insert(Skier skier);
+        int Insert(Skier skier);
 
     }
 }

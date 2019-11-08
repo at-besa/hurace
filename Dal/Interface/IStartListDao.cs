@@ -9,7 +9,7 @@ namespace Hurace.Dal.Interface
     {
         IEnumerable<StartList> FindAll();
         StartList FindByIds(int raceId, int skierId);
-        bool Insert(StartList startList);
+        int Insert(StartList startList);
         bool Update(StartList startList);
     }
 }

@@ -38,13 +38,13 @@ namespace Hurace.Dal.Ado
                        new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
         }
 
-        public bool Insert(RaceType raceType)
+        public int Insert(RaceType raceType)
         {
             return template.Execute(
-                       @"insert into racetype(id, type, numberOfRuns)  values (null, @typ, @num)",
+                       @"insert into racetype(id, type, numberOfRuns)  values (null, @typ, @num); SELECT last_insert_rowid();",
                        new QueryParameter("@id", raceType.Id),
                        new QueryParameter("@typ", raceType.Type),
-                       new QueryParameter("@num", raceType.NumberOfRuns)) == 1;
+                       new QueryParameter("@num", raceType.NumberOfRuns));
         }
 
         public IEnumerable<RaceType> FindAll()

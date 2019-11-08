@@ -44,16 +44,16 @@ namespace Hurace.Dal.Ado
                        new QueryParameter("@sex", skier.Sex)) == 1;
         }
 
-        public bool Insert(Skier skier)
+        public int Insert(Skier skier)
         {
             return template.Execute(
-                       @"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) values (null, @fn, @ln, @dob , @nat, null, @sex)",
+                       @"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) values (null, @fn, @ln, @dob , @nat, null, @sex); SELECT last_insert_rowid();",
                        new QueryParameter("@id", skier.Id),
                        new QueryParameter("@fn", skier.FirstName),
                        new QueryParameter("@ln", skier.LastName),
                        new QueryParameter("@dob", skier.DateOfBirth.ToString("yyyy-M-d")),
                        new QueryParameter("@nat", skier.Nation),
-                       new QueryParameter("@sex", skier.Sex)) == 1;
+                       new QueryParameter("@sex", skier.Sex));
         }
 
         public IEnumerable<Skier> FindAll()

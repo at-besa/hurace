@@ -11,7 +11,7 @@ using Hurace.Dal.Domain;
         RaceData FindById(int id);
 
         bool Update(RaceData raceData);
-        bool Insert(RaceData raceData);
+        int Insert(RaceData raceData);
 
     }
 }

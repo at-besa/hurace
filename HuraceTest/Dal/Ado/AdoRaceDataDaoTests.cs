@@ -1,37 +1,72 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Hurace.Dal.Ado;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace HuraceTest.Dal.Ado
 {
 	public class AdoRaceDataDaoTests
 	{
+		private IConfiguration configuration;
+		private IConnectionFactory connectionFactory;
+		private AdoRaceDataDao raceDataDao;
+		[SetUp]
+		public void Setup()
+		{
+			configuration = ConfigurationUtil.GetConfiguration();
+			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+			raceDataDao = new AdoRaceDataDao(connectionFactory);
+		}
 		[Test]
 		public void AdoRaceDataDaoTest()
 		{
-			Assert.Fail();
+			Assert.True(raceDataDao.FindAll().Any());
 		}
 
 		[Test]
 		public void UpdateTest()
 		{
-			Assert.Fail();
+			RaceData testRaceData = raceDataDao.FindById(3);
+			testRaceData.SkierId = 45;
+			raceDataDao.Update(testRaceData);
+			
+			Assert.True(raceDataDao.FindById(3).SkierId == 45);
 		}
 
 		[Test]
 		public void InsertTest()
 		{
-			Assert.Fail();
+			RaceData raceData = new RaceData
+			{
+				Disqualified = false,
+				Race = new AdoRaceDao(connectionFactory).FindById(15),
+				Splittime = new []{
+					new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 1), 
+					new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 2)},
+				SkierId = 5
+			};
+			raceData.SkierId = 45;
+			raceData.Id = raceDataDao.Insert(raceData);
+			Assert.True(raceDataDao.FindById(raceData.Id).Id == raceData.Id);
+
 		}
 
 		[Test]
 		public void FindAllTest()
 		{
-			Assert.Fail();
+			Assert.True(raceDataDao.FindAll().Any());
 		}
 
 		[Test]
 		public void FindByIdTest()
 		{
-			Assert.Fail();
+			Assert.True(raceDataDao.FindById(4).Id == 4);
 		}
 	}
+
 }
