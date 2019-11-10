@@ -73,10 +73,8 @@ namespace Hurace.Dal.Common
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Commit Exception Type: {0}", ex.GetType());
                 Console.WriteLine("  Message: {0}", ex.Message);
-
                 // Attempt to roll back the transaction.
                 try
                 {

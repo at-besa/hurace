@@ -1,37 +1,62 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Linq;
+using Hurace.Dal.Ado;
+using Hurace.Dal.Common;
+using Hurace.Dal.Domain;
+using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
 
 namespace HuraceTest.Dal.Ado
 {
 	public class AdoStartListDaoTests
 	{
+		private IConfiguration configuration;
+		private IConnectionFactory connectionFactory;
+		private AdoStartListDao startlistDao;
+		[SetUp]
+		public void Setup()
+		{
+			configuration = ConfigurationUtil.GetConfiguration();
+			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+			startlistDao = new AdoStartListDao(connectionFactory);
+		}
 		[Test]
 		public void AdoStartListDaoTest()
 		{
-			Assert.Fail();
+			Assert.True(startlistDao.FindAll().Any());
 		}
 
 		[Test]
 		public void FindAllTest()
 		{
-			Assert.Fail();
+			Assert.True(startlistDao.FindAll().Any());
 		}
 
 		[Test]
 		public void FindByIdsTest()
 		{
-			Assert.Fail();
+			Assert.True(startlistDao.FindByIds(4,4).SkierId == 4);
 		}
 
 		[Test]
 		public void InsertTest()
 		{
-			Assert.Fail();
+			var startlist = new StartList
+			{
+				Race = new Race {Id = 14},
+				SkierId = 44,
+				StartPos = 2
+			};
+			Assert.True(startlistDao.Insert(startlist) > 0);
 		}
 
 		[Test]
 		public void UpdateTest()
 		{
-			Assert.Fail();
+			var test = startlistDao.FindByIds(6, 2);
+			test.StartPos = 66;
+			startlistDao.Update(test);
+			Assert.True(startlistDao.FindByIds(6,2).StartPos == 66);
 		}
 	}
 }
