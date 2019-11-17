@@ -70,6 +70,9 @@
 	%\lstinputlisting[language=Java]{../src/tests/PQueueTest.java}
 	%\newpage
 	\subsubsection{Datenbankzugriffsschicht}
+	Zur persistierung der Daten wird eine SQLite Datenbank verwendet.
+	Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt.
+	 
 	%\includegraphics[width=.8\textwidth]{img/main_1.png}
 	%\\
 	%\includegraphics[width=.8\textwidth]{img/main_2.png}
