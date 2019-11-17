@@ -14,7 +14,11 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \lstset{
+<<<<<<< HEAD
 	language=Java,
+=======
+	language=java,
+>>>>>>> c1585b9eb1d3da72108067a08438cf1b411f54d8
 	extendedchars=\true,
 	inputencoding=utf8,
 	stringstyle=\ttfamily\small, 
@@ -69,7 +73,7 @@
 	%\newpage
 	\newpage
 	\subsubsection{Datenbankzugriffsschicht}
-
+	
 	Zur persistierung der Daten wird eine SQLite Datenbank verwendet.
 	Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt.
 	 
@@ -78,20 +82,18 @@
 	%\includegraphics[width=.8\textwidth]{img/main_2.png}
 	%\\
 	%\includegraphics[width=.8\textwidth]{img/main_3.png}
-	\begin{itemize}
-		\item{IRaceDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/IRaceDao.cs}
-		\item{IRaceDataDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/IRaceDataDao.cs}
-		\item{IRaceTypeDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/IRaceTypeDao.cs}
-		\item{ISkierDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/ISkierDao.cs}
-		\item{ISplittimeDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/ISplittimeDao.cs}
-		\item{IStartListDao}
-		\lstinputlisting[language=Java]{../Dal/Interface/IStartListDao.cs}
-	\end{itemize}
+	\textbf{IRaceDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/IRaceDao.cs}
+	\textbf{IRaceDataDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/IRaceDataDao.cs}
+	\textbf{IRaceTypeDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/IRaceTypeDao.cs}
+	\textbf{ISkierDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/ISkierDao.cs}
+	\textbf{ISplittimeDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/ISplittimeDao.cs}
+	\textbf{IStartListDao}
+	\lstinputlisting[language=csh]{../Dal/Interface/IStartListDao.cs}
 	
 	
 
