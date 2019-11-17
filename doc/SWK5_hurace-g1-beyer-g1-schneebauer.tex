@@ -69,7 +69,7 @@
 	%\newpage
 	\newpage
 	\subsubsection{Datenbankzugriffsschicht}
-	Zur persistierung der Daten wird eine SQLite Datenbank verwendet. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt. Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung.
+	Zur persistierung der Daten wird eine SQLite Datenbank verwendet. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt. Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Um generisch zu bleiben wird gegen Interfaces implementiert.
 	\newline
 	 
 	%\includegraphics[width=.8\textwidth]{img/main_1.png}
@@ -90,7 +90,12 @@
 	\textbf{IStartListDao}
 	\lstinputlisting[language=csh]{../Dal/Interface/IStartListDao.cs}
 	
+	\subsection{UnitTests}
+	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
+	\newline
+	\newline
 	
+	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
 
 	\newpage	
 \end{document}
