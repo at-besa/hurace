@@ -14,7 +14,7 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \lstset{
-	language=java,
+	language=Java,
 	extendedchars=\true,
 	inputencoding=utf8,
 	stringstyle=\ttfamily\small, 
@@ -63,13 +63,13 @@
 	\subsubsection{Datenbankmodell}
 
 	\includegraphics[width=.7\textwidth]{img/huraceDB.png}
-	%\lstinputlisting[language=Java]{../src/queues/BinaryHeapQueue.java}
+	%\lstinputlisting[language=Java]{../Dal/Interface/IRaceDao.cs}
 	%\newpage
 	%\lstinputlisting[language=Java]{../src/queues/DHeapQueue.java}
 	%\newpage
-	%\lstinputlisting[language=Java]{../src/tests/PQueueTest.java}
-	%\newpage
+	\newpage
 	\subsubsection{Datenbankzugriffsschicht}
+
 	Zur persistierung der Daten wird eine SQLite Datenbank verwendet.
 	Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt.
 	 
@@ -78,5 +78,22 @@
 	%\includegraphics[width=.8\textwidth]{img/main_2.png}
 	%\\
 	%\includegraphics[width=.8\textwidth]{img/main_3.png}
+	\begin{itemize}
+		\item{IRaceDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/IRaceDao.cs}
+		\item{IRaceDataDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/IRaceDataDao.cs}
+		\item{IRaceTypeDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/IRaceTypeDao.cs}
+		\item{ISkierDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/ISkierDao.cs}
+		\item{ISplittimeDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/ISplittimeDao.cs}
+		\item{IStartListDao}
+		\lstinputlisting[language=Java]{../Dal/Interface/IStartListDao.cs}
+	\end{itemize}
+	
+	
+
 	\newpage	
 \end{document}
