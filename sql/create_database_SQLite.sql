@@ -1,22 +1,23 @@
 ﻿create table racetype
 (
-    id   INTEGER not null
+    id           INTEGER not null
         primary key autoincrement,
-    type TEXT    not null
+    type         TEXT    not null,
+    numberOfRuns INTEGER default 1 not null
 );
 
 create table race
 (
-    id          INTEGER not null
+    id         INTEGER not null
         primary key autoincrement,
-    typeId      INTEGER not null
+    typeId     INTEGER not null
         references racetype
             on update cascade on delete cascade,
-    date        TEXT    not null,
-    name        TEXT    not null,
-    location    TEXT    not null,
-    splittimes  INTEGER not null,
-    description TEXT
+    date       TEXT    not null,
+    name       TEXT    not null,
+    location   TEXT    not null,
+    splittimes INTEGER not null,
+    sex        TEXT
 );
 
 create unique index race_id_uindex
@@ -33,7 +34,10 @@ create table skier
     lastname     TEXT    not null,
     dateofbirth  TEXT    not null,
     nation       TEXT(3) not null,
-    profileimage BLOB
+    profileimage BLOB,
+    weight       TEXT,
+    height       TEXT,
+    sex          TEXT
 );
 
 create table racedata
@@ -63,7 +67,8 @@ create table splittime
             on update cascade on delete cascade,
     runNo       INTEGER not null,
     splittimeNo INTEGER not null,
-    splittime   REAL    not null,
+    splittime   TEXT    not null,
+    primary key (racedataId, runNo, splittimeNo),
     constraint PK_splittime
         unique (racedataId, runNo, splittimeNo),
     constraint runNo
@@ -75,13 +80,13 @@ create table splittime
 create table startlist
 (
     raceId   INTEGER not null
-        constraint FK_startlist_race
-            references race
+        references race
             on update cascade on delete cascade,
     skierId  INTEGER not null
-        constraint FK_startlist_skier
-            references skier
+        references skier
             on update cascade on delete cascade,
-    startpos INTEGER not null
+    startpos INTEGER not null,
+    constraint startlist_pk
+        primary key (raceId, skierId, startpos)
 );
 
