@@ -14,7 +14,7 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \lstset{
-	language=java,
+	language=csharp,
 	extendedchars=\true,
 	inputencoding=utf8,
 	stringstyle=\ttfamily\small, 
@@ -67,13 +67,22 @@
 	%\newpage
 	%\lstinputlisting[language=Java]{../src/queues/DHeapQueue.java}
 	%\newpage
-	%\lstinputlisting[language=Java]{../src/tests/PQueueTest.java}
-	%\newpage
+	\newpage
 	\subsubsection{Datenbankzugriffsschicht}
-	%\includegraphics[width=.8\textwidth]{img/main_1.png}
-	%\\
-	%\includegraphics[width=.8\textwidth]{img/main_2.png}
-	%\\
-	%\includegraphics[width=.8\textwidth]{img/main_3.png}
+	\item{IRaceDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/IRaceDao.cs}
+	\item{IRaceDataDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/IRaceDataDao.cs}
+	\item{IRaceTypeDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/IRaceTypeDao.cs}
+	\item{ISkierDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/ISkierDao.cs}
+	\item{ISplittimeDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/ISplittimeDao.cs}
+	\item{IStartListDao}
+	\lstinputlisting[language=csharp]{../Dal/Interface/IStartListDao.cs}
+	
+	
+	
 	\newpage	
 \end{document}
