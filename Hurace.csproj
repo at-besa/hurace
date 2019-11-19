@@ -7,8 +7,11 @@
 
   <ItemGroup>
     <Compile Remove="HuraceTest\**" />
+    <Compile Remove="Timer\**" />
     <EmbeddedResource Remove="HuraceTest\**" />
+    <EmbeddedResource Remove="Timer\**" />
     <None Remove="HuraceTest\**" />
+    <None Remove="Timer\**" />
     <None Update="DB\data.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -34,13 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Client\appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="Timer\Timer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core" />
+    <None Update="Client\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
