@@ -8,10 +8,13 @@
   <ItemGroup>
     <Compile Remove="HuraceTest\**" />
     <Compile Remove="Timer\**" />
+	<Compile Remove="RaceControl\**" />
     <EmbeddedResource Remove="HuraceTest\**" />
-    <EmbeddedResource Remove="Timer\**" />
+	<EmbeddedResource Remove="Timer\**" />
+	<EmbeddedResource Remove="RaceControl\**" />
     <None Remove="HuraceTest\**" />
-    <None Remove="Timer\**" />
+	<None Remove="Timer\**" />
+	<None Remove="RaceControl\**" />
     <None Update="DB\data.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
