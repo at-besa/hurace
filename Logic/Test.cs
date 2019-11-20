@@ -1,6 +1,6 @@
 ﻿using Hurace.Timer;
 
-namespace Hurace.Core
+namespace Hurace.Core.Logic
 {
     public class Test
     {
