@@ -23,7 +23,6 @@ namespace Hurace.Core.Logic
         
         public ICollection<RaceModel> GetRaces()
         {
-            
             Races = new Collection<RaceModel>();
             var racecollection = new AdoRaceDao(connectionFactory).FindAll();
             foreach (var race in racecollection)
