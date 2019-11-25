@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Hurace.Dal.Ado;
-using Hurace.Dal.Common;
-using Hurace.Dal.Domain;
+using Hurace.Core.DAL.Ado;
+using Hurace.Core.DAL.Common;
+using Hurace.Core.DAL.Domain;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 

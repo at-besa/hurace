@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\Core.DAL\Core.DAL.csproj" />
     <ProjectReference Include="..\Timer\Timer.csproj" />
   </ItemGroup>
 

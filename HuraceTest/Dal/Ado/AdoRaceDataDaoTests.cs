@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hurace.Dal.Ado;
-using Hurace.Dal.Common;
-using Hurace.Dal.Domain;
+﻿using System.Linq;
+using Hurace.Core.DAL.Ado;
+using Hurace.Core.DAL.Common;
+using Hurace.Core.DAL.Domain;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace HuraceTest.Dal.Ado
 {
