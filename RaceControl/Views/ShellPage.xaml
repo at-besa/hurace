@@ -32,12 +32,12 @@
                     <SymbolIcon Symbol="Library"/>
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
-            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:DataGridPage" >
+            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:StartListPage" >
                 <winui:NavigationViewItem.Icon>
                     <SymbolIcon Symbol="List"/>
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
-            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:DataGridPage" >
+            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:RaceControlPage" >
                 <winui:NavigationViewItem.Icon>
                     <SymbolIcon Symbol="Manage"/>
                 </winui:NavigationViewItem.Icon>
