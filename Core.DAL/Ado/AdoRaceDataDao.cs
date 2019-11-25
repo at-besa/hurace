@@ -55,6 +55,13 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@dis", raceData.Disqualified));
         }
 
+        public bool Delete(RaceData raceData)
+        {
+            return template.Execute(
+                       @"delete from RaceData where id=@id",
+                       new QueryParameter("@id", raceData.Id)) >= 0;
+        }
+
         public IEnumerable<RaceData> FindAll()
         {
             return template.Query("select * from RaceData", MapRowToRaceData);

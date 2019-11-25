@@ -11,6 +11,7 @@ namespace Hurace.Core.DAL.Interface
 
         bool Update(Skier skier);
         int Insert(Skier skier);
+        bool Delete(Skier skier);
 
     }
 }

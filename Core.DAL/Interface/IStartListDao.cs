@@ -9,5 +9,6 @@ namespace Hurace.Core.DAL.Interface
         StartList FindByIds(int raceId, int skierId);
         int Insert(StartList startList);
         bool Update(StartList startList);
+        bool Delete(StartList startList);
     }
 }

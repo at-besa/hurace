@@ -44,6 +44,13 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@num", raceType.NumberOfRuns));
         }
 
+        public bool Delete(RaceType raceType)
+        {
+            return template.Execute(
+                       @"delete from racetype where id=@id",
+                       new QueryParameter("@id", raceType.Id)) >= 0;
+        }
+
         public IEnumerable<RaceType> FindAll()
         {
             return template.Query("select * from racetype", MapRowToRaceType);

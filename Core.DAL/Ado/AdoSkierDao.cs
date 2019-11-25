@@ -53,6 +53,13 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@sex", skier.Sex));
         }
 
+        public bool Delete(Skier skier)
+        {
+            return template.Execute(
+                       @"delete from skier where id=@id",
+                       new QueryParameter("@id", skier.Id)) >= 0;
+        }
+
         public IEnumerable<Skier> FindAll()
         {
             return template.Query("select * from skier", MapRowToSkier);

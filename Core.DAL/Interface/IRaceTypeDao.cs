@@ -11,6 +11,7 @@ namespace Hurace.Core.DAL.Interface
 
         bool Update(RaceType raceType);
         int Insert(RaceType raceType);
+        bool Delete(RaceType raceType);
 
     }
 }

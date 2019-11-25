@@ -8,7 +8,8 @@ namespace Hurace.Core.DAL.Interface
         IEnumerable<Splittime> FindAll();
         IEnumerable<Splittime> FindByRaceRun(int raceDataId, int runNo);
         Splittime FindByIds(int raceDataId, int runNo, int splittimeNo);
-        int Insert(Splittime splittime);
         bool Update(Splittime splittime);
+        int Insert(Splittime splittime);
+        bool Delete(Splittime splittime);
     }
 }

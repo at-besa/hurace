@@ -60,7 +60,7 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@splittimeNo", splittime.SplittimeNo),
                        new QueryParameter("@splittime", splittime.Time.ToLongTimeString()));
         }
-
+        
         public bool Update(Splittime splittime)
         {
             return template.Execute(
@@ -69,6 +69,15 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@racedataId", splittime.RaceDataId),
                        new QueryParameter("@runNo", splittime.RunNo),
                        new QueryParameter("@splittimeNo", splittime.SplittimeNo)) == 1;
+        }
+        
+        public bool Delete(Splittime splittime)
+        {
+            return template.Execute(
+                       @"delete from Splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",
+                       new QueryParameter("@racedataId", splittime.RaceDataId),
+                       new QueryParameter("@runNo", splittime.RunNo),
+                       new QueryParameter("@splittimeNo", splittime.SplittimeNo)) >= 1;
         }
     }
 }
