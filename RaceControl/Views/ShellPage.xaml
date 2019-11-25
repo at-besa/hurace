@@ -42,7 +42,7 @@
                     <SymbolIcon Symbol="Manage"/>
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
-            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:DataGridPage" >
+            <winui:NavigationViewItem x:Uid="Shell_DataGrid" helpers:NavHelper.NavigateTo="views:ScoreBoardPage" >
                 <winui:NavigationViewItem.Icon>
                     <SymbolIcon Symbol="Caption"/>
                 </winui:NavigationViewItem.Icon>

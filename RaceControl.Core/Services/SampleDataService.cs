@@ -11,6 +11,8 @@ namespace RaceControl.Core.Services
     // TODO WTS: Delete this file once your app is using real data.
     public static class SampleDataService
     {
+        private static IEnumerable<SampleOrder> _allOrders;
+
         private static IEnumerable<SampleOrder> AllOrders()
         {
             // The following is order summary data
@@ -486,6 +488,18 @@ namespace RaceControl.Core.Services
         {
             await Task.CompletedTask;
             return AllOrders();
+        }
+
+        // TODO WTS: Remove this once your ContentGrid page is displaying real data.
+        public static async Task<IEnumerable<SampleOrder>> GetContentGridDataAsync()
+        {
+            if (_allOrders == null)
+            {
+                _allOrders = AllOrders();
+            }
+
+            await Task.CompletedTask;
+            return _allOrders;
         }
     }
 }
