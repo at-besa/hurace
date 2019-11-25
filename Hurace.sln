@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timer", "Timer\Timer.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.DAL", "Core.DAL\Core.DAL.csproj", "{3CCAD52D-1829-4437-A411-B42AE475E2E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Logic\Logic.csproj", "{4FF4A5F1-42D9-41B3-B2F2-85032C156787}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Logic", "Core.Logic\Core.Logic.csproj", "{4FF4A5F1-42D9-41B3-B2F2-85032C156787}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceControl", "RaceControl\RaceControl.csproj", "{8C9D6B0D-769F-45DC-9CFD-1FB512C472FC}"
 EndProject
