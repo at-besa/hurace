@@ -145,9 +145,9 @@
     <None Include="RaceControl.Tests.xUnit_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RaceControl\RaceControl.csproj">
-      <Project>{F7CC6C76-FCE9-4A8B-A1E9-51448290DFC7}</Project>
-      <Name>RaceControl</Name>
+    <ProjectReference Include="..\RaceControlOld\RaceControlOld.csproj">
+      <Project>{f7cc6c76-fce9-4a8b-a1e9-51448290dfc7}</Project>
+      <Name>RaceControlOld</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

@@ -1,6 +1,6 @@
 ﻿using System;
 
-using RaceControl.ViewModels;
+using RaceControlOld.ViewModels;
 
 using Xunit;
 

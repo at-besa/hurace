@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.DAL", "Core.DAL\Core.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Logic", "Core.Logic\Core.Logic.csproj", "{4FF4A5F1-42D9-41B3-B2F2-85032C156787}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceControl", "RaceControl\RaceControl.csproj", "{F7CC6C76-FCE9-4A8B-A1E9-51448290DFC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceControlOld", "RaceControlOld\RaceControlOld.csproj", "{F7CC6C76-FCE9-4A8B-A1E9-51448290DFC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceControl.Tests.xUnit", "RaceControl.Tests.xUnit\RaceControl.Tests.xUnit.csproj", "{B3A165A4-5A7B-4625-8CC0-D96B76ACB4AE}"
 EndProject
