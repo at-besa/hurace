@@ -8,24 +8,24 @@ using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic
 {
-    public class RaceLogic : IRaceLogic
+    public class StartListLogic : IStartListLogic
     {
         private IConnectionFactory connectionFactory;
-        public ICollection<RaceModel> Races { get; set; }
+        public ICollection<StartListModel> StartLists { get; set; }
         
-        public RaceLogic()
+        public StartListLogic()
         {
             var configuration = ConfigurationUtil.GetConfiguration();
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
         }
-        
-        public async Task<ICollection<RaceModel>> GetRaces()
+
+        public async Task<ICollection<StartListModel>> GetStartLists()
         {
-            return await Task.Run(() => {  Races = new Collection<RaceModel>();
+            return await Task.Run(() => {  StartLists = new Collection<StartListModel>();
                 var racecollection = new AdoRaceDao(connectionFactory).FindAll();
                 foreach (var race in racecollection)
                 {
-                    Races.Add(new RaceModel
+                    StartLists.Add(new StartListModel
                     {
                         Date = race.Date,
                         Location = race.Location,
@@ -37,7 +37,7 @@ namespace Hurace.Core.Logic
                     });
                 }
 
-                return Races;
+                return StartLists;
             });
         }
     }

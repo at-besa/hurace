@@ -5,8 +5,8 @@ using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic.Interface
 {
-    public interface IRaceLogic
+    public interface IStartListLogic
     {
-        Task<ICollection<RaceModel>> GetRaces();
+        Task<ICollection<StartListModel>> GetStartLists();
     }
 }
