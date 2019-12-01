@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RaceControl.ViewModels;
 
 namespace RaceControl
 {
@@ -19,10 +20,13 @@ namespace RaceControl
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
-	{
+    {
+        private RaceManagementViewModel raceManagementViewModel;
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
+            this.raceManagementViewModel = new RaceManagementViewModel();
+            this.DataContext = this.raceManagementViewModel;
+        }
 	}
 }

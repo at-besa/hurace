@@ -7,6 +7,44 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <ListBox ItemsSource="{Binding RaceViewModels}" 
+                 SelectedItem="{Binding SelectedRaceViewModel}"
+                 BorderThickness="0"
+                 Grid.Row="0">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0,6" >
+                        <TextBlock Text="{Binding Race.Race.Name}"
+                                   FontSize="18"
+                                   FontWeight="Bold" />
+                        <Image Source="{Binding Image}" Width="22" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1" 
+                    DataContext="{Binding SelectedRaceViewModel}">
+            <TextBlock Text="{Binding Race.Race.Type.Type}"></TextBlock>
+            <TextBlock Text="{Binding Race.Race.Status.Name}"></TextBlock>
+            <TextBlock Text="{Binding Race.Race.Type.Type}"></TextBlock>
+            <TextBlock Text="{Binding Race.Race.Location}"></TextBlock>
+        </StackPanel>
 
     </Grid>
 </Window>
