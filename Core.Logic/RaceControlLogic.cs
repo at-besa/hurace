@@ -27,13 +27,7 @@ namespace Hurace.Core.Logic
                 {
                     RaceControls.Add(new RaceControlModel
                     {
-                        Date = race.Date,
-                        Location = race.Location,
-                        Name = race.Name,
-                        Sex = race.Sex,
-                        Splittimes = race.Splittimes,
-                        Status = "running",
-                        Type = race.Type.Type
+                        Race = race
                     });
                 }
 
