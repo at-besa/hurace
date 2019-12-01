@@ -10,12 +10,6 @@ namespace Hurace.Core.Logic.Model
 {
     public class RaceModel
     {
-        public string Type { get; set; }
-        public DateTime Date { get; set; }
-        public string Name { get; set; }
-        public string Location { get; set; }
-        public int Splittimes { get; set; }
-        public string Sex { get; set; }
-        public string Status { get; set; }
+        public Race Race { get; set; }
     }
 }

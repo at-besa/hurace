@@ -44,7 +44,7 @@ namespace Hurace.Core.DAL.Importer
             foreach (var startList in startLists)
             {
                 raceDatas.Add(new RaceData { 
-                    Race = startList.Race,
+                    RaceId = startList.Race.Id,
                     SkierId = startList.SkierId,
                     Disqualified = decideIfDisqualifiedByPercentage(DISQUALIFIED_PERCENTAGE)
                 });

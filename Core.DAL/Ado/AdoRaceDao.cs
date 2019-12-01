@@ -34,7 +34,7 @@ namespace Hurace.Core.DAL.Ado
         public bool Update(Race race)
         {
             return template.Execute(
-                       @"update Race set typeId=@type, statusId=@status, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex, deleted = 0 where id=@id",
+                       @"update RaceId set typeId=@type, statusId=@status, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex, deleted = 0 where id=@id",
                        new QueryParameter("@id", race.Id),
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
@@ -48,7 +48,7 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(Race race)
         {
             return template.Execute(
-                       @"insert into Race(id, typeId, name, location, date, splittimes, sex, deleted) values (null, @type, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
+                       @"insert into RaceId(id, typeId, name, location, date, splittimes, sex, deleted) values (null, @type, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
                        new QueryParameter("@id", race.Id),             // TODO check the insertion of the ID 
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
@@ -62,7 +62,7 @@ namespace Hurace.Core.DAL.Ado
         public bool Delete(int raceId)
         {
             return template.Execute(
-                    @"update Race set deleted=1 where id=@id",
+                    @"update RaceId set deleted=1 where id=@id",
                     new QueryParameter("@id", raceId)) >= 0;
         }
 

@@ -16,6 +16,6 @@ namespace Hurace.Core.DAL.Domain
         public string Sex { get; set;  }
         
         public override string ToString() =>
-            $"Race(id:{Id}, Type:{Type}, Name:{Name}, Location:{Location}, Sex:{Sex}, Date:{Date:yyyy-MM-dd})";
+            $"RaceId(id:{Id}, Type:{Type}, Name:{Name}, Location:{Location}, Sex:{Sex}, Date:{Date:yyyy-MM-dd})";
     }
 }

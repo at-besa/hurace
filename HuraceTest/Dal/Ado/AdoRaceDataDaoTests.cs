@@ -41,7 +41,7 @@ namespace HuraceTest.Dal.Ado
 			RaceData raceData = new RaceData
 			{
 				Disqualified = false,
-				Race = new AdoRaceDao(connectionFactory).FindById(15),
+				RaceId = new AdoRaceDao(connectionFactory).FindById(15),
 				Splittime = new []{
 					new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 1), 
 					new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 2)},

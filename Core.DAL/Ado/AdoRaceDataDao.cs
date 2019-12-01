@@ -28,7 +28,7 @@ namespace Hurace.Core.DAL.Ado
             return new RaceData
             {
                 Id = id,
-                Race = new AdoRaceDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["raceId"])),
+                RaceId = Convert.ToInt32(row["raceId"]),
                 SkierId = Convert.ToInt32(row["skierId"]),
                 Disqualified = Convert.ToBoolean(row["disqualified"]),
                 Splittime = runs
@@ -40,7 +40,7 @@ namespace Hurace.Core.DAL.Ado
             return template.Execute(
                        @"update RaceData set id=@id, raceId=@rid, skierId=@skid, disqualified=@dis where id=@id",
                        new QueryParameter("@id", raceData.Id),
-                       new QueryParameter("@rid", raceData.Race.Id),
+                       new QueryParameter("@rid", raceData.RaceId),
                        new QueryParameter("@skid", raceData.SkierId),
                        new QueryParameter("@dis", raceData.Disqualified)) >= 0;
         }
@@ -50,7 +50,7 @@ namespace Hurace.Core.DAL.Ado
             return template.Execute(
                        @"insert into RaceData(id, raceId, skierId, disqualified) values (null, @rid, @skid, @dis); SELECT last_insert_rowid();",
                        new QueryParameter("@id", raceData.Id),
-                       new QueryParameter("@rid", raceData.Race.Id),
+                       new QueryParameter("@rid", raceData.RaceId),
                        new QueryParameter("@skid", raceData.SkierId),
                        new QueryParameter("@dis", raceData.Disqualified));
         }

@@ -7,6 +7,6 @@ namespace Hurace.Core.Logic.Interface
 {
     public interface IRaceControlLogic
     {
-        Task<ICollection<RaceControlModel>> GetRaceControls();
+        Task<RaceControlModel> GetRaceControlForRaceId(int raceId);
     }
 }

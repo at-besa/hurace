@@ -21,19 +21,14 @@ namespace Hurace.Core.Logic
         
         public async Task<ICollection<RaceModel>> GetRaces()
         {
-            return await Task.Run(() => {  Races = new Collection<RaceModel>();
+            return await Task.Run(() => {  
+                Races = new Collection<RaceModel>();
                 var racecollection = new AdoRaceDao(connectionFactory).FindAll();
                 foreach (var race in racecollection)
                 {
                     Races.Add(new RaceModel
                     {
-                        Date = race.Date,
-                        Location = race.Location,
-                        Name = race.Name,
-                        Sex = race.Sex,
-                        Splittimes = race.Splittimes,
-                        Status = "running",
-                        Type = race.Type.Type
+                        Race = race
                     });
                 }
 

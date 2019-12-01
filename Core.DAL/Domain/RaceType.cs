@@ -15,6 +15,6 @@
         public int NumberOfRuns { get; set; }
         
         public override string ToString() =>
-            $"Race(id:{Id}, Type:{Type}, NumberOfRuns:{NumberOfRuns})";
+            $"RaceId(id:{Id}, Type:{Type}, NumberOfRuns:{NumberOfRuns})";
     }
 }

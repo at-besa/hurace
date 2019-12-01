@@ -7,6 +7,6 @@
         public string Name { get; set; }
         
         public override string ToString() =>
-            $"Race(id:{Id}, Name:{Name})";
+            $"RaceId(id:{Id}, Name:{Name})";
     }
 }

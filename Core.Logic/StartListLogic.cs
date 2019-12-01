@@ -37,15 +37,16 @@ namespace Hurace.Core.Logic
                     var skier = skiers.SingleOrDefault(s => s.Id == raceData.SkierId);
                     var start = startlist.SingleOrDefault(sl => sl.SkierId == skier?.Id);
                     
-                    StartLists.Add(new StartListModel
-                    {
-                        Location = raceData.Race.Location,
-                        StartPos = start.StartPos,
-                        Name = raceData.Race.Name,
-                        Sex = raceData.Race.Sex,
-                        RaceType = raceData.Race.Type.Type,
-                        Skier = $"{skier?.FirstName} {skier?.LastName}",
-                    });
+                    // TODO
+//                    StartLists.Add(new StartListModel
+//                    {
+//                        Location = raceData.RaceId.Location,
+//                        StartPos = start.StartPos,
+//                        Name = raceData.RaceId.Name,
+//                        Sex = raceData.RaceId.Sex,
+//                        RaceType = raceData.RaceId.Type.Type,
+//                        Skier = $"{skier?.FirstName} {skier?.LastName}",
+//                    });
                 }
                 return StartLists;
             });

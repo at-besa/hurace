@@ -11,5 +11,6 @@ namespace Hurace.Core.Logic.Model
     public class RaceControlModel
     {
         public Race Race { get; set; }
+        
     }
 }

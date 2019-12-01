@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
+using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 
@@ -11,7 +12,7 @@ namespace Hurace.Core.Logic
     public class RaceControlLogic : IRaceControlLogic
     {
         private IConnectionFactory connectionFactory;
-        public ICollection<RaceControlModel> RaceControls { get; set; }
+        public RaceControlModel RaceControl { get; private set; }
         
         public RaceControlLogic()
         {
@@ -19,20 +20,16 @@ namespace Hurace.Core.Logic
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
         }
         
-        public async Task<ICollection<RaceControlModel>> GetRaceControls()
+        public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId)
         {
-            return await Task.Run(() => {  
-                RaceControls = new Collection<RaceControlModel>();
-                var racecollection = new AdoRaceDao(connectionFactory).FindAll();
-                foreach (var race in racecollection)
+            return await Task.Run(() =>
+            {
+                RaceControl = new RaceControlModel
                 {
-                    RaceControls.Add(new RaceControlModel
-                    {
-                        Race = race
-                    });
-                }
+                    Race = new AdoRaceDao(connectionFactory).FindById(raceId)
+                };
 
-                return RaceControls;
+                return RaceControl;
             });
         }
         
@@ -46,5 +43,18 @@ namespace Hurace.Core.Logic
             });
         }
         
+        public async Task<bool> SetRaceStatus(int raceId, int statusId)
+        {
+            return await Task.Run(() =>
+            {
+                var race = RaceControl.Race;
+                race.Status = new AdoStatusDao(connectionFactory).FindById(statusId);
+                
+                var done = new AdoRaceDao(connectionFactory).Update(race);
+
+                return done;
+            });
+        }
+
     }
 }
