@@ -39,6 +39,22 @@ namespace Hurace.Core.DAL.Ado
                 new QueryParameter("@raceId", raceId),
                 new QueryParameter("@skierId", skierId));
         }
+        
+        public IEnumerable<StartList> FindAllByRaceId(int raceId)
+        {
+            return template.Query(
+                @"select * from startlist where raceId=@raceId",
+                MapRowToStartList,
+                new QueryParameter("@raceId", raceId));
+        }
+
+        public IEnumerable<StartList> FindAllBySkierId(int skierId)
+        {
+            return template.Query(
+                @"select * from startlist where skierId=@skierId",
+                MapRowToStartList,
+                new QueryParameter("@skierId", skierId));
+        }
 
         internal IEnumerable<StartList> FindById(int raceId)
         {

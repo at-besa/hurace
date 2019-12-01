@@ -6,8 +6,8 @@ namespace Hurace.Core.DAL.Domain
     // DTO/Domain Object
     public class RaceData
     {
-        private const string seperator = " - ";
-        private Func<IEnumerable<Splittime>, string> splitter = splittimes => String.Join(seperator, splittimes); 
+        private const string Seperator = " - ";
+        private Func<IEnumerable<Splittime>, string> splitter = splittimes => String.Join(Seperator, splittimes); 
         public int Id { get; set; }
         public Race Race { get; set; }
         public int SkierId { get; set; }

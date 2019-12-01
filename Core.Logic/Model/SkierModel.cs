@@ -1,10 +1,8 @@
-﻿﻿using System;
+﻿using System;
 
- namespace Hurace.Core.DAL.Domain
+namespace Hurace.Core.Logic.Model
 {
-
-    // DTO/Domain Object
-    public class Skier
+    public class SkierModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -20,6 +18,6 @@
 //        public int Points { get; set; }
         
         public override string ToString() =>
-          $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Sex:{Sex}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";
+            $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Sex:{Sex}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";
     }
 }

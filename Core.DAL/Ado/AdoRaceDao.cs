@@ -22,6 +22,7 @@ namespace Hurace.Core.DAL.Ado
             {
                 Id = Convert.ToInt32(row["id"]),
                 Type = new AdoRaceTypeDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["typeId"])),
+                Status = new AdoStatusDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["statusId"])),
                 Name = Convert.ToString(row["name"]),
                 Location = Convert.ToString(row["location"]),
                 Date = Convert.ToDateTime(row["date"]),
@@ -33,9 +34,10 @@ namespace Hurace.Core.DAL.Ado
         public bool Update(Race race)
         {
             return template.Execute(
-                       @"update Race set typeId=@type, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex where id=@id",
+                       @"update Race set typeId=@type, statusId=@status, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex where id=@id",
                        new QueryParameter("@id", race.Id),
                        new QueryParameter("@type", race.Type.Id),
+                       new QueryParameter("@status", race.Status.Id),
                        new QueryParameter("@nam", race.Name),
                        new QueryParameter("@loc", race.Location),
                        new QueryParameter("@dat", race.Date.ToString("s")),
@@ -49,6 +51,7 @@ namespace Hurace.Core.DAL.Ado
                        @"insert into Race(id, typeId, name, location, date, splittimes, sex) values (null, @type, @nam, @loc, @dat , @spl, @sex); SELECT last_insert_rowid();",
                        new QueryParameter("@id", race.Id),             // TODO check the insertion of the ID 
                        new QueryParameter("@type", race.Type.Id),
+                       new QueryParameter("@status", race.Status.Id),
                        new QueryParameter("@nam", race.Name),
                        new QueryParameter("@loc", race.Location),
                        new QueryParameter("@dat", race.Date.ToString("s")),
