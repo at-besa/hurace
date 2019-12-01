@@ -21,7 +21,8 @@ namespace Hurace.Core.Logic
         
         public async Task<ICollection<RaceControlModel>> GetRaceControls()
         {
-            return await Task.Run(() => {  RaceControls = new Collection<RaceControlModel>();
+            return await Task.Run(() => {  
+                RaceControls = new Collection<RaceControlModel>();
                 var racecollection = new AdoRaceDao(connectionFactory).FindAll();
                 foreach (var race in racecollection)
                 {
@@ -34,5 +35,16 @@ namespace Hurace.Core.Logic
                 return RaceControls;
             });
         }
+        
+        public async Task<bool> DeleteRace(int raceId)
+        {
+            return await Task.Run(() =>
+            {
+                var deleted = new AdoRaceDao(connectionFactory).Delete(raceId);
+
+                return deleted;
+            });
+        }
+        
     }
 }

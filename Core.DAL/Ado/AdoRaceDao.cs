@@ -34,7 +34,7 @@ namespace Hurace.Core.DAL.Ado
         public bool Update(Race race)
         {
             return template.Execute(
-                       @"update Race set typeId=@type, statusId=@status, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex where id=@id",
+                       @"update Race set typeId=@type, statusId=@status, name=@nam, location=@loc, date=@dat, splittimes=@spl, sex=@sex, deleted = 0 where id=@id",
                        new QueryParameter("@id", race.Id),
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
@@ -48,7 +48,7 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(Race race)
         {
             return template.Execute(
-                       @"insert into Race(id, typeId, name, location, date, splittimes, sex) values (null, @type, @nam, @loc, @dat , @spl, @sex); SELECT last_insert_rowid();",
+                       @"insert into Race(id, typeId, name, location, date, splittimes, sex, deleted) values (null, @type, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
                        new QueryParameter("@id", race.Id),             // TODO check the insertion of the ID 
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
@@ -59,21 +59,21 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@sex", race.Sex));
         }
 
-        public bool Delete(Race race)
+        public bool Delete(int raceId)
         {
             return template.Execute(
-                    @"delete from Race where id=@id",
-                    new QueryParameter("@id", race.Id)) >= 0;
+                    @"update Race set deleted=1 where id=@id",
+                    new QueryParameter("@id", raceId)) >= 0;
         }
 
         public IEnumerable<Race> FindAll()
         {
-            return template.Query("select * from race", MapRowToRace);
+            return template.Query("select * from race where deleted = 0", MapRowToRace);
         }
 
         public Race FindById(int id)
         {
-            return template.QueryById("select * from race where id=@id",
+            return template.QueryById("select * from race where id=@id and deleted = 0",
                 MapRowToRace,
                 new QueryParameter("@id", id));
         }

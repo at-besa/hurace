@@ -40,5 +40,16 @@ namespace Hurace.Core.Logic
                 return Races;
             });
         }
+        
+        
+        public async Task<bool> DeleteRace(int raceId)
+        {
+            return await Task.Run(() =>
+            {
+                var deleted = new AdoRaceDao(connectionFactory).Delete(raceId);
+
+                return deleted;
+            });
+        }
     }
 }
