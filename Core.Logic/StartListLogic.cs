@@ -23,18 +23,24 @@ namespace Hurace.Core.Logic
         {
             return await Task.Run(() => {  StartLists = new Collection<StartListModel>();
                 var racecollection = new AdoRaceDao(connectionFactory).FindAll();
+                var startlists = new AdoStartListDao(connectionFactory).FindAll();
                 foreach (var race in racecollection)
                 {
-                    StartLists.Add(new StartListModel
+                    foreach (var startlist in startlists)
                     {
-                        Date = race.Date,
-                        Location = race.Location,
-                        Name = race.Name,
-                        Sex = race.Sex,
-                        Splittimes = race.Splittimes,
-                        Status = "running",
-                        Type = race.Type.Type
-                    });
+                        StartLists.Add(new StartListModel
+                        {
+                            Location = race.Location,
+                            StartPos = startlist.StartPos,
+                            Name = race.Name,
+                            Sex = race.Sex,
+                            Splittimes = race.Splittimes,
+                            Status = "running",
+                            Type = race.Type.Type
+                        });
+                        
+                    }
+         
                 }
 
                 return StartLists;
