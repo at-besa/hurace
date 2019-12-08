@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\skier.ico" />
+    <None Remove="Images\skier256.png" />
+    <None Remove="Images\skier32.png" />
+    <None Remove="Skier.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Core.Logic\Core.Logic.csproj" />
   </ItemGroup>
 
@@ -29,9 +36,21 @@
     <Resource Include="Images\mars.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\skier.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\skier256.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\skier32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
       <Resource Include="Images\venus.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+      <Resource Include="Skier.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Resource>
   </ItemGroup>
 
 </Project>

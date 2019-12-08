@@ -7,7 +7,9 @@
         xmlns:viewmodels="clr-namespace:RaceControl.ViewModels"
         xmlns:views="clr-namespace:RaceControl.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Race Control" Height="450" Width="800"
+        Foreground="White"
+        Icon="/Images/skier.ico">
 	<Window.Resources>
 		<DataTemplate x:Name="RaceManagementTemplate" DataType="{x:Type viewmodels:RaceManagementViewModel}">
 			<views:RaceManagementView DataContext="{Binding}"></views:RaceManagementView>
@@ -17,17 +19,17 @@
 		</DataTemplate>
 
 	</Window.Resources>
-	<Grid Background="Gray">
+	<Grid Background="LightGray">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Orientation="Horizontal" Background="DimGray">
-			<Button Content="Race Management" Background="DimGray" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="180" Click="RaceManagement_Clicked" ></Button>
-			<Button Content="Skier Control" Background="DimGray" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150"></Button>
-			<Button Content="Race Control" Background="DimGray" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="RaceControlButton_Clicked"></Button>
-			<Button Content="Screen Control" Background="DimGray" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="ScreenControlButton_Clicked"></Button>
+			<Button Content="Race Management" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="180" Click="RaceManagement_Clicked" ></Button>
+			<Button Content="Skier Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150"></Button>
+			<Button Content="Race Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="RaceControlButton_Clicked"></Button>
+			<Button Content="Screen Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="ScreenControlButton_Clicked"></Button>
 		</StackPanel> 
 
 		<ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
