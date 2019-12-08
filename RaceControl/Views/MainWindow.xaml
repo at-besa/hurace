@@ -17,6 +17,9 @@
 		<DataTemplate x:Name="ScreenControlTemplate" DataType="{x:Type viewmodels:ScreenControlViewModel}">
 			<views:ScreenControlView DataContext="{Binding}"></views:ScreenControlView>
 		</DataTemplate>
+		<DataTemplate x:Name="StartListTemplate" DataType="{x:Type viewmodels:StartListViewModel}">
+			<views:StartListView DataContext="{Binding}"></views:StartListView>
+		</DataTemplate>
 
 	</Window.Resources>
 	<Grid Background="LightGray">
@@ -27,7 +30,7 @@
 
 		<StackPanel Grid.Row="0" Orientation="Horizontal" Background="DimGray">
 			<Button Content="Race Management" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="180" Click="RaceManagement_Clicked" ></Button>
-			<Button Content="Skier Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150"></Button>
+			<Button Content="Start List" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="StartListButton_Clicked"></Button>
 			<Button Content="Race Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="RaceControlButton_Clicked"></Button>
 			<Button Content="Screen Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="ScreenControlButton_Clicked"></Button>
 		</StackPanel> 

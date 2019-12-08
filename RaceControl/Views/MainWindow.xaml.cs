@@ -40,5 +40,10 @@ namespace RaceControl
 		{
 			DataContext = new ScreenControlViewModel();
 		}
+
+		private void StartListButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			DataContext = new StartListViewModel();
+		}
 	}
 }
