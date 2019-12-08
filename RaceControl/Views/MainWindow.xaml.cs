@@ -21,12 +21,24 @@ namespace RaceControl
 	/// </summary>
 	public partial class MainWindow : Window
     {
-        private RaceManagementViewModel raceManagementViewModel;
 		public MainWindow()
 		{
 			InitializeComponent();
-            this.raceManagementViewModel = new RaceManagementViewModel();
-            this.DataContext = this.raceManagementViewModel;
         }
+
+		private void RaceManagement_Clicked(object sender, RoutedEventArgs e)
+		{
+			DataContext = new RaceManagementViewModel();
+		}
+
+		private void RaceControlButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			DataContext = new RaceControlViewModel();
+		}
+
+		private void ScreenControlButton_Clicked(object sender, RoutedEventArgs e)
+		{
+			DataContext = new ScreenControlViewModel();
+		}
 	}
 }
