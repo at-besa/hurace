@@ -6,7 +6,7 @@ using RaceControl.Helpers;
 
 namespace RaceControl.ViewModels
 {
-    public class RaceControlViewModel : Observable
+    public class RaceControlViewModel
     {
         public ObservableCollection<RaceModel> Source { get; } = new ObservableCollection<RaceModel>();
         private RaceLogic raceLogic;

@@ -9,7 +9,7 @@ using RaceControl.Helpers;
 
 namespace RaceControl.ViewModels
 {
-    public class RaceManagementViewModel : Observable
+    public class RaceManagementViewModel
     {
         public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
         public RaceViewModel SelectedRaceViewModel { get; set; }
