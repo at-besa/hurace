@@ -7,48 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-		</Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-	    <Grid Grid.Column="0">
-		    <Grid.RowDefinitions>
-			    <RowDefinition Height="*"/>
-			    <RowDefinition Height="Auto"/>
-		    </Grid.RowDefinitions>
-	    </Grid>
 
-	    <ListBox ItemsSource="{Binding Races}" 
-	             SelectedItem="{Binding SelectedRace}"
-	             BorderThickness="0"
-	             Grid.Row="0" 
-	             Grid.Column="0"
-	             Background="Gray"
-	             Foreground="White"
-	    >
 
-		    <ListBox.ItemTemplate>
-			    <DataTemplate>
-				    <StackPanel Orientation="Horizontal"
-				                Margin="0,6" >
-					    <TextBlock Text="{Binding Race.Race.Name}"
-					               FontSize="18"
-					               FontWeight="Bold" />
-					    <Image Source="{Binding Image}" Margin="2,0,0,10" Height="15" Width="22" VerticalAlignment="Center" />
-				    </StackPanel>
+        <ListView Grid.Column="0"
+                  Background="Gray"
+                  Foreground="White"
+                  ItemsSource="{Binding }"/>
 
-			    </DataTemplate>
-		    </ListBox.ItemTemplate>
-	    </ListBox>
+        <GridSplitter Grid.Column="1" Height="100" Width="5"/>
 
-	    <StackPanel Grid.Column="1" 
-	                DataContext="{Binding SelectedRace}">
-			<TextBlock Text="Start List Editor" Foreground="White" FontSize="16" Margin="5"></TextBlock>
-		    <TextBlock Text="{Binding Race.Race.Type.Type}"></TextBlock>
-		    <TextBlock Text="{Binding Race.Race.Status.Name}"></TextBlock>
-		    <TextBlock Text="{Binding Race.Race.Type.Type}"></TextBlock>
-		    <TextBlock Text="{Binding Race.Race.Location}"></TextBlock>
-	    </StackPanel>
-	</Grid>
+        <ListView 
+                  Grid.Column="2"
+                  Background="Gray"
+                  Foreground="White"/>
+
+    </Grid>
 </UserControl>
