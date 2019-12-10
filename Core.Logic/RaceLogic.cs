@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
+using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 
@@ -11,9 +13,9 @@ namespace Hurace.Core.Logic
 	public class RaceLogic : IRaceLogic
 	{
 		private IConnectionFactory connectionFactory;
-		public ICollection<RaceModel> Races { get; set; }
-		public ICollection<string> RaceTypes { get; set; }
-		public ICollection<string> RaceStates { get; set; }
+		private ICollection<RaceModel> Races { get; set; }
+		private IEnumerable<RaceType> RaceTypes { get; set; }
+		private IEnumerable<Status> RaceStates { get; set; }
 
 
 		public RaceLogic()
@@ -55,39 +57,41 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				var deleted = new AdoRaceDao(connectionFactory).Update(race.Race);
+				
+				
+				var saved = new AdoRaceDao(connectionFactory).Update(race.Race);
 
-				return deleted;
+				return saved;
 			});
 		}
-		
+
 		public async Task<ICollection<string>> GetRaceTypes()
 		{
 			return await Task.Run(() =>
 			{
-				RaceTypes = new Collection<string>();
-				var racetypes = new AdoRaceTypeDao(connectionFactory).FindAll();
-				foreach (var racetype in racetypes)
+				RaceTypes = new AdoRaceTypeDao(connectionFactory).FindAll();
+				var racetypes = new Collection<string>();
+				foreach (var racetype in RaceTypes)
 				{
-					RaceTypes.Add(racetype.Type);
+					racetypes.Add(racetype.Type);
 				}
 
-				return RaceTypes;
+				return racetypes;
 			});
 		}
 
-		public async Task<IEnumerable<string>> GetRaceStates()
+		public async Task<ICollection<string>> GetRaceStates()
 		{
 			return await Task.Run(() =>
 			{
-				RaceStates = new Collection<string>();
-				var racestates = new AdoStatusDao(connectionFactory).FindAll();
-				foreach (var state in racestates)
+				RaceStates = new AdoStatusDao(connectionFactory).FindAll();
+				var racestates = new Collection<string>();
+				foreach (var state in RaceStates)
 				{
-					RaceStates.Add(state.Name);
+					racestates.Add(state.Name);
 				}
 
-				return RaceStates;
+				return racestates;
 			});
 		}
 	}
