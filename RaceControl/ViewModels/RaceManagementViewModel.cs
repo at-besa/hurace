@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
@@ -16,14 +17,29 @@ namespace RaceControl.ViewModels
          
         private RaceLogic logic;
 
+        public ObservableCollection<string> RaceTypes { get; set; } = new ObservableCollection<string>();
+        public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
+
         public RaceManagementViewModel()
         {
-            getmystuff();
+	        GetRaces();
+            GetRaceTypes();
+        }
 
+        private async void GetRaceTypes()
+        {
+	        logic = new RaceLogic();
+
+            var types = await logic.GetRaceTypes();
+
+	        foreach (var type in types)
+	        {
+		        RaceTypes.Add(type);
+	        }
         }
 
 
-        private async void getmystuff()
+        private async void GetRaces()
         {
             logic = new RaceLogic();
 
@@ -34,6 +50,7 @@ namespace RaceControl.ViewModels
                 var raceViewModel = new RaceViewModel(raceModel); 
                 RaceViewModels.Add(raceViewModel);
             }
+
         }
     }
 

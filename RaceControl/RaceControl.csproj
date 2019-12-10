@@ -14,6 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0">
+      <NoWarn>true</NoWarn>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Core.Logic\Core.Logic.csproj" />
   </ItemGroup>
 

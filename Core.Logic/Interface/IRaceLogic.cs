@@ -8,5 +8,6 @@ namespace Hurace.Core.Logic.Interface
     public interface IRaceLogic
     {
         Task<ICollection<RaceModel>> GetRaces();
+        Task<ICollection<string>> GetRaceTypes();
     }
 }

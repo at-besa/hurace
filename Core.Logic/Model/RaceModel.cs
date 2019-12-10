@@ -8,7 +8,7 @@ using Hurace.Core.DAL.Domain;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class RaceModel
+    public class RaceModel 
     {
         public Race Race { get; set; }
 
