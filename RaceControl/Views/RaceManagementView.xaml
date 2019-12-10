@@ -44,29 +44,33 @@
 	    </ListBox>
 
 	    <StackPanel Grid.Column="1" Margin="5">
+		    <Button Command="{Binding DeleteCommand}" HorizontalAlignment="Right" Margin="0,0">
+				<StackPanel Orientation="Horizontal">
+					<Image Source="/Images/close.png" Height="15" Margin="2"></Image>
+					<TextBlock Text="Delete Race" Margin="2"></TextBlock>
+				</StackPanel>
+			</Button>
+		    <TextBlock Text="Name"></TextBlock>
+		    <TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Name}" Margin="4"></TextBox>
 			<TextBlock Text="Type"></TextBlock>
 			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Type.Type}" Margin="4"></ComboBox>
-			<TextBlock Text="Name"></TextBlock>
-			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Name}" Margin="4"></TextBox>
 		    <TextBlock Text="Gender Type"></TextBlock>
 			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
-			<DatePicker Text="{Binding SelectedRaceViewModel.RaceModel.Race.Date}" Margin="4"></DatePicker>
+			<wpftk:DateTimePicker Value="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></wpftk:DateTimePicker>
 		    <TextBlock Text="Location"></TextBlock>
 			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Location}" Margin="4"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
 			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></wpftk:IntegerUpDown>
 
-			<StackPanel Orientation="Horizontal" Margin="25,10">
+			<StackPanel Orientation="Horizontal" Margin="25,10" HorizontalAlignment="Center">
 				<ComboBox ItemsSource="{Binding RaceStates}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Status.Name}"></ComboBox>
-				<Button Margin="25,0">
-				    <TextBlock Text="Delete RaceModel"></TextBlock>
-			    </Button>
-			    <Button Margin="25,0">
-				    <TextBlock Text="Save RaceModel"></TextBlock>
+
+			    <Button Command="{Binding SaveCommand}" Margin="25,0">
+				    <TextBlock Text="Save RaceModel" Margin="2"></TextBlock>
 			    </Button>
 		    </StackPanel>
-		</StackPanel>
+	    </StackPanel>
 
 </Grid>
 </UserControl>

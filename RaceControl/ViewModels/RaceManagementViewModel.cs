@@ -1,25 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Media;
+using CoSimulationPlcSimAdv.Commands;
 using Hurace.Core.Logic;
-using Hurace.Core.Logic.Model;
-using RaceControl.Helpers;
 
 namespace RaceControl.ViewModels
 {
     public class RaceManagementViewModel
     {
+	    private RaceLogic logic;
         public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
         public RaceViewModel SelectedRaceViewModel { get; set; }
-         
-        private RaceLogic logic;
-
         public ObservableCollection<string> RaceTypes { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<string> RaceStates { get; set; } = new ObservableCollection<string>();
         public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
+
+        public CommandBase SaveCommand { get; set; }
+        public CommandBase DeleteCommand { get; set; }
 
         public RaceManagementViewModel()
         {
@@ -28,6 +25,22 @@ namespace RaceControl.ViewModels
             GetRaces();
             GetRaceTypes();
             GetRaceStates();
+            
+            SaveCommand = new CommandBase(SaveRace);
+            DeleteCommand = new CommandBase(DeleteRace);
+            
+        }
+
+        private async void GetRaces()
+        {
+	        var raceModels = await logic.GetRaces();
+
+	        foreach (var raceModel in raceModels)
+	        {
+		        var raceViewModel = new RaceViewModel(raceModel);
+		        RaceViewModels.Add(raceViewModel);
+	        }
+
         }
 
         private async void GetRaceTypes()
@@ -40,28 +53,27 @@ namespace RaceControl.ViewModels
 	        }
         }
 
-
-        private async void GetRaces()
-        {
-            var raceModels = await logic.GetRaces();
-
-            foreach (var raceModel in raceModels)
-            {
-                var raceViewModel = new RaceViewModel(raceModel); 
-                RaceViewModels.Add(raceViewModel);
-            }
-
-        }
-        
         private async void GetRaceStates()
         {
+	        RaceStates.Clear();
 	        var raceStates = await logic.GetRaceStates();
 
 	        foreach (var state in raceStates)
 	        {
 		        RaceStates.Add(state);
 	        }
+        }
 
+        private async void SaveRace(object sender, EventArgs eventArgs)
+        {
+	        await logic.SaveRace(SelectedRaceViewModel.RaceModel);
+        }
+        
+        private async void DeleteRace(object sender, EventArgs e)
+        {
+	        await logic.DeleteRace(SelectedRaceViewModel.RaceModel.Race.Id);
+	        RaceViewModels.Remove(SelectedRaceViewModel);
+	        SelectedRaceViewModel = RaceViewModels[0];
         }
     }
 

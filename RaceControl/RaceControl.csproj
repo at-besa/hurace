@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\close.png" />
     <None Remove="Images\skier.ico" />
     <None Remove="Images\skier256.png" />
     <None Remove="Images\skier32.png" />
@@ -39,6 +40,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\mars.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

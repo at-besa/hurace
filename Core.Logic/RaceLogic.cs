@@ -51,6 +51,16 @@ namespace Hurace.Core.Logic
 			});
 		}
 
+		public async Task<bool> SaveRace(RaceModel race)
+		{
+			return await Task.Run(() =>
+			{
+				var deleted = new AdoRaceDao(connectionFactory).Update(race.Race);
+
+				return deleted;
+			});
+		}
+		
 		public async Task<ICollection<string>> GetRaceTypes()
 		{
 			return await Task.Run(() =>
