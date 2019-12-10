@@ -57,8 +57,8 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				
-				
+				race.Race.Status = RaceStates.FirstOrDefault(status => status.Name == race.Race.Status.Name);
+				race.Race.Type = RaceTypes.FirstOrDefault(type => type.Type == race.Race.Type.Type);
 				var saved = new AdoRaceDao(connectionFactory).Update(race.Race);
 
 				return saved;
