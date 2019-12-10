@@ -56,6 +56,15 @@
 			<TextBox Text="{Binding SelectedRaceViewModel.Race.Race.Location}"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
 			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.Race.Race.Splittimes}"></wpftk:IntegerUpDown>
+		    
+		    <StackPanel Orientation="Horizontal">
+			    <Button>
+				    <TextBlock Text="Delete Race"></TextBlock>
+			    </Button>
+			    <Button>
+				    <TextBlock Text="Save Race"></TextBlock>
+			    </Button>
+		    </StackPanel>
 		</StackPanel>
 
 </Grid>
