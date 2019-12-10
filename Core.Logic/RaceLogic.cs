@@ -13,6 +13,7 @@ namespace Hurace.Core.Logic
 		private IConnectionFactory connectionFactory;
 		public ICollection<RaceModel> Races { get; set; }
 		public ICollection<string> RaceTypes { get; set; }
+		public ICollection<string> RaceStates { get; set; }
 
 
 		public RaceLogic()
@@ -62,6 +63,21 @@ namespace Hurace.Core.Logic
 				}
 
 				return RaceTypes;
+			});
+		}
+
+		public async Task<IEnumerable<string>> GetRaceStates()
+		{
+			return await Task.Run(() =>
+			{
+				RaceStates = new Collection<string>();
+				var racestates = new AdoStatusDao(connectionFactory).FindAll();
+				foreach (var state in racestates)
+				{
+					RaceStates.Add(state.Name);
+				}
+
+				return RaceStates;
 			});
 		}
 	}

@@ -33,7 +33,7 @@
 			    <DataTemplate>
 				    <StackPanel Orientation="Horizontal"
 				                Margin="0,6" >
-					    <TextBlock Text="{Binding Race.Race.Name}"
+					    <TextBlock Text="{Binding RaceModel.Race.Name}"
 					               FontSize="14"
 					               FontWeight="Bold" />
 					    <Image Source="{Binding Image}" Margin="2,0,0,10" Height="12" Width="22" VerticalAlignment="Center" />
@@ -45,24 +45,25 @@
 
 	    <StackPanel Grid.Column="1" Margin="5">
 			<TextBlock Text="Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceViewModel.Race.Race.Type.Type}"></ComboBox>
+			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Type.Type}" Margin="4"></ComboBox>
 			<TextBlock Text="Name"></TextBlock>
-			<TextBox Text="{Binding SelectedRaceViewModel.Race.Race.Status.Name}"></TextBox>
+			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Name}" Margin="4"></TextBox>
 		    <TextBlock Text="Gender Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.Race.Race.Sex}"></ComboBox>
+			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
-			<DatePicker Text="{Binding SelectedRaceViewModel.Race.Race.Date}"></DatePicker>
+			<DatePicker Text="{Binding SelectedRaceViewModel.RaceModel.Race.Date}" Margin="4"></DatePicker>
 		    <TextBlock Text="Location"></TextBlock>
-			<TextBox Text="{Binding SelectedRaceViewModel.Race.Race.Location}"></TextBox>
+			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Location}" Margin="4"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
-			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.Race.Race.Splittimes}"></wpftk:IntegerUpDown>
-		    
-		    <StackPanel Orientation="Horizontal">
-			    <Button>
-				    <TextBlock Text="Delete Race"></TextBlock>
+			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></wpftk:IntegerUpDown>
+
+			<StackPanel Orientation="Horizontal" Margin="25,10">
+				<ComboBox ItemsSource="{Binding RaceStates}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Status.Name}"></ComboBox>
+				<Button Margin="25,0">
+				    <TextBlock Text="Delete RaceModel"></TextBlock>
 			    </Button>
-			    <Button>
-				    <TextBlock Text="Save Race"></TextBlock>
+			    <Button Margin="25,0">
+				    <TextBlock Text="Save RaceModel"></TextBlock>
 			    </Button>
 		    </StackPanel>
 		</StackPanel>

@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:RaceControl.ViewModels"
         xmlns:views="clr-namespace:RaceControl.Views"
         mc:Ignorable="d"
-        Title="Race Control" Height="450" Width="800"
+        Title="RaceModel Control" Height="450" Width="800"
         Foreground="White"
         Icon="/Images/skier.ico">
 	<Window.Resources>

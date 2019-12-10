@@ -6,14 +6,14 @@ namespace RaceControl.ViewModels
 {
     public class RaceViewModel : NotifyPropertyChanged
     {
-        public RaceModel Race { get; set; }
+        public RaceModel RaceModel { get; set; }
         public string Image { get; set; }
 
-        public RaceViewModel(RaceModel raceModel)
+        public RaceViewModel(RaceModel raceModelModel)
         {
-            Race = raceModel;
+            RaceModel = raceModelModel;
 
-            if (Race.Race.Sex == "m")
+            if (RaceModel.Race.Sex == "m")
             {
                 Image = "/Images/mars.png";
             }

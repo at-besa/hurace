@@ -18,18 +18,20 @@ namespace RaceControl.ViewModels
         private RaceLogic logic;
 
         public ObservableCollection<string> RaceTypes { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> RaceStates { get; set; } = new ObservableCollection<string>();
         public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
 
         public RaceManagementViewModel()
         {
-	        GetRaces();
+	        logic = new RaceLogic();
+
+            GetRaces();
             GetRaceTypes();
+            GetRaceStates();
         }
 
         private async void GetRaceTypes()
         {
-	        logic = new RaceLogic();
-
             var types = await logic.GetRaceTypes();
 
 	        foreach (var type in types)
@@ -41,8 +43,6 @@ namespace RaceControl.ViewModels
 
         private async void GetRaces()
         {
-            logic = new RaceLogic();
-
             var raceModels = await logic.GetRaces();
 
             foreach (var raceModel in raceModels)
@@ -50,6 +50,17 @@ namespace RaceControl.ViewModels
                 var raceViewModel = new RaceViewModel(raceModel); 
                 RaceViewModels.Add(raceViewModel);
             }
+
+        }
+        
+        private async void GetRaceStates()
+        {
+	        var raceStates = await logic.GetRaceStates();
+
+	        foreach (var state in raceStates)
+	        {
+		        RaceStates.Add(state);
+	        }
 
         }
     }
