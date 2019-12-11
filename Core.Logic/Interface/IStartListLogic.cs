@@ -7,6 +7,6 @@ namespace Hurace.Core.Logic.Interface
 {
     public interface IStartListLogic
     {
-        Task<ICollection<StartListModel>> GetStartListForRaceId(int raceId);
+        Task<StartListModel> GetStartListForRaceId(int raceId);
     }
 }

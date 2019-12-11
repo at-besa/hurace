@@ -14,7 +14,7 @@ namespace Hurace.Core.Logic
     public class StartListLogic : IStartListLogic
     {
         private IConnectionFactory connectionFactory;
-        public ICollection<StartListModel> StartLists { get; set; }
+        public StartListModel StartList { get; set; }
         
         public StartListLogic()
         {
@@ -22,33 +22,32 @@ namespace Hurace.Core.Logic
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
         }
 
-        public async Task<ICollection<StartListModel>> GetStartListForRaceId(int raceId)
+        public async Task<StartListModel> GetStartListForRaceId(int raceId)
         {
             return await Task.Run(() => {  
-                StartLists = new Collection<StartListModel>();
-                
-                var skiers = new AdoSkierDao(connectionFactory).FindAll();
-                var startlist = new AdoStartListDao(connectionFactory).FindAllByRaceId(raceId);
-                var raceDatas = new AdoRaceDataDao(connectionFactory).FindAllByRaceId(raceId); 
-                
-                
-                foreach (var raceData in raceDatas)
+                StartList = new StartListModel();
+                StartList.raceId = raceId;
+
+                IEnumerable<Skier> skiers = new AdoSkierDao(connectionFactory).FindAll();
+
+                if (skiers == null)
                 {
-                    var skier = skiers.SingleOrDefault(s => s.Id == raceData.SkierId);
-                    var start = startlist.SingleOrDefault(sl => sl.SkierId == skier?.Id);
-                    
-                    // TODO
-//                    StartLists.Add(new StartListModel
-//                    {
-//                        Location = raceData.RaceId.Location,
-//                        StartPos = start.StartPos,
-//                        Name = raceData.RaceId.Name,
-//                        Sex = raceData.RaceId.Sex,
-//                        RaceType = raceData.RaceId.Type.Type,
-//                        Skier = $"{skier?.FirstName} {skier?.LastName}",
-//                    });
+                    throw new NullReferenceException("No skiers found");
                 }
-                return StartLists;
+
+                IEnumerable<StartList> startListMembers = new AdoStartListDao(connectionFactory).FindAllByRaceId(raceId);
+
+                foreach (var startListMember in startListMembers)
+                {
+                    StartList.StartListMembers.Add(
+                            new StartListMemberModel() 
+                            {
+                                Skier = new SkierModel(skiers.FirstOrDefault(skier => skier.Id == startListMember.SkierId)),
+                                Startposition = startListMember.StartPos
+                            }
+                        );
+                }
+                return StartList;
             });
         }
 

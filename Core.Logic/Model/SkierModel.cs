@@ -1,9 +1,20 @@
-﻿using System;
+﻿using Hurace.Core.DAL.Domain;
+using System;
 
 namespace Hurace.Core.Logic.Model
 {
     public class SkierModel
     {
+        public SkierModel(Skier skier)
+        {
+            Id = skier.Id;
+            FirstName = skier.FirstName;
+            LastName = skier.LastName;
+            DateOfBirth = skier.DateOfBirth;
+            Nation = skier.Nation;
+            ProfileImage = skier.ProfileImage;
+            Sex = skier.Sex;
+        }
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -11,11 +22,6 @@ namespace Hurace.Core.Logic.Model
         public string Nation { get; set; }
         public string ProfileImage { get; set; }
         public string Sex { get; set; }
-        
-        
-        // BeSa predefined data for WorldCup
-//        public int Rank { get; set; }
-//        public int Points { get; set; }
         
         public override string ToString() =>
             $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Sex:{Sex}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";

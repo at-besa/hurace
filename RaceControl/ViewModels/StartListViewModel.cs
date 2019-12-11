@@ -13,7 +13,7 @@ namespace RaceControl.ViewModels
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
         public ICollection<RaceModel> RaceModels { get; set; } = new Collection<RaceModel>();
 
-        public ICollection<StartListModel> RunningRaceStartList { get; set; }
+        public StartListModel RunningRaceStartList { get; set; }
         private RaceLogic raceLogic;
         private StartListLogic startListLogic = new StartListLogic();
 
@@ -29,14 +29,14 @@ namespace RaceControl.ViewModels
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
         }
 
-        private async Task<ICollection<StartListModel>> GetRunningRaceStartList(RaceModel runningRace)
+        private async Task<StartListModel> GetRunningRaceStartList(RaceModel runningRace)
         {
             if (runningRace == null || runningRace.Race == null)
             {
                 return null;
             }
-            ICollection<StartListModel> startListModels = await startListLogic.GetStartListForRaceId(runningRace.Race.Id);
-            return startListModels;
+            StartListModel startListModel = await startListLogic.GetStartListForRaceId(runningRace.Race.Id);
+            return startListModel;
         }
 
         private async Task<RaceModel> GetRunningRace()
