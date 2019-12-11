@@ -27,6 +27,7 @@ namespace Hurace.Core.Logic
             return await Task.Run(() => {  
                 StartList = new StartListModel();
                 StartList.raceId = raceId;
+                StartList.StartListMembers = new Collection<StartListMemberModel>();
 
                 IEnumerable<Skier> skiers = new AdoSkierDao(connectionFactory).FindAll();
 
@@ -40,14 +41,28 @@ namespace Hurace.Core.Logic
                 foreach (var startListMember in startListMembers)
                 {
                     StartList.StartListMembers.Add(
-                            new StartListMemberModel() 
-                            {
-                                Skier = new SkierModel(skiers.FirstOrDefault(skier => skier.Id == startListMember.SkierId)),
-                                Startposition = startListMember.StartPos
-                            }
-                        );
+                        new StartListMemberModel()
+                        {
+                            Skier = new SkierModel(skiers.FirstOrDefault(skier => skier.Id == startListMember.SkierId)),
+                            Startposition = startListMember.StartPos
+                        }
+                    );
                 }
                 return StartList;
+            });
+        }
+
+        public async Task<Collection<SkierModel>> GetAllSkiersWithSameSex(string sex)
+        {
+            return await Task.Run(() => {
+                IEnumerable<Skier> allSkiers = new AdoSkierDao(connectionFactory).FindAll();
+                IEnumerable<Skier> allSkiersWithSameSex = allSkiers.Where(skier => skier.Sex == sex);
+                var allSkierModelsWithSameSex = new Collection<SkierModel>();
+                foreach (var skierWithSameSex in allSkiersWithSameSex)
+                {
+                    allSkierModelsWithSameSex.Add(new SkierModel(skierWithSameSex));
+                }
+                return allSkierModelsWithSameSex;
             });
         }
 

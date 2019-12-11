@@ -11,11 +11,12 @@ namespace RaceControl.ViewModels
     public class StartListViewModel 
     {
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
-        public ICollection<RaceModel> RaceModels { get; set; } = new Collection<RaceModel>();
-
+        public ICollection<SkierModel> PossibleSkiersNotInStartList { get; set; } = new Collection<SkierModel>();
         public StartListModel RunningRaceStartList { get; set; }
+
         private RaceLogic raceLogic;
-        private StartListLogic startListLogic = new StartListLogic();
+        private StartListLogic startListLogic;
+
 
         public StartListViewModel()
 	    {
@@ -25,8 +26,20 @@ namespace RaceControl.ViewModels
         private async void init()
         {
             raceLogic = new RaceLogic();
+            startListLogic = new StartListLogic();
             RunningRace = await GetRunningRace();
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
+            PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRace.Race.Sex, RunningRaceStartList.StartListMembers);
+        }
+
+        private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(string sex, ICollection<StartListMemberModel> startListMembers)
+        {
+            var skiersWithSameSex = await startListLogic.GetAllSkiersWithSameSex(sex);
+            foreach (var startListMember in startListMembers)
+            {
+                skiersWithSameSex.Remove(startListMember.Skier);
+            }
+            return skiersWithSameSex;
         }
 
         private async Task<StartListModel> GetRunningRaceStartList(RaceModel runningRace)
