@@ -8,7 +8,7 @@ using Hurace.Core.DAL.Domain;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class ScreenControlModel
+    public class ScreenControlModel        //TODO generate IComparable<ScreenControlModel>
     {
         // TODO do the fields
         public string Type { get; set; }

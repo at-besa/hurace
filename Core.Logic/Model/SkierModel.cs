@@ -3,7 +3,7 @@ using System;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class SkierModel
+    public class SkierModel        //TODO generate IComparable<SkierModel>
     {
         public SkierModel(Skier skier)
         {
@@ -22,7 +22,7 @@ namespace Hurace.Core.Logic.Model
         public string Nation { get; set; }
         public string ProfileImage { get; set; }
         public string Sex { get; set; }
-        
+
         public override string ToString() =>
             $"Skier(id:{Id}, FirstName:{FirstName}, LastName:{LastName}, Sex:{Sex}, Nation:{Nation}, DateOfBirth:{DateOfBirth:yyyy-MM-dd})";
     }

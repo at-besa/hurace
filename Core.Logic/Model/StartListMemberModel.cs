@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class StartListMemberModel
+    public class StartListMemberModel       //TODO generate IComparable<StartListMemberModel>
     {
         public SkierModel Skier { get; set; }
         public int Startposition { get; set; }
