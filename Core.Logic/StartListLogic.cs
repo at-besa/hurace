@@ -36,7 +36,10 @@ namespace Hurace.Core.Logic
                     throw new NullReferenceException("No skiers found");
                 }
 
-                IEnumerable<StartList> startListMembers = new AdoStartListDao(connectionFactory).FindAllByRaceId(raceId);
+                IEnumerable<StartList> startListMembers = 
+                    new AdoStartListDao(connectionFactory)
+                    .FindAllByRaceId(raceId)
+                    .OrderBy(startListMember => startListMember.StartPos);
 
                 foreach (var startListMember in startListMembers)
                 {
@@ -47,7 +50,9 @@ namespace Hurace.Core.Logic
                             Startposition = startListMember.StartPos
                         }
                     );
+                    
                 }
+
                 return StartList;
             });
         }

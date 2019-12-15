@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using CoSimulationPlcSimAdv.Commands;
 using Hurace.Core.DAL.Domain;
 using Swack.UI.ViewModels;
 
@@ -26,6 +27,8 @@ namespace RaceControl.ViewModels
         public StartListMemberModel SelectedStartListMember { get; set; }
         public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
 
+        public CommandBase DeleteStartListMemberCommand { get; set; }          
+
         private RaceManagementLogic raceManagementLogic;
         private StartListLogic startListLogic;
 
@@ -33,6 +36,12 @@ namespace RaceControl.ViewModels
         public StartListViewModel()
 	    {
             Init();
+            DeleteStartListMemberCommand = new CommandBase(DeleteStartListMember);
+        }
+
+        private void DeleteStartListMember(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private async void Init()
@@ -56,7 +65,7 @@ namespace RaceControl.ViewModels
 
         private async Task<StartListModel> GetRunningRaceStartList(RaceModel runningRace)
         {
-            if (runningRace == null || runningRace == null)
+            if (runningRace == null)
             {
                 return null;
             }

@@ -60,10 +60,12 @@
                                 Kind="ArrowDownward" />
                         </Button>
                         <Button
+                            Command="{Binding DeleteStartListMemberCommand}"
                             Style="{StaticResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon
                                 Kind="Delete" />
+                            
                         </Button>
                     </StackPanel>
 
