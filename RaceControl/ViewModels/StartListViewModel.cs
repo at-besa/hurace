@@ -8,11 +8,20 @@ using System.Threading.Tasks;
 
 namespace RaceControl.ViewModels
 {
-    public class StartListViewModel 
+    public class StartListViewModel : NotifyPropertyChanged
     {
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
-        public ICollection<SkierModel> PossibleSkiersNotInStartList { get; set; } = new Collection<SkierModel>();
-        public StartListModel RunningRaceStartList { get; set; }
+        public ICollection<SkierModel> PossibleSkiersNotInStartList { get; set; } = new ObservableCollection<SkierModel>();
+
+        private StartListModel runningRaceStartList;
+        public StartListModel RunningRaceStartList
+        {
+            get => runningRaceStartList;
+            set => Set(ref runningRaceStartList, value);
+        }
+
+        public StartListMemberModel SelectedStartListMember { get; set; }
+        public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
 
         private RaceLogic raceLogic;
         private StartListLogic startListLogic;

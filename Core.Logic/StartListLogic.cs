@@ -27,7 +27,7 @@ namespace Hurace.Core.Logic
             return await Task.Run(() => {  
                 StartList = new StartListModel();
                 StartList.raceId = raceId;
-                StartList.StartListMembers = new Collection<StartListMemberModel>();
+                StartList.StartListMembers = new ObservableCollection<StartListMemberModel>();
 
                 IEnumerable<Skier> skiers = new AdoSkierDao(connectionFactory).FindAll();
 

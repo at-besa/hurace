@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RaceControl.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -13,19 +14,120 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        <ListBox ItemsSource="{Binding RunningRaceStartList.StartListMembers}" 
+			         SelectedItem="{Binding SelectedStartListMember}"
+			         BorderThickness="0"
+			         Grid.Row="0" 
+			         Grid.Column="0"
+			         Background="Gray"
+			         Foreground="White"
+			>
 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+						            Margin="0,6" >
+                        <TextBlock Text="{Binding Startposition}"
+                                   FontSize="14"
+                                   FontWeight="Bold" 
+                                   Margin="4,0,6,0"
+                                   />
+                        <TextBlock Text="{Binding Skier.FirstName}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Margin="0,0,4,0"
+                                   />
+                        <TextBlock Text="{Binding Skier.LastName}"
+                                   FontSize="14"
+							       FontWeight="Bold" 
+                                   Margin="0,0,4,0"
+                                   />
+                        <TextBlock Text="{Binding Skier.Sex}"
+                                   FontSize="14"
+                                   FontWeight="Bold" 
+                                   Margin="0,0,4,0"
+                                   />
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="ArrowUpward" />
+                        </Button>
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="ArrowDownward" />
+                        </Button>
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="Delete" />
+                        </Button>
+                    </StackPanel>
 
-        <ListView Grid.Column="0"
-                  Background="Gray"
-                  Foreground="White"
-                  ItemsSource="{Binding }"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <GridSplitter Grid.Column="1" Height="100" Width="5"/>
 
-        <ListView 
-                  Grid.Column="2"
-                  Background="Gray"
-                  Foreground="White"/>
+        <ListBox ItemsSource="{Binding PossibleSkiersNotInStartList}" 
+			         SelectedItem="{Binding SelectedPossibleSkierNotInStartList}"
+			         BorderThickness="0"
+			         Grid.Row="0" 
+			         Grid.Column="2"
+			         Background="Gray"
+			         Foreground="White"
+			>
 
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal"
+						            Margin="0,6" >
+                        <TextBlock Text="test"
+                                   FontSize="14"
+                                   FontWeight="Bold" 
+                                   Margin="4,0,6,0"
+                                   />
+                        <TextBlock Text="{Binding}"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Margin="0,0,4,0"
+                                   />
+                        <TextBlock Text="{Binding LastName}"
+                                   FontSize="14"
+							       FontWeight="Bold" 
+                                   Margin="0,0,4,0"
+                                   />
+                        <TextBlock Text="{Binding Sex}"
+                                   FontSize="14"
+                                   FontWeight="Bold" 
+                                   Margin="0,0,4,0"
+                                   />
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="ArrowUpward" />
+                        </Button>
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="ArrowDownward" />
+                        </Button>
+                        <Button
+                            Style="{StaticResource MaterialDesignIconButton}"
+                            ToolTip="MaterialDesignIconButton">
+                            <materialDesign:PackIcon
+                                Kind="Delete" />
+                        </Button>
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
