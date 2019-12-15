@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Hurace.Core.DAL.Domain;
+using Swack.UI.ViewModels;
 
 namespace RaceControl.ViewModels
 {
@@ -23,7 +25,7 @@ namespace RaceControl.ViewModels
         public StartListMemberModel SelectedStartListMember { get; set; }
         public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
 
-        private RaceLogic raceLogic;
+        private RaceManagementLogic raceManagementLogic;
         private StartListLogic startListLogic;
 
 
@@ -34,11 +36,11 @@ namespace RaceControl.ViewModels
 
         private async void init()
         {
-            raceLogic = new RaceLogic();
+            raceManagementLogic = new RaceManagementLogic();
             startListLogic = new StartListLogic();
             RunningRace = await GetRunningRace();
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
-            PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRace.Race.Sex, RunningRaceStartList.StartListMembers);
+            PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRace.Sex, RunningRaceStartList.StartListMembers);
         }
 
         private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(string sex, ICollection<StartListMemberModel> startListMembers)
@@ -53,19 +55,19 @@ namespace RaceControl.ViewModels
 
         private async Task<StartListModel> GetRunningRaceStartList(RaceModel runningRace)
         {
-            if (runningRace == null || runningRace.Race == null)
+            if (runningRace == null || runningRace == null)
             {
                 return null;
             }
-            StartListModel startListModel = await startListLogic.GetStartListForRaceId(runningRace.Race.Id);
+            StartListModel startListModel = await startListLogic.GetStartListForRaceId(runningRace.Id);
             return startListModel;
         }
 
         private async Task<RaceModel> GetRunningRace()
         {
-            var raceModels = await raceLogic.GetRaces();
+            var raceModels = await raceManagementLogic.GetRaces();
             var runningRaceModel = raceModels.
-                FirstOrDefault(raceModel => raceModel.Race.Status.Name.Equals("running"));
+                FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
 
             return runningRaceModel;
         }

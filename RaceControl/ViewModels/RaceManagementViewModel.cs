@@ -14,7 +14,7 @@ namespace RaceControl.ViewModels
 {
     public class RaceManagementViewModel 
     {
-	    private RaceLogic logic;
+	    private RaceManagementLogic managementLogic;
 	    private RaceViewModel selectedRaceViewModel;
 	    public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
 
@@ -57,7 +57,7 @@ namespace RaceControl.ViewModels
 		
 		public RaceManagementViewModel()
         {
-	        logic = new RaceLogic();
+	        managementLogic = new RaceManagementLogic();
 
             GetRaces();
             GetRaceTypes();
@@ -73,15 +73,15 @@ namespace RaceControl.ViewModels
 		{
 			if (SelectedRaceViewModel != null)
 			{
-				SelectedRaceType = selectedRaceViewModel.RaceModel.Race.Type.Type;
-				SelectedState = selectedRaceViewModel.RaceModel.Race.Status.Name;
+				SelectedRaceType = selectedRaceViewModel.RaceModel.Type.Type;
+				SelectedState = selectedRaceViewModel.RaceModel.Status.Name;
 			}
 
 		}
 
 		private async void GetRaces()
         {
-	        var raceModels = await logic.GetRaces();
+	        var raceModels = await managementLogic.GetRaces();
 
 	        foreach (var raceModel in raceModels)
 	        {
@@ -93,7 +93,7 @@ namespace RaceControl.ViewModels
 
         private async void GetRaceTypes()
         {
-	        var types = await logic.GetRaceTypes();
+	        var types = await managementLogic.GetRaceTypes();
 	        foreach (var type in types)
 	        {
 		        RaceTypes.Add(type);
@@ -102,7 +102,7 @@ namespace RaceControl.ViewModels
 
         private async void GetRaceStates()
         {
-	        var states = await logic.GetRaceStates();
+	        var states = await managementLogic.GetRaceStates();
 	        foreach (var state in states)
 	        {
 		        RaceStates.Add(state);
@@ -111,22 +111,22 @@ namespace RaceControl.ViewModels
         
         private async void SaveRace(object sender, EventArgs eventArgs)
         {
-	        SelectedRaceViewModel.RaceModel.Race.Type.Type = SelectedRaceType;
-	        SelectedRaceViewModel.RaceModel.Race.Status.Name = SelectedState;
+	        SelectedRaceViewModel.RaceModel.Type.Type = SelectedRaceType;
+	        SelectedRaceViewModel.RaceModel.Status.Name = SelectedState;
 	        if (SelectedRaceViewModel.NewRace)
 	        {
-		        await logic.CreateRace(SelectedRaceViewModel.RaceModel);
+		        await managementLogic.CreateRace(SelectedRaceViewModel.RaceModel);
 	        }
 	        else
 	        {
-				await logic.SaveRace(SelectedRaceViewModel.RaceModel);
+				await managementLogic.SaveRace(SelectedRaceViewModel.RaceModel);
 			}
             
         }
         
         private async void DeleteRace(object sender, EventArgs e)
         {
-	        await logic.DeleteRace(SelectedRaceViewModel.RaceModel.Race.Id);
+	        await managementLogic.DeleteRace(SelectedRaceViewModel.RaceModel.Id);
 	        RaceViewModels.Remove(SelectedRaceViewModel);
 	        SelectedRaceViewModel = RaceViewModels[0];
         }
@@ -134,8 +134,7 @@ namespace RaceControl.ViewModels
         private void CreateNewRace(object sender, EventArgs e)
         {
 	        SelectedRaceViewModel = new RaceViewModel(
-		        new RaceModel{
-			        Race = new Race{
+		        new RaceModel(new Race{
 	                    Type = new RaceType(),
 	                    Status = new Status(),
 	                    Name = "New Race",
@@ -143,8 +142,7 @@ namespace RaceControl.ViewModels
 	                    Location = "",
 	                    Sex = "m",
 	                    Splittimes = 1,
-	                }
-		        },
+		        }),
 		        true
 		        );
             RaceViewModels.Add(SelectedRaceViewModel);

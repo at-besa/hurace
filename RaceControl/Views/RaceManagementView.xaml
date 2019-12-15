@@ -33,7 +33,7 @@
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal"
 						            Margin="0,6" >
-							<TextBlock Text="{Binding RaceModel.Race.Name}"
+							<TextBlock Text="{Binding RaceModel.Name}"
 							           FontSize="14"
 							           FontWeight="Bold" />
 							<Image Source="{Binding Image}" Margin="2,0,0,10" Height="12" Width="22" VerticalAlignment="Center" />
@@ -57,19 +57,19 @@
 				</StackPanel>
 			</Button>
 		    <TextBlock Text="Name"></TextBlock>
-		    <TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Name}" Margin="4"></TextBox>
+		    <TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Name}" Margin="4"></TextBox>
 			<TextBlock Text="Type"></TextBlock>
 			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceType}" Margin="4"></ComboBox>
 		    <TextBlock Text="Gender Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Sex}" Margin="4"></ComboBox>
+			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
-			<DatePicker SelectedDate="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></DatePicker>
+			<DatePicker SelectedDate="{Binding SelectedRaceViewModel.RaceModel.Date, Mode=TwoWay}" Margin="4"></DatePicker>
 			<TextBlock Text="Time"></TextBlock>
-			<materialDesign:TimePicker SelectedTime="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></materialDesign:TimePicker>
+			<materialDesign:TimePicker SelectedTime="{Binding SelectedRaceViewModel.RaceModel.Date, Mode=TwoWay}" Margin="4"></materialDesign:TimePicker>
 			<TextBlock Text="Location"></TextBlock>
-			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Location}" Margin="4"></TextBox>
+			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Location}" Margin="4"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
-			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></TextBox>
+			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Splittimes}" Margin="4"></TextBox>
 
 			<StackPanel Orientation="Horizontal" Margin="25,10" HorizontalAlignment="Center">
 				<ComboBox ItemsSource="{Binding RaceStates}" SelectedItem="{Binding SelectedState}">

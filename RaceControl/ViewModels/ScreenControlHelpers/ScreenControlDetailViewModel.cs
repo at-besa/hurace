@@ -1,12 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿using RaceControl.Helpers;
 //using RaceControl.Core.Models;
 //using RaceControl.Core.Services;
-using RaceControl.Helpers;
 
-namespace RaceControl.ViewModels
+namespace RaceControl.ViewModels.ScreenControlHelpers
 {
     public class ScreenControlDetailViewModel : Observable
     {

@@ -11,7 +11,9 @@ namespace Hurace.Core.Logic.Model
     public class RaceControlModel : IComparable<RaceControlModel>
     {
         public Race Race { get; set; }
-
+        public SkierModel SkierModel { get; set; }
+        
+        
         public int CompareTo(RaceControlModel other) {
             if (ReferenceEquals(this, other)) return 0;
             if (ReferenceEquals(null, other)) return 1;
