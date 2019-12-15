@@ -21,7 +21,7 @@
 			         Grid.Column="0"
 			         Background="Gray"
 			         Foreground="White"
-			>
+        >
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -86,16 +86,11 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal"
 						            Margin="0,6" >
-                        <TextBlock Text="test"
-                                   FontSize="14"
-                                   FontWeight="Bold" 
-                                   Margin="4,0,6,0"
-                                   />
-                        <TextBlock Text="{Binding}"
+                        <TextBlock Text="{Binding FirstName}"
                                    FontSize="14"
                                    FontWeight="Bold"
                                    Margin="0,0,4,0"
-                                   />
+                        />
                         <TextBlock Text="{Binding LastName}"
                                    FontSize="14"
 							       FontWeight="Bold" 
@@ -110,19 +105,7 @@
                             Style="{StaticResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon
-                                Kind="ArrowUpward" />
-                        </Button>
-                        <Button
-                            Style="{StaticResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="ArrowDownward" />
-                        </Button>
-                        <Button
-                            Style="{StaticResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="Delete" />
+                                Kind="Plus" />
                         </Button>
                     </StackPanel>
 

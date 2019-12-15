@@ -1,5 +1,6 @@
 ﻿using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
+using Swack.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,10 +30,10 @@ namespace RaceControl.ViewModels
 
         public StartListViewModel()
 	    {
-            init();
+            Init();
         }
 
-        private async void init()
+        private async void Init()
         {
             raceLogic = new RaceLogic();
             startListLogic = new StartListLogic();
