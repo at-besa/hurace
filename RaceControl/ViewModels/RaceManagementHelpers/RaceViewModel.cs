@@ -15,7 +15,7 @@ namespace RaceControl.ViewModels.RaceManagementHelpers
             RaceModel = raceModelModel;
             NewRace = newRace;
 
-            if (RaceModel.Race.Sex == "m")
+            if (RaceModel.Sex == "m")
             {
                 Image = "/Images/mars.png";
             }

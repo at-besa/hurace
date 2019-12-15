@@ -10,7 +10,7 @@ using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic
 {
-	public class RaceLogic : IRaceLogic
+	public class RaceManagementLogic : IRaceLogic
 	{
 		private IConnectionFactory connectionFactory;
 		private ICollection<RaceModel> Races { get; set; }
@@ -18,7 +18,7 @@ namespace Hurace.Core.Logic
 		private ICollection<string> RaceStates { get; set; }
 
 
-		public RaceLogic()
+		public RaceManagementLogic()
 		{
 			var configuration = ConfigurationUtil.GetConfiguration();
 			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
@@ -32,10 +32,7 @@ namespace Hurace.Core.Logic
 				var racecollection = new AdoRaceDao(connectionFactory).FindAll();
 				foreach (var race in racecollection)
 				{
-					Races.Add(new RaceModel
-					{
-						Race = race
-					});
+					Races.Add(new RaceModel(race));
 				}
 
 				return Races;
@@ -57,10 +54,10 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				race.Race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Race.Type.Type);
-				race.Race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Race.Status.Name);
+				race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
+				race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
 
-				var saved = new AdoRaceDao(connectionFactory).Update(race.Race);
+				var saved= new AdoRaceDao(connectionFactory).Update(race.ToRace());
 
 				return saved;
 			});
@@ -70,11 +67,11 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				race.Race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Race.Type.Type);
-				race.Race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Race.Status.Name);
+				race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
+				race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
 
-				var created = new AdoRaceDao(connectionFactory).Insert(race.Race);
-				race.Race.Id = created;
+				var created = new AdoRaceDao(connectionFactory).Insert(race.ToRace());
+				race.Id = created;
 				return created > 0;
 			});
 		}

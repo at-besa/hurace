@@ -9,11 +9,11 @@ namespace RaceControl.ViewModels
     public class RaceControlViewModel
     {
         public ObservableCollection<RaceModel> Source { get; } = new ObservableCollection<RaceModel>();
-        private RaceLogic raceLogic;
+        private RaceManagementLogic raceManagementLogic;
         
         public RaceControlViewModel()
         {
-            raceLogic = new RaceLogic();
+            raceManagementLogic = new RaceManagementLogic();
         }
 
         public async Task LoadDataAsync()
@@ -21,7 +21,7 @@ namespace RaceControl.ViewModels
             Source.Clear();
 
             // TODO WTS: Replace this with your actual data
-            var data = await raceLogic.GetRaces();
+            var data = await raceManagementLogic.GetRaces();
 
             foreach (var item in data)
             {
