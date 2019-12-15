@@ -16,5 +16,6 @@ namespace Swack.UI.ViewModels
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-    }
+
+	}
 }

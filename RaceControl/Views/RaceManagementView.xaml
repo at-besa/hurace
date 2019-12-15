@@ -16,34 +16,39 @@
 	    <Grid Grid.Column="0">
 		    <Grid.RowDefinitions>
 			    <RowDefinition Height="*"/>
-			    <RowDefinition Height="Auto"/>
-		    </Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<ListBox ItemsSource="{Binding RaceViewModels}" 
+			         SelectedItem="{Binding SelectedRaceViewModel}"
+			         BorderThickness="0"
+			         Grid.Row="0" 
+			         Grid.Column="0"
+			         Background="Gray"
+			         Foreground="White"
+			>
+
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal"
+						            Margin="0,6" >
+							<TextBlock Text="{Binding RaceModel.Race.Name}"
+							           FontSize="14"
+							           FontWeight="Bold" />
+							<Image Source="{Binding Image}" Margin="2,0,0,10" Height="12" Width="22" VerticalAlignment="Center" />
+						</StackPanel>
+
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+
+			<Button Grid.Column="0" Grid.Row="1" Command="{Binding CreateNewRaceCommand}" Height="35" Margin="1">
+				<TextBlock Text="Create New Race" />
+			</Button>
+
 	    </Grid>
 
-	    <ListBox ItemsSource="{Binding RaceViewModels}" 
-	             SelectedItem="{Binding SelectedRaceViewModel}"
-	             BorderThickness="0"
-	             Grid.Row="0" 
-	             Grid.Column="0"
-	             Background="Gray"
-				 Foreground="White"
-	             >
-
-		    <ListBox.ItemTemplate>
-			    <DataTemplate>
-				    <StackPanel Orientation="Horizontal"
-				                Margin="0,6" >
-					    <TextBlock Text="{Binding RaceModel.Race.Name}"
-					               FontSize="14"
-					               FontWeight="Bold" />
-					    <Image Source="{Binding Image}" Margin="2,0,0,10" Height="12" Width="22" VerticalAlignment="Center" />
-				    </StackPanel>
-
-			    </DataTemplate>
-		    </ListBox.ItemTemplate>
-	    </ListBox>
-
-	    <StackPanel Grid.Column="1" Margin="5">
+		<StackPanel Grid.Column="1" Margin="5">
 		    <Button Command="{Binding DeleteCommand}" HorizontalAlignment="Right" Margin="0,0">
 				<StackPanel Orientation="Horizontal">
 					<Image Source="/Images/close.png" Height="15" Margin="2"></Image>
@@ -53,7 +58,7 @@
 		    <TextBlock Text="Name"></TextBlock>
 		    <TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Name}" Margin="4"></TextBox>
 			<TextBlock Text="Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Type.Type}" Margin="4"></ComboBox>
+			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceType}" Margin="4"></ComboBox>
 		    <TextBlock Text="Gender Type"></TextBlock>
 			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
@@ -64,10 +69,18 @@
 			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></wpftk:IntegerUpDown>
 
 			<StackPanel Orientation="Horizontal" Margin="25,10" HorizontalAlignment="Center">
-				<ComboBox ItemsSource="{Binding RaceStates}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Status.Name}"></ComboBox>
+				<ComboBox ItemsSource="{Binding RaceStates}" SelectedItem="{Binding SelectedState}">
+					<!--<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<TextBox Text="{Binding RaceStates.Name}"></TextBox>
+							</StackPanel>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>-->
+				</ComboBox>
 
 			    <Button Command="{Binding SaveCommand}" Margin="25,0">
-				    <TextBlock Text="Save RaceModel" Margin="2"></TextBlock>
+				    <TextBlock Text="Save Race" Margin="2"></TextBlock>
 			    </Button>
 		    </StackPanel>
 	    </StackPanel>

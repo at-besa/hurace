@@ -14,8 +14,8 @@ namespace Hurace.Core.Logic
 	{
 		private IConnectionFactory connectionFactory;
 		private ICollection<RaceModel> Races { get; set; }
-		private IEnumerable<RaceType> RaceTypes { get; set; }
-		private IEnumerable<Status> RaceStates { get; set; }
+		private ICollection<string> RaceTypes { get; set; } 
+		private ICollection<string> RaceStates { get; set; }
 
 
 		public RaceLogic()
@@ -57,14 +57,25 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				var status = race.Race.Status;
-				var type = race.Race.Type;
-				
-				race.Race.Status = RaceStates.First(s => s.Name == status.Name);
-				race.Race.Type = RaceTypes.First(t => t.Type == type.Type);
+				race.Race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Race.Type.Type);
+				race.Race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Race.Status.Name);
+
 				var saved = new AdoRaceDao(connectionFactory).Update(race.Race);
 
 				return saved;
+			});
+		}
+		
+		public async Task<bool> CreateRace(RaceModel race)
+		{
+			return await Task.Run(() =>
+			{
+				race.Race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Race.Type.Type);
+				race.Race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Race.Status.Name);
+
+				var created = new AdoRaceDao(connectionFactory).Insert(race.Race);
+				race.Race.Id = created;
+				return created > 0;
 			});
 		}
 
@@ -72,14 +83,14 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				RaceTypes = new AdoRaceTypeDao(connectionFactory).FindAll();
-				var racetypes = new Collection<string>();
-				foreach (var racetype in RaceTypes)
+				var raceTypes = new AdoRaceTypeDao(connectionFactory).FindAll();
+				RaceTypes = new Collection<string>();
+				foreach (var raceType in raceTypes)
 				{
-					racetypes.Add(racetype.Type);
+					RaceTypes.Add(raceType.Type);
 				}
 
-				return racetypes;
+				return RaceTypes;
 			});
 		}
 
@@ -87,14 +98,13 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				RaceStates = new AdoStatusDao(connectionFactory).FindAll();
-				var racestates = new Collection<string>();
-				foreach (var state in RaceStates)
+				var raceStates = new AdoStatusDao(connectionFactory).FindAll();
+				RaceStates = new Collection<string>();
+				foreach (var raceState in raceStates)
 				{
-					racestates.Add(state.Name);
+					RaceStates.Add(raceState.Name);
 				}
-
-				return racestates;
+				return RaceStates;
 			});
 		}
 	}

@@ -8,10 +8,13 @@ namespace RaceControl.ViewModels
     {
         public RaceModel RaceModel { get; set; }
         public string Image { get; set; }
+        public bool NewRace { get; set; } = false;
 
-        public RaceViewModel(RaceModel raceModelModel)
+
+        public RaceViewModel(RaceModel raceModelModel, bool newRace = false)
         {
             RaceModel = raceModelModel;
+            NewRace = newRace;
 
             if (RaceModel.Race.Sex == "m")
             {

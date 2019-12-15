@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic.Interface
@@ -9,5 +10,6 @@ namespace Hurace.Core.Logic.Interface
     {
         Task<ICollection<RaceModel>> GetRaces();
         Task<ICollection<string>> GetRaceTypes();
+        Task<ICollection<string>> GetRaceStates();
     }
 }
