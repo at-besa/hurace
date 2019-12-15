@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RaceControl.Views"
              xmlns:wpftk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+	<Grid Background="DarkGray">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="300"></ColumnDefinition>
 			<ColumnDefinition Width="*"></ColumnDefinition>
@@ -62,11 +63,13 @@
 		    <TextBlock Text="Gender Type"></TextBlock>
 			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Race.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
-			<wpftk:DateTimePicker Value="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></wpftk:DateTimePicker>
-		    <TextBlock Text="Location"></TextBlock>
+			<DatePicker SelectedDate="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></DatePicker>
+			<TextBlock Text="Time"></TextBlock>
+			<materialDesign:TimePicker SelectedTime="{Binding SelectedRaceViewModel.RaceModel.Race.Date, Mode=TwoWay}" Margin="4"></materialDesign:TimePicker>
+			<TextBlock Text="Location"></TextBlock>
 			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Location}" Margin="4"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
-			<wpftk:IntegerUpDown Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></wpftk:IntegerUpDown>
+			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Race.Splittimes}" Margin="4"></TextBox>
 
 			<StackPanel Orientation="Horizontal" Margin="25,10" HorizontalAlignment="Center">
 				<ComboBox ItemsSource="{Binding RaceStates}" SelectedItem="{Binding SelectedState}">

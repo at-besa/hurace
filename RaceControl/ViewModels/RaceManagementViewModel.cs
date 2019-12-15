@@ -8,6 +8,7 @@ using CoSimulationPlcSimAdv.Commands;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
+using RaceControl.ViewModels.RaceManagementHelpers;
 
 namespace RaceControl.ViewModels
 {
@@ -44,9 +45,9 @@ namespace RaceControl.ViewModels
 		    }
 	    }
 
-		public ObservableCollection<string> RaceTypes { get; set; } = new ObservableCollection<string>();
+		public ICollection<string> RaceTypes { get; set; } = new List<string>();
 		public string SelectedRaceType { get; set; } = "";
-		public ObservableCollection<string> RaceStates { get; set; } = new ObservableCollection<string>();
+		public ICollection<string> RaceStates { get; set; } = new List<string>();
 		public string SelectedState { get; set; } = "";
         public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
 
@@ -70,7 +71,6 @@ namespace RaceControl.ViewModels
 
 		private void OnSelectedItemChanged()
 		{
-			Console.WriteLine("iwas here");
 			if (SelectedRaceViewModel != null)
 			{
 				SelectedRaceType = selectedRaceViewModel.RaceModel.Race.Type.Type;
