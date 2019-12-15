@@ -18,6 +18,8 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.7.0">
       <NoWarn>true</NoWarn>
     </PackageReference>
+    <PackageReference Include="MaterialDesignColors" Version="1.2.1" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
