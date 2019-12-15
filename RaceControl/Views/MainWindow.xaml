@@ -29,10 +29,10 @@
 		</Grid.RowDefinitions>
 
 		<StackPanel Grid.Row="0" Orientation="Horizontal" Background="DimGray">
-			<Button Content="Race Management" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="180" Click="RaceManagement_Clicked" ></Button>
-			<Button Content="Start List" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="StartListButton_Clicked"></Button>
-			<Button Content="Race Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="RaceControlButton_Clicked"></Button>
-			<Button Content="Screen Control" Background="DimGray" Foreground="Aqua" BorderThickness="1" FontSize="18" FontWeight="Bold" Width="150" Click="ScreenControlButton_Clicked"></Button>
+			<Button Content="Race Management" FontSize="18" FontWeight="Bold"  Margin="5,0"  Click="RaceManagement_Clicked" ></Button>
+			<Button Content="Start List" FontSize="18" FontWeight="Bold" Margin="5,0" Click="StartListButton_Clicked"></Button>
+			<Button Content="Race Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="RaceControlButton_Clicked"></Button>
+			<Button Content="Screen Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="ScreenControlButton_Clicked"></Button>
 		</StackPanel> 
 
 		<ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
