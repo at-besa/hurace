@@ -65,4 +65,8 @@
       </Resource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\RaceControlHelpers\" />
+  </ItemGroup>
+
 </Project>

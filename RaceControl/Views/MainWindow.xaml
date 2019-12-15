@@ -17,6 +17,9 @@
 		<DataTemplate x:Name="ScreenControlTemplate" DataType="{x:Type viewmodels:ScreenControlViewModel}">
 			<views:ScreenControlView DataContext="{Binding}"></views:ScreenControlView>
 		</DataTemplate>
+		<DataTemplate x:Name="RaceControlTemplate" DataType="{x:Type viewmodels:RaceControlViewModel}">
+			<views:RaceControlView DataContext="{Binding}"></views:RaceControlView>
+		</DataTemplate>
 		<DataTemplate x:Name="StartListTemplate" DataType="{x:Type viewmodels:StartListViewModel}">
 			<views:StartListView DataContext="{Binding}"></views:StartListView>
 		</DataTemplate>
