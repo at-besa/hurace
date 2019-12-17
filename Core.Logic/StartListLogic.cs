@@ -13,10 +13,11 @@ namespace Hurace.Core.Logic
 {
     public class StartListLogic : IStartListLogic
     {
+        public static StartListLogic Instance = new StartListLogic();
         private IConnectionFactory connectionFactory;
         public StartListModel StartList { get; set; }
         
-        public StartListLogic()
+        private StartListLogic()
         {
             var configuration = ConfigurationUtil.GetConfiguration();
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
@@ -57,12 +58,12 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<Collection<SkierModel>> GetAllSkiersWithSameSex(string sex)
+        public async Task<ObservableCollection<SkierModel>> GetAllSkiersWithSameSex(string sex)
         {
             return await Task.Run(() => {
                 IEnumerable<Skier> allSkiers = new AdoSkierDao(connectionFactory).FindAll();
                 IEnumerable<Skier> allSkiersWithSameSex = allSkiers.Where(skier => skier.Sex == sex);
-                var allSkierModelsWithSameSex = new Collection<SkierModel>();
+                var allSkierModelsWithSameSex = new ObservableCollection<SkierModel>();
                 foreach (var skierWithSameSex in allSkiersWithSameSex)
                 {
                     allSkierModelsWithSameSex.Add(new SkierModel(skierWithSameSex));

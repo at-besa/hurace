@@ -9,11 +9,12 @@ using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
 using RaceControl.ViewModels.RaceManagementHelpers;
+using Swack.UI.ViewModels;
 
 namespace RaceControl.ViewModels
 {
-    public class RaceManagementViewModel 
-    {
+    public class RaceManagementViewModel : NotifyPropertyChanged
+	{
 	    private RaceManagementLogic managementLogic;
 	    private RaceViewModel selectedRaceViewModel;
 	    public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
@@ -23,18 +24,18 @@ namespace RaceControl.ViewModels
 		    get => selectedRaceViewModel;
 		    set
 		    {
-			    if (selectedRaceViewModel != value)
+			    Set(ref selectedRaceViewModel, value);
+				if (selectedRaceViewModel != null)
 				{
-					selectedRaceViewModel = value;
-					if (selectedRaceViewModel != null)
-					{
-						OnSelectedItemChanged();
-					}
+					OnSelectedItemChanged();
 				}
 		    }
 	    }
 
 	    private bool isSelected;
+	    private string selectedRaceType = "";
+	    private string selectedState = "";
+
 	    public bool IsSelected {
 		    get => isSelected;
 		    set {
@@ -46,10 +47,22 @@ namespace RaceControl.ViewModels
 	    }
 
 		public ICollection<string> RaceTypes { get; set; } = new List<string>();
-		public string SelectedRaceType { get; set; } = "";
+
+		public string SelectedRaceType
+		{
+			get => selectedRaceType;
+			set => Set(ref selectedRaceType, value);
+		}
+
 		public ICollection<string> RaceStates { get; set; } = new List<string>();
-		public string SelectedState { get; set; } = "";
-        public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
+
+		public string SelectedState
+		{
+			get => selectedState;
+			set => Set(ref selectedState, value);
+		}
+
+		public ICollection<string> Genders { get; set; } = new List<string>{"m", "f"};
 
         public CommandBase SaveCommand { get; set; }
         public CommandBase DeleteCommand { get; set; }

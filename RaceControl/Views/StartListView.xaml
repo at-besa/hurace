@@ -93,12 +93,12 @@
                                    FontWeight="Bold"
                                    Margin="0,0,4,0"
                         />
-                        <TextBlock Text="{Binding LastName}"
+						<TextBlock Text="{Binding LastName}"
                                    FontSize="14"
 							       FontWeight="Bold" 
                                    Margin="0,0,4,0"
                                    />
-                        <TextBlock Text="{Binding Sex}"
+						<TextBlock Text="{Binding Sex}"
                                    FontSize="14"
                                    FontWeight="Bold" 
                                    Margin="0,0,4,0"

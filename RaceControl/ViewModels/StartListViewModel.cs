@@ -15,9 +15,15 @@ namespace RaceControl.ViewModels
     public class StartListViewModel : NotifyPropertyChanged
     {
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
-        public ICollection<SkierModel> PossibleSkiersNotInStartList { get; set; } = new ObservableCollection<SkierModel>();
 
-        private StartListModel runningRaceStartList;
+	    private ICollection<SkierModel> possibleSkiersNotInStartList;
+        public ICollection<SkierModel> PossibleSkiersNotInStartList
+	    {
+		    get => possibleSkiersNotInStartList;
+		    set => Set(ref possibleSkiersNotInStartList ,value);
+	    }
+
+	    private StartListModel runningRaceStartList;
         public StartListModel RunningRaceStartList
         {
             get => runningRaceStartList;
@@ -27,7 +33,7 @@ namespace RaceControl.ViewModels
         public StartListMemberModel SelectedStartListMember { get; set; }
         public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
 
-        public CommandBase DeleteStartListMemberCommand { get; set; }          
+        public CommandBase DeleteStartListMemberCommand { get; set; }
 
         private RaceManagementLogic raceManagementLogic;
         private StartListLogic startListLogic;
@@ -47,20 +53,19 @@ namespace RaceControl.ViewModels
         private async void Init()
         {
             raceManagementLogic = new RaceManagementLogic();
-            startListLogic = new StartListLogic();
+            startListLogic = StartListLogic.Instance;
             RunningRace = await GetRunningRace();
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
-            PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRace.Sex, RunningRaceStartList.StartListMembers);
+            PossibleSkiersNotInStartList = await startListLogic.GetAllSkiersWithSameSex(RunningRace.Sex);
+            GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
         }
 
-        private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(string sex, ICollection<StartListMemberModel> startListMembers)
+        private void GetPossibleSkiersNotInStartList(ICollection<StartListMemberModel> startListMembers)
         {
-            var skiersWithSameSex = await startListLogic.GetAllSkiersWithSameSex(sex);
-            foreach (var startListMember in startListMembers)
+	        foreach (var startListMember in startListMembers)
             {
-                skiersWithSameSex.Remove(startListMember.Skier);
+	            PossibleSkiersNotInStartList.Remove(startListMember.Skier);
             }
-            return skiersWithSameSex;
         }
 
         private async Task<StartListModel> GetRunningRaceStartList(RaceModel runningRace)

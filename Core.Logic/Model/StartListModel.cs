@@ -6,7 +6,7 @@ using Hurace.Core.Logic.Annotations;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class StartListModel : IComparable<StartListModel>, INotifyPropertyChanged
+    public class StartListModel : IComparable<StartListModel>
     {
         public int raceId { get; set; }
 
@@ -18,12 +18,12 @@ namespace Hurace.Core.Logic.Model
             return raceId.CompareTo(other.raceId);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //[NotifyPropertyChangedInvocator]
+        //protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
     }
 }

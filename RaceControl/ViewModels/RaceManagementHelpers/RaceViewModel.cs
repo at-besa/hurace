@@ -3,7 +3,7 @@ using Swack.UI.ViewModels;
 
 namespace RaceControl.ViewModels.RaceManagementHelpers
 {
-    public class RaceViewModel : NotifyPropertyChanged
+    public class RaceViewModel
     {
         public RaceModel RaceModel { get; set; }
         public string Image { get; set; }
