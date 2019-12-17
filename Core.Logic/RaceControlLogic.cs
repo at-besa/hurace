@@ -12,10 +12,11 @@ namespace Hurace.Core.Logic
     public class RaceControlLogic : IRaceControlLogic
     {
         public static RaceControlLogic Instance { get; } = new RaceControlLogic();
+        private readonly StartListLogic startListLogic = StartListLogic.Instance;
+        private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
         public RaceControlModel RaceControlModel { get; private set; }
         
         private IConnectionFactory connectionFactory;
-        private StartListLogic startListLogic;
         
         
         private RaceControlLogic()
@@ -41,18 +42,6 @@ namespace Hurace.Core.Logic
                 return RaceControlModel;
             });
         }
-
-        public async Task<int> GetRaceIdOfRunningRace()
-        {
-            return await Task.Run(() =>
-            {
-                
-                
-                return 0;
-            });
-        }
         
-        
-
     }
 }

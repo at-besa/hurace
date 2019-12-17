@@ -12,13 +12,14 @@ namespace Hurace.Core.Logic
 {
 	public class RaceManagementLogic : IRaceLogic
 	{
-		private IConnectionFactory connectionFactory;
+		public static RaceManagementLogic Instance = new RaceManagementLogic();
+		private readonly IConnectionFactory connectionFactory;
 		private ICollection<RaceModel> Races { get; set; }
 		private ICollection<string> RaceTypes { get; set; } 
 		private ICollection<string> RaceStates { get; set; }
 
 
-		public RaceManagementLogic()
+		private RaceManagementLogic()
 		{
 			var configuration = ConfigurationUtil.GetConfiguration();
 			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
@@ -103,6 +104,14 @@ namespace Hurace.Core.Logic
 				}
 				return RaceStates;
 			});
+		}
+		
+		public async Task<RaceModel> GetRunningRace()
+		{
+			Races = await GetRaces();
+			var runningRaceModel = Races.FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
+
+			return runningRaceModel;
 		}
 	}
 }

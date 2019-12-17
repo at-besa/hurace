@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Security.Cryptography.Pkcs;
 using System.Windows;
 using System.Windows.Controls;
-using CoSimulationPlcSimAdv.Commands;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
+using RaceControl.Helpers;
 using RaceControl.ViewModels.RaceManagementHelpers;
 using Swack.UI.ViewModels;
 
@@ -15,7 +15,7 @@ namespace RaceControl.ViewModels
 {
     public class RaceManagementViewModel : NotifyPropertyChanged
 	{
-	    private RaceManagementLogic managementLogic;
+	    private readonly RaceManagementLogic managementLogic = RaceManagementLogic.Instance;
 	    private RaceViewModel selectedRaceViewModel;
 	    public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
 
@@ -38,12 +38,7 @@ namespace RaceControl.ViewModels
 
 	    public bool IsSelected {
 		    get => isSelected;
-		    set {
-			    if (isSelected != value)
-			    {
-				    isSelected = value;
-			    }
-		    }
+		    set => Set(ref isSelected, value);
 	    }
 
 		public ICollection<string> RaceTypes { get; set; } = new List<string>();
@@ -70,9 +65,7 @@ namespace RaceControl.ViewModels
 		
 		public RaceManagementViewModel()
         {
-	        managementLogic = new RaceManagementLogic();
-
-            GetRaces();
+	        GetRaces();
             GetRaceTypes();
             GetRaceStates();
             

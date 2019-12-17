@@ -1,7 +1,7 @@
-﻿﻿using System;
+﻿using System;
 using System.Windows.Input;
 
-namespace CoSimulationPlcSimAdv.Commands {
+namespace RaceControl.Helpers {
     
     public class CommandBase : ICommand {
         

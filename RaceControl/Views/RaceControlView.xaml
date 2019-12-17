@@ -32,7 +32,7 @@
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 
-				<ListBox ItemsSource="{Binding SkierModels}" 
+				<ListBox ItemsSource="{Binding RaceControlModel.StartListModel.StartListMembers}" 
 				         SelectedItem="{Binding SelectedSkierViewModel}"
 				         BorderThickness="0"
 				         Grid.Row="0" 
@@ -44,10 +44,11 @@
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal" Margin="0,6" >
-								<TextBlock Text="{Binding Skier.StartPos}" Width="35"/>
-								<Image Source="{Binding Skier.Image}" Margin="2" Height="50" Width="50" VerticalAlignment="Stretch" />
+								<TextBlock Text="{Binding Startposition}" Width="35"/>
+								<Image Source="{Binding Skier.ProfileImage}" Margin="2" Height="55" Width="55" VerticalAlignment="Stretch" />
 								<StackPanel Orientation="Vertical">
-									<TextBlock Text="{Binding Skier.Name}" FontSize="14" FontWeight="Bold" />
+									<TextBlock Text="{Binding Skier.FirstName}" FontSize="14" FontWeight="Bold" />
+									<TextBlock Text="{Binding Skier.LastName}" FontSize="14" FontWeight="Bold" />
 									<TextBlock Text="{Binding Skier.Nation}" />
 								</StackPanel>
 								<TextBlock Text="{Binding Skier.Race.State}" FontSize="10" HorizontalAlignment="Right"/>

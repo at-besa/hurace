@@ -31,6 +31,9 @@ namespace Hurace.Core.DAL.Ado
                 RaceId = Convert.ToInt32(row["raceId"]),
                 SkierId = Convert.ToInt32(row["skierId"]),
                 Disqualified = Convert.ToBoolean(row["disqualified"]),
+                Running = Convert.ToBoolean(row["running"]),
+                Blocked = Convert.ToBoolean(row["blocked"]),
+                Finished = Convert.ToBoolean(row["finished"]),
                 Splittime = runs
             };
         }
@@ -38,21 +41,27 @@ namespace Hurace.Core.DAL.Ado
         public bool Update(RaceData raceData)
         {
             return template.Execute(
-                       @"update RaceData set id=@id, raceId=@rid, skierId=@skid, disqualified=@dis where id=@id",
+                       @"update RaceData set id=@id, raceId=@rid, skierId=@skid, disqualified=@dis, running=@running, blocked=@blocked, finished=@finished where id=@id",
                        new QueryParameter("@id", raceData.Id),
                        new QueryParameter("@rid", raceData.RaceId),
                        new QueryParameter("@skid", raceData.SkierId),
-                       new QueryParameter("@dis", raceData.Disqualified)) >= 0;
+                       new QueryParameter("@dis", raceData.Disqualified),
+                       new QueryParameter("@running", raceData.Running),
+                       new QueryParameter("@blocked", raceData.Blocked),
+                       new QueryParameter("@finished", raceData.Finished)) >= 0;
         }
 
         public int Insert(RaceData raceData)
         {
             return template.Execute(
-                       @"insert into RaceData(id, raceId, skierId, disqualified) values (null, @rid, @skid, @dis); SELECT last_insert_rowid();",
+                       @"insert into RaceData(id, raceId, skierId, disqualified, running, blocked, finished) values (null, @rid, @skid, @dis, @running, @blocked, @finished); SELECT last_insert_rowid();",
                        new QueryParameter("@id", raceData.Id),
                        new QueryParameter("@rid", raceData.RaceId),
                        new QueryParameter("@skid", raceData.SkierId),
-                       new QueryParameter("@dis", raceData.Disqualified));
+                       new QueryParameter("@dis", raceData.Disqualified),
+                       new QueryParameter("@running", raceData.Running),
+                       new QueryParameter("@blocked", raceData.Blocked),
+                       new QueryParameter("@finished", raceData.Finished));
         }
 
         public bool Delete(RaceData raceData)

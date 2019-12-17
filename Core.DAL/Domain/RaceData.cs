@@ -12,6 +12,9 @@ namespace Hurace.Core.DAL.Domain
         public int RaceId { get; set; }
         public int SkierId { get; set; }
         public bool Disqualified { get; set; }
+        public bool Running { get; set; }
+        public bool Blocked { get; set; }
+        public bool Finished { get; set; }
         public IEnumerable<Splittime>[] Splittime { get; set; }
 
         public override string ToString() =>
@@ -26,7 +29,13 @@ namespace Hurace.Core.DAL.Domain
             if (raceIdComparison != 0) return raceIdComparison;
             var skierIdComparison = SkierId.CompareTo(other.SkierId);
             if (skierIdComparison != 0) return skierIdComparison;
-            return Disqualified.CompareTo(other.Disqualified);
+            var disqualifiedComparison = Disqualified.CompareTo(other.Disqualified);
+            if (disqualifiedComparison != 0) return disqualifiedComparison;
+            var runningComparison = Running.CompareTo(other.Running);
+            if (runningComparison != 0) return runningComparison;
+            var blockedComparison = Blocked.CompareTo(other.Blocked);
+            if (blockedComparison != 0) return blockedComparison;
+            return Finished.CompareTo(other.Finished);
         }
     }
 }

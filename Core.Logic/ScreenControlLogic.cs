@@ -10,10 +10,11 @@ namespace Hurace.Core.Logic
 {
     public class ScreenControlLogic : IScreenControl
     {
+        public static ScreenControlLogic Instance = new ScreenControlLogic();
         private IConnectionFactory connectionFactory;
         public ICollection<ScreenControlModel> ScreenControls { get; set; }
         
-        public ScreenControlLogic()
+        private ScreenControlLogic()
         {
             var configuration = ConfigurationUtil.GetConfiguration();
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");

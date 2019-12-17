@@ -25,6 +25,7 @@ namespace Hurace.Core.DAL.Ado
                 LastName = Convert.ToString(row["lastname"]),
                 DateOfBirth = Convert.ToDateTime(row["dateofbirth"]),
                 Nation = Convert.ToString(row["nation"]),
+                ProfileImage = Convert.ToString(row["profileimage"]),
                 Sex = Convert.ToString(row["sex"])
             };
         }

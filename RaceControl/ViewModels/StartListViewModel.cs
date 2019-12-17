@@ -1,19 +1,18 @@
-﻿using Hurace.Core.Logic;
-using Hurace.Core.Logic.Model;
-using Swack.UI.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using CoSimulationPlcSimAdv.Commands;
-using Hurace.Core.DAL.Domain;
+using Hurace.Core.Logic;
+using Hurace.Core.Logic.Model;
+using RaceControl.Helpers;
 using Swack.UI.ViewModels;
 
 namespace RaceControl.ViewModels
 {
     public class StartListViewModel : NotifyPropertyChanged
     {
+        private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
+        private readonly StartListLogic startListLogic = StartListLogic.Instance;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
 	    private ICollection<SkierModel> possibleSkiersNotInStartList;
@@ -35,8 +34,6 @@ namespace RaceControl.ViewModels
 
         public CommandBase DeleteStartListMemberCommand { get; set; }
 
-        private RaceManagementLogic raceManagementLogic;
-        private StartListLogic startListLogic;
 
 
         public StartListViewModel()
@@ -52,8 +49,6 @@ namespace RaceControl.ViewModels
 
         private async void Init()
         {
-            raceManagementLogic = new RaceManagementLogic();
-            startListLogic = StartListLogic.Instance;
             RunningRace = await GetRunningRace();
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
             PossibleSkiersNotInStartList = await startListLogic.GetAllSkiersWithSameSex(RunningRace.Sex);
