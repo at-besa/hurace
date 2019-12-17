@@ -11,50 +11,48 @@ namespace Hurace.Core.Logic
 {
     public class RaceControlLogic : IRaceControlLogic
     {
-        private IConnectionFactory connectionFactory;
-        public RaceControlModel RaceControl { get; private set; }
+        public static RaceControlLogic Instance { get; } = new RaceControlLogic();
+        public RaceControlModel RaceControlModel { get; private set; }
         
-        public RaceControlLogic()
+        private IConnectionFactory connectionFactory;
+        private StartListLogic startListLogic;
+        
+        
+        private RaceControlLogic()
         {
             var configuration = ConfigurationUtil.GetConfiguration();
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+            
         }
         
         public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId)
         {
-            return await Task.Run(() =>
+            return await Task.Run(async () =>
             {
-                RaceControl = new RaceControlModel
+                var race = new AdoRaceDao(connectionFactory).FindById(raceId);
+                var startlistmodel = await startListLogic.GetStartListForRaceId(raceId);
+                
+                RaceControlModel = new RaceControlModel
                 {
-                    Race = new AdoRaceDao(connectionFactory).FindById(raceId)
+                    RaceModel = new RaceModel(race),
+                    StartListModel = startlistmodel
                 };
 
-                return RaceControl;
+                return RaceControlModel;
             });
         }
-        
-        public async Task<bool> DeleteRace(int raceId)
-        {
-            return await Task.Run(() =>
-            {
-                var deleted = new AdoRaceDao(connectionFactory).Delete(raceId);
 
-                return deleted;
-            });
-        }
-        
-        public async Task<bool> SetRaceStatus(int raceId, int statusId)
+        public async Task<int> GetRaceIdOfRunningRace()
         {
             return await Task.Run(() =>
             {
-                var race = RaceControl.Race;
-                race.Status = new AdoStatusDao(connectionFactory).FindById(statusId);
                 
-                var done = new AdoRaceDao(connectionFactory).Update(race);
-
-                return done;
+                
+                return 0;
             });
         }
+        
+        
 
     }
 }
