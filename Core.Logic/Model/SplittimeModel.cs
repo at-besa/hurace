@@ -10,7 +10,8 @@ namespace Hurace.Core.Logic.Model
         public int RunNo { get; set; }
         public int SplittimeNo { get; set; }
         public DateTime Time { get; set; }
-        
+        public TimeSpan TimeOffsetToWinner { get; set; }
+
         public override string ToString() =>
             $"Splittime(RaceDataId:{RaceDataId}, RunNo:{RunNo}, SplittimeNo:{SplittimeNo}, Time:{Time})";
 

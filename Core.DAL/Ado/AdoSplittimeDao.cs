@@ -32,13 +32,12 @@ namespace Hurace.Core.DAL.Ado
             return template.Query("select * from Splittime", MapRowToSplittime);
         }
 
-        public IEnumerable<Splittime> FindByRaceRun(int raceDataId, int runNo)
+        public IEnumerable<Splittime> FindByRaceDataId(int raceDataId)
         {
             return template.Query(
-                @"select * from Splittime where racedataId=@raceDataId and runNo=@runNo",
+                @"select * from Splittime where racedataId=@raceDataId",
                 MapRowToSplittime,
-                new QueryParameter("@raceDataId", raceDataId),
-                new QueryParameter("@runNo", runNo));
+                new QueryParameter("@raceDataId", raceDataId));
         }
 
         public Splittime FindByIds(int raceDataId, int runNo, int splittimeNo)

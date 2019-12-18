@@ -17,7 +17,7 @@ namespace RaceControl.ViewModels
 	{
 	    private readonly RaceManagementLogic managementLogic = RaceManagementLogic.Instance;
 	    private RaceViewModel selectedRaceViewModel;
-	    public ObservableCollection<RaceViewModel> RaceViewModels { get; set; } = new ObservableCollection<RaceViewModel>();
+	    public ObservableCollection<RaceViewModel> RaceViewModels { get; } = new ObservableCollection<RaceViewModel>();
 
 	    public RaceViewModel SelectedRaceViewModel
 	    {

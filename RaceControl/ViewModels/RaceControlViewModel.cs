@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
@@ -13,17 +15,20 @@ namespace RaceControl.ViewModels
     {
         private readonly RaceControlLogic raceControlLogic = RaceControlLogic.Instance;
         private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
-        public ObservableCollection<RaceModel> Source { get; } = new ObservableCollection<RaceModel>();
 
-        private StartListMemberModel selectedSkierViewModel;
-        public StartListMemberModel SelectedSkierViewModel
+        private ICollection<SplittimeModel> actualSplittimes;
+        public ICollection<SplittimeModel> ActualSplittimes
         {
-	        get => selectedSkierViewModel;
-	        set => Set(ref selectedSkierViewModel, value);
+	        get => actualSplittimes;
+	        set => Set(ref actualSplittimes, value);
         }
 
-        public CommandBase StartRunCommand { get; set; }
-        public CommandBase ClearanceCommand { get; set; }
+        private ICollection<SplittimeModel> lastSplittimes;
+        public ICollection<SplittimeModel> LastSplittimes
+        {
+	        get => lastSplittimes;
+	        set => Set(ref lastSplittimes, value);
+        }
 
         private RaceControlModel raceControlModel;
         public RaceControlModel RaceControlModel
@@ -32,6 +37,26 @@ namespace RaceControl.ViewModels
 	        set => Set(ref raceControlModel, value);
         }
 
+        private StartListMemberModel selectedSkierViewModel;
+        public StartListMemberModel SelectedSkierViewModel {
+	        get => selectedSkierViewModel;
+	        set  {
+				Set(ref selectedSkierViewModel, value);
+				ShowSplittimesForActualSkier();
+	        }
+        }
+
+        private StartListMemberModel lastSkierViewModel;
+        public StartListMemberModel LastSkierViewModel {
+	        get => lastSkierViewModel;
+	        set {
+		        Set(ref lastSkierViewModel, value);
+	        }
+        }
+
+        public CommandBase StartRunCommand { get; set; }
+        public CommandBase ClearanceCommand { get; set; }
+
         public RaceControlViewModel()
         {
             Init();
@@ -39,15 +64,30 @@ namespace RaceControl.ViewModels
             ClearanceCommand = new CommandBase(Clearance);
         }
 
-        private void StartRun(object sender, EventArgs e)
+        private async void StartRun(object sender, EventArgs e)
         {
             if (SelectedSkierViewModel != null)
-	        {
-		        SelectedSkierViewModel.Blocked = false;
+            {
+                //SelectedSkierViewModel.Blocked = false;
+                await raceControlLogic.StartRun(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
             }
         }
-        private void Clearance(object sender, EventArgs e)
+
+        private async void ShowSplittimesForActualSkier()
         {
+            if(SelectedSkierViewModel != null)
+				ActualSplittimes = await raceControlLogic.GetSplittimesForSkier(SelectedSkierViewModel.Skier.Id, 1);
+        }
+
+        private async void Clearance(object sender, EventArgs e)
+        {
+	        LastSkierViewModel = SelectedSkierViewModel;
+            SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
+                model.Startposition == SelectedSkierViewModel.Startposition + 1);
+            
+            LastSplittimes = ActualSplittimes;
+            ShowSplittimesForActualSkier();
+
             if (SelectedSkierViewModel != null)
 	        {
 		        SelectedSkierViewModel.Finished = true;
@@ -63,7 +103,6 @@ namespace RaceControl.ViewModels
 
         private async Task LoadDataAsync()
         {
-            Source.Clear();
             var race = await raceManagementLogic.GetRunningRace();
             RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id);
         }

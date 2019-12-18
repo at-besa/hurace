@@ -43,8 +43,8 @@ namespace HuraceTest.Dal.Ado
 			//	Disqualified = false,
 			//	RaceId = new AdoRaceDao(connectionFactory).FindById(15),
 			//	Splittime = new []{
-			//		new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 1), 
-			//		new AdoSplittimeDao(connectionFactory).FindByRaceRun(45, 2)},
+			//		new AdoSplittimeDao(connectionFactory).FindByRaceDataId(45, 1), 
+			//		new AdoSplittimeDao(connectionFactory).FindByRaceDataId(45, 2)},
 			//	SkierId = 5
 			//};
 			//raceData.SkierId = 45;

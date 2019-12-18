@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.DAL.Interface;
@@ -22,7 +23,8 @@ namespace Hurace.Core.DAL.Ado
             IEnumerable<Splittime>[] runs = new IEnumerable<Splittime>[2];
             for (int i = 0; i <= 1; i++)
             {
-                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceRun(id, i + 1);
+                var i1 = i;
+                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceDataId(id).Where(splittime => splittime.RunNo == i1+1);
             }
 
             return new RaceData

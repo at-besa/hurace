@@ -8,7 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-	<Grid Background="DarkGray">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="300"></ColumnDefinition>
 			<ColumnDefinition Width="*"></ColumnDefinition>
@@ -25,8 +25,8 @@
 			         BorderThickness="0"
 			         Grid.Row="0" 
 			         Grid.Column="0"
-			         Background="Gray"
-			         Foreground="White"
+			         Background="{DynamicResource MaterialDesignCardBackground}"
+			         Foreground="{DynamicResource MaterialDesignDarkForeground}"
 			>
 
 				<ListBox.ItemTemplate>

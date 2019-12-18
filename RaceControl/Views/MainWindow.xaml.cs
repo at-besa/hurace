@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
+using RaceControl.Helpers;
 using RaceControl.ViewModels;
 
 namespace RaceControl
@@ -20,11 +22,12 @@ namespace RaceControl
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
-    {
+	{
 		public MainWindow()
 		{
 			InitializeComponent();
-        }
+			ApplyBase(true);
+		}
 
 		private void RaceManagement_Clicked(object sender, RoutedEventArgs e)
 		{
@@ -44,6 +47,21 @@ namespace RaceControl
 		private void StartListButton_Clicked(object sender, RoutedEventArgs e)
 		{
 			DataContext = new StartListViewModel();
+		}
+		
+		private static void ApplyBase(bool isDark)
+		{
+			ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
+		}
+
+		private static void ModifyTheme(Action<ITheme> modificationAction)
+		{
+			PaletteHelper paletteHelper = new PaletteHelper();
+			ITheme theme = paletteHelper.GetTheme();
+
+			modificationAction?.Invoke(theme);
+
+			paletteHelper.SetTheme(theme);
 		}
 	}
 }

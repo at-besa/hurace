@@ -14,8 +14,6 @@ namespace Hurace.Core.Logic.Model
         public SkierModel SkierModel { get; set; }
         public StartListModel StartListModel { get; set; }
 
-        public ICollection<SplittimeModel> ActualSplittimes;
-        public ICollection<SplittimeModel> LastSplittimes;
 
         public int CompareTo(RaceControlModel other)
         {

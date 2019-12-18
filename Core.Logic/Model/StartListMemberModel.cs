@@ -1,18 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Swack.UI.ViewModels;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class StartListMemberModel : IComparable<StartListMemberModel> 
+    public class StartListMemberModel : NotifyPropertyChanged, IComparable<StartListMemberModel>
     {
-        public SkierModel Skier { get; set; }
-        public int Startposition { get; set; }
-        
-        public bool Disqualified { get; set; }
-        public bool Running { get; set; }
-        public bool Blocked { get; set; }
-        public bool Finished { get; set; }
+        private bool blocked;
+        private bool running;
+        private bool disqualified;
+        private int startposition;
+        private bool finished;
+        private SkierModel skier;
+
+        public SkierModel Skier
+        {
+            get => skier;
+            set => Set(ref skier, value);
+        }
+
+        public int Startposition
+        {
+            get => startposition;
+            set => Set(ref startposition, value);
+        }
+        public bool Disqualified
+        {
+            get => disqualified;
+            set => Set(ref disqualified, value);
+        }
+        public bool Running
+        {
+            get => running;
+            set => Set(ref running, value);
+        }
+        public bool Blocked
+        {
+            get => blocked;
+            set => Set(ref blocked, value);
+        }
+        public bool Finished
+        {
+            get => finished;
+            set => Set(ref finished, value);
+        }
 
         public int CompareTo(StartListMemberModel other)
         {

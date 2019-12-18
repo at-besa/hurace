@@ -5,25 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RaceControl.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:Hurace.Core.Logic.Model;assembly=Core.Logic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-	<Grid Background="DarkGray">
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="SplittimeTemplate" DataType="{x:Type models:SplittimeModel}">
+			<DockPanel LastChildFill="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Column="0" Text="{Binding SplittimeNo}" FontWeight="Bold" Margin="10,0" />
+
+					<StackPanel Grid.Column="1" Orientation="Vertical" DockPanel.Dock="Top">
+						<TextBlock Text="{Binding Time, StringFormat='mm:ss.fff'}" />
+						<TextBlock  Text="{Binding TimeOffsetToWinner}" />
+					</StackPanel>
+				</Grid>
+			</DockPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+
+
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<Grid Row="0">
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+		<Grid Row="0" Background="{DynamicResource MaterialDesignCardBackground}" >
+			<DockPanel HorizontalAlignment="Center" >
 				<TextBlock Text="Running Race: " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
-				<TextBlock Text="{Binding Race.Name}"></TextBlock>
-			</StackPanel>
+				<TextBlock Text="{Binding RaceControlModel.RaceModel.Name}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+			</DockPanel>
+			<Line Height="3" Fill="{DynamicResource MaterialDesignCardBackground}" VerticalAlignment="Bottom"></Line>
 		</Grid>
 
 		<Grid Row="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="230"></ColumnDefinition>
-				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
 
 			<Grid Grid.Column="0">
@@ -37,8 +61,8 @@
 				         BorderThickness="0"
 				         Grid.Row="0" 
 				         Grid.Column="0"
-				         Background="Gray"
-				         Foreground="White"
+				         Background="{DynamicResource MaterialDesignCardBackground}"
+				         Foreground="{DynamicResource MaterialDesignDarkForeground}"
 				>
 
 					<ListBox.ItemTemplate>
@@ -58,13 +82,12 @@
 									<materialDesign:PackIcon Grid.Row="1" Kind="CheckboxBlankCircle" Visibility="{Binding Blocked, Converter={StaticResource BoolToVisInvert}}" Foreground="Lime" Height="16" Width="16" />
 									<materialDesign:PackIcon Grid.Row="1" Kind="CheckboxBlankCircleOutline" Visibility="{Binding Blocked, Converter={StaticResource BoolToVis}}" Foreground="Orange"  Height="16" Width="16" />
 									<TextBlock Grid.Row="2" Text="DSQ" Visibility="{Binding Disqualified, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Red" HorizontalAlignment="Center"/>
-									<TextBlock Grid.Row="2" Text="DSQ" Visibility="{Binding Disqualified, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Red" HorizontalAlignment="Center"/>
 									<TextBlock Grid.Row="2" Text="RUN" Visibility="{Binding Running, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Lime"  HorizontalAlignment="Center"/>
 									<TextBlock Grid.Row="2" Text="FIN" Visibility="{Binding Finished, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Blue" HorizontalAlignment="Center"/>
 								</Grid>
 								<StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,6" >
 									<Image Source="{Binding Skier.ProfileImage}" Margin="2" Height="55" Width="55" VerticalAlignment="Stretch" />
-									<StackPanel Orientation="Vertical">
+									<StackPanel Orientation="Vertical"  Margin="5,0">
 										<TextBlock Text="{Binding Skier.FirstName}" FontSize="14" FontWeight="Bold" />
 										<TextBlock Text="{Binding Skier.LastName}" FontSize="14" FontWeight="Bold" />
 										<TextBlock Text="{Binding Skier.Nation}" />
@@ -84,54 +107,94 @@
 			<Grid Grid.Column="1">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="50"/>
-					<RowDefinition Height="150"/>
-					<RowDefinition Height="150"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
 
-				<StackPanel Orientation="Horizontal">
-					<Button Style="{StaticResource MaterialDesignRaisedButton}" Command="{Binding StartRunCommand}" Margin="5" HorizontalAlignment="Left">
-						<StackPanel Orientation="Horizontal">
-							<materialDesign:PackIcon Kind="ClockStart" Height="16" Width="16" />
-							<TextBlock Text="Start Run" Margin="6,0"></TextBlock>
-						</StackPanel>
-					</Button>
+				<ToolBarTray>
+					<ToolBar>
 
-					<Button Style="{StaticResource MaterialDesignRaisedButton}" Command="{Binding ClearanceCommand}" Margin="5" HorizontalAlignment="Left">
-						<StackPanel Orientation="Horizontal">
-							<materialDesign:PackIcon Kind="FlagCheckered" Height="16" Width="16" />
-							<TextBlock Text="Clearance" Margin="6,0"></TextBlock>
-						</StackPanel>
-					</Button>
-
-				</StackPanel>
+						<Button Command="{Binding StartRunCommand}" ToolTip="Start Run" >
+							<materialDesign:PackIcon Kind="ClockStart" />
+						</Button>
+						<Separator />
+						<Button Command="{Binding ClearanceCommand}" ToolTip="Clearance" >
+							<materialDesign:PackIcon Kind="FlagCheckered" />
+						</Button>
+						<Separator />
+					</ToolBar>
+				</ToolBarTray>
 
 				<Grid Grid.Row="1">
-					<StackPanel Orientation="Vertical"  Margin="5">
-						<TextBlock Text="Actual Skier" Style="{StaticResource MaterialDesignBody1TextBlock}" />
-						<StackPanel Orientation="Horizontal" Margin="0,6" >
-							<TextBlock Text="{Binding Skier.StartPos}" Style="{StaticResource MaterialDesignCaptionTextBlock}" Width="35"/>
-							<Image Source="{Binding Skier.Image}" Margin="2" Height="50" Width="50" VerticalAlignment="Stretch" />
-							<StackPanel Orientation="Vertical" Width="200">
-								<TextBlock Text="{Binding Skier.Name}" FontSize="14" FontWeight="Bold" />
-								<TextBlock Text="{Binding Skier.Nation}" />
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+
+					<materialDesign:Card Grid.Column="0" Margin="10" Background="{DynamicResource MaterialDesignCardBackground}">
+						<Grid>
+							<StackPanel Orientation="Vertical"  Margin="5">
+								<Grid>
+									<TextBlock Text="Actual Skier" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Left" />
+									<materialDesign:PackIcon Kind="CheckboxBlankCircle" Visibility="{Binding SelectedSkierViewModel.Blocked, Converter={StaticResource BoolToVisInvert}}" Foreground="Lime" Height="20" Width="20" HorizontalAlignment="Right" />
+									<materialDesign:PackIcon Kind="CheckboxBlankCircleOutline" Visibility="{Binding SelectedSkierViewModel.Blocked, Converter={StaticResource BoolToVis}}" Foreground="Orange"  Height="20" Width="20" HorizontalAlignment="Right" />
+									<TextBlock Text="DSQ" Visibility="{Binding SelectedSkierViewModel.Disqualified, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" Margin="25,0"/>
+									<TextBlock Text="RUN" Visibility="{Binding SelectedSkierViewModel.Running, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Lime"  HorizontalAlignment="Right" Margin="25,0"/>
+									<TextBlock Text="FIN" Visibility="{Binding SelectedSkierViewModel.Finished, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Blue" HorizontalAlignment="Right" Margin="25,0"/>
+								</Grid>
+								<StackPanel Orientation="Horizontal" Margin="0,6" >
+									<TextBlock Text="{Binding SelectedSkierViewModel.Startposition}" Style="{DynamicResource MaterialDesignCaptionTextBlock}" Width="35" FontSize="35"/>
+									<Image Source="{Binding SelectedSkierViewModel.Skier.ProfileImage}" Margin="2" Height="75" Width="75" VerticalAlignment="Stretch" />
+									<StackPanel Orientation="Vertical" Width="200" Margin="5,0">
+										<TextBlock Text="{Binding SelectedSkierViewModel.Skier.FirstName}" FontSize="20" FontWeight="Bold" />
+										<TextBlock Text="{Binding SelectedSkierViewModel.Skier.LastName}" FontSize="20" FontWeight="Bold" />
+										<TextBlock Text="{Binding SelectedSkierViewModel.Skier.Nation}"  FontSize="16"  />
+									</StackPanel>
+								</StackPanel>
 							</StackPanel>
-						</StackPanel>
-					</StackPanel>
+						</Grid>
+					</materialDesign:Card>
+					<materialDesign:Card Grid.Column="1" Margin="10" HorizontalAlignment="Stretch">
+						<Grid>
+							<ListBox ItemsSource="{Binding ActualSplittimes}"  ItemTemplate="{DynamicResource SplittimeTemplate}" />
+						</Grid>
+					</materialDesign:Card>
 				</Grid>
 
+
 				<Grid Grid.Row="2">
-					<StackPanel Orientation="Vertical" Margin="5">
-						<TextBlock Text="Last Skier" Style="{StaticResource MaterialDesignBody1TextBlock}" Height="25"/>
-						<StackPanel Orientation="Horizontal" Margin="0,6" >
-							<TextBlock Text="{Binding LastSkier.StartPos}" Style="{StaticResource MaterialDesignCaptionTextBlock}" Width="35"/>
-							<Image Source="{Binding LastSkier.Image}" Margin="2" Height="50" Width="50" VerticalAlignment="Stretch" />
-							<StackPanel Orientation="Vertical" Width="200">
-								<TextBlock Text="{Binding LastSkier.Name}" FontSize="14" FontWeight="Bold" />
-								<TextBlock Text="{Binding LastSkier.Nation}" />
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<materialDesign:Card Margin="10" Background="{DynamicResource MaterialDesignCardBackground}">
+						<Grid>
+							<StackPanel Orientation="Vertical"  Margin="5">
+								<Grid>
+									<TextBlock Text="Last Skier" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Left" />
+									<TextBlock Text="DSQ" Visibility="{Binding SelectedSkierViewModel.Disqualified, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" Margin="5,0"/>
+									<TextBlock Text="RUN" Visibility="{Binding SelectedSkierViewModel.Running, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Lime"  HorizontalAlignment="Right" Margin="5,0"/>
+									<TextBlock Text="FIN" Visibility="{Binding SelectedSkierViewModel.Finished, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Blue" HorizontalAlignment="Right" Margin="5,0"/>
+								</Grid>
+							<StackPanel Orientation="Horizontal" Margin="0,6" >
+								<TextBlock Text="{Binding LastSkierViewModel.Startposition}" Style="{DynamicResource MaterialDesignCaptionTextBlock}" Width="35" FontSize="35"/>
+								<Image Source="{Binding LastSkierViewModel.Skier.ProfileImage}" Margin="2" Height="75" Width="75" VerticalAlignment="Stretch" />
+								<StackPanel Orientation="Vertical" Width="200" Margin="5,0">
+									<TextBlock Text="{Binding LastSkierViewModel.Skier.FirstName}" FontSize="20" FontWeight="Bold" />
+									<TextBlock Text="{Binding LastSkierViewModel.Skier.LastName}" FontSize="20" FontWeight="Bold" />
+									<TextBlock Text="{Binding LastSkierViewModel.Skier.Nation}"  FontSize="16"  />
+								</StackPanel>
 							</StackPanel>
-						</StackPanel>
-					</StackPanel>
+							</StackPanel>
+						</Grid>
+					</materialDesign:Card>
+					<materialDesign:Card Grid.Column="1" Margin="10" HorizontalAlignment="Stretch">
+						<Grid>
+							<ListBox ItemsSource="{Binding LastSplittimes}"  ItemTemplate="{DynamicResource SplittimeTemplate}" />
+						</Grid>
+					</materialDesign:Card>
 				</Grid>
+
 			</Grid>
 		</Grid>
 	

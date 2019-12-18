@@ -6,11 +6,11 @@
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
 		<ResourceDictionary>
-			<BooleanToVisibilityConverter x:Key="BoolToVis" />
+			<helpers:BoolToVisConverterInverted x:Key="BoolToVis" True="Visible" False="Collapsed"  />
 			<helpers:BoolToVisConverterInverted x:Key="BoolToVisInvert" True="Collapsed" False="Visible" />
 
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
 			    <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 			    <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/materialdesigncolor.indigo.xaml" />
 			    <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/materialdesigncolor.indigo.xaml" />

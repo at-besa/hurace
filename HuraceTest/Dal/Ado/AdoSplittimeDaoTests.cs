@@ -36,7 +36,7 @@ namespace HuraceTest.Dal.Ado
 		[Test]
 		public void FindByRaceRunTest()
 		{
-			Assert.True(splittimeDao.FindByRaceRun(4,1).Any());
+			Assert.True(splittimeDao.FindByRaceDataId(4).Any());
 		}
 
 		[Test]

@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RaceControl"
         xmlns:viewmodels="clr-namespace:RaceControl.ViewModels"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:RaceControl.Views"
         mc:Ignorable="d"
-        Title="RaceModel Control" Height="450" Width="800"
-        Foreground="White"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}" 
+        Title="RaceModel Control" Height="600" Width="950"
         Icon="/Images/skier.ico">
 	<Window.Resources>
 		<DataTemplate x:Name="RaceManagementTemplate" DataType="{x:Type viewmodels:RaceManagementViewModel}">
@@ -25,19 +29,20 @@
 		</DataTemplate>
 
 	</Window.Resources>
-	<Grid Background="LightGray">
+	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<StackPanel Grid.Row="0" Orientation="Horizontal" Background="DimGray">
+		<StackPanel Grid.Row="0" Orientation="Horizontal" 
+		            Background="{DynamicResource MaterialDesignToolBarBackground}">
 			<Button Content="Race Management" FontSize="18" FontWeight="Bold"  Margin="5,0"  Click="RaceManagement_Clicked" ></Button>
 			<Button Content="Start List" FontSize="18" FontWeight="Bold" Margin="5,0" Click="StartListButton_Clicked"></Button>
 			<Button Content="Race Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="RaceControlButton_Clicked"></Button>
 			<Button Content="Screen Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="ScreenControlButton_Clicked"></Button>
-		</StackPanel> 
+		</StackPanel>
 
-		<ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
+		<ContentControl Foreground="{DynamicResource MaterialDesignDarkForeground}" Grid.Row="1" Content="{Binding}"></ContentControl>
     </Grid>
 </Window>
