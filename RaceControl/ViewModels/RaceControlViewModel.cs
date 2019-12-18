@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Model;
@@ -11,9 +13,19 @@ namespace RaceControl.ViewModels
     {
         private readonly RaceControlLogic raceControlLogic = RaceControlLogic.Instance;
         private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
-        private RaceControlModel raceControlModel;
         public ObservableCollection<RaceModel> Source { get; } = new ObservableCollection<RaceModel>();
 
+        private StartListMemberModel selectedSkierViewModel;
+        public StartListMemberModel SelectedSkierViewModel
+        {
+	        get => selectedSkierViewModel;
+	        set => Set(ref selectedSkierViewModel, value);
+        }
+
+        public CommandBase StartRunCommand { get; set; }
+        public CommandBase ClearanceCommand { get; set; }
+
+        private RaceControlModel raceControlModel;
         public RaceControlModel RaceControlModel
         {
 	        get => raceControlModel;
@@ -23,7 +35,25 @@ namespace RaceControl.ViewModels
         public RaceControlViewModel()
         {
             Init();
+            StartRunCommand = new CommandBase(StartRun);
+            ClearanceCommand = new CommandBase(Clearance);
         }
+
+        private void StartRun(object sender, EventArgs e)
+        {
+            if (SelectedSkierViewModel != null)
+	        {
+		        SelectedSkierViewModel.Blocked = false;
+            }
+        }
+        private void Clearance(object sender, EventArgs e)
+        {
+            if (SelectedSkierViewModel != null)
+	        {
+		        SelectedSkierViewModel.Finished = true;
+	        }
+	    }
+
 
         private async void Init()
         {

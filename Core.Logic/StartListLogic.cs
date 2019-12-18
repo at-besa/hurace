@@ -31,6 +31,7 @@ namespace Hurace.Core.Logic
                 StartList.StartListMembers = new ObservableCollection<StartListMemberModel>();
 
                 IEnumerable<Skier> skiers = new AdoSkierDao(connectionFactory).FindAll();
+                IEnumerable<RaceData> racedata = new AdoRaceDataDao(connectionFactory).FindAllByRaceId(raceId);
 
                 if (skiers == null)
                 {
@@ -44,11 +45,17 @@ namespace Hurace.Core.Logic
 
                 foreach (var startListMember in startListMembers)
                 {
+                    var skierdata = racedata.FirstOrDefault(data => data.SkierId == startListMember.SkierId);
+                    
                     StartList.StartListMembers.Add(
                         new StartListMemberModel()
                         {
                             Skier = new SkierModel(skiers.FirstOrDefault(skier => skier.Id == startListMember.SkierId)),
-                            Startposition = startListMember.StartPos
+                            Startposition = startListMember.StartPos,
+                            Blocked = skierdata != null && skierdata.Blocked,
+                            Disqualified = skierdata != null && skierdata.Disqualified,
+                            Finished = skierdata != null && skierdata.Finished,
+                            Running = skierdata != null && skierdata.Running
                         }
                     );
                     
