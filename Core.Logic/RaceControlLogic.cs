@@ -55,11 +55,11 @@ namespace Hurace.Core.Logic
         {
             return await Task.Run(() =>
             {
-                if (RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model => !model.Blocked) == null)
-                {
+                //if (RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model => !model.Blocked) == null)
+                //{
                     slm.Blocked = false;
                     return Update(slm, raceId);
-                }
+                //}
                 return false;
             });
         }

@@ -12,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{materialDesign:MaterialDesignFont}" 
-        Title="RaceModel Control" Height="600" Width="950"
+        Title="Race Control" Height="600" Width="950"
         Icon="/Images/skier.ico">
 	<Window.Resources>
 		<DataTemplate x:Name="RaceManagementTemplate" DataType="{x:Type viewmodels:RaceManagementViewModel}">

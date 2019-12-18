@@ -22,7 +22,14 @@
 
 					<StackPanel Grid.Column="1" Orientation="Vertical" DockPanel.Dock="Top">
 						<TextBlock Text="{Binding Time, StringFormat='mm:ss.fff'}" />
-						<TextBlock  Text="{Binding TimeOffsetToWinner}" />
+						<TextBlock>
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0:D2}.{1:fff}">
+									<Binding Path="TimeOffsetToWinner.Seconds"/>
+									<Binding Path="TimeOffsetToWinner"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
 					</StackPanel>
 				</Grid>
 			</DockPanel>
