@@ -10,7 +10,7 @@ using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic
 {
-	public class RaceManagementLogic : IRaceLogic
+	public class RaceManagementLogic : IRaceManagementLogic
 	{
 		public static RaceManagementLogic Instance = new RaceManagementLogic();
 		private readonly IConnectionFactory connectionFactory;

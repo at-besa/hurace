@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Hurace.Core.Logic;
+using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
 using Swack.UI.ViewModels;
@@ -13,8 +14,8 @@ namespace RaceControl.ViewModels
 {
     public class RaceControlViewModel : NotifyPropertyChanged
     {
-        private readonly RaceControlLogic raceControlLogic = RaceControlLogic.Instance;
-        private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
+        private readonly IRaceControlLogic raceControlLogic = RaceControlLogic.Instance;
+        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
 
         private ICollection<SplittimeModel> actualSplittimes;
         public ICollection<SplittimeModel> ActualSplittimes

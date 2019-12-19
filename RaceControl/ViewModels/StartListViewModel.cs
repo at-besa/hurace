@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hurace.Core.Logic;
+using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
 using Swack.UI.ViewModels;
@@ -11,8 +12,8 @@ namespace RaceControl.ViewModels
 {
     public class StartListViewModel : NotifyPropertyChanged
     {
-        private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
-        private readonly StartListLogic startListLogic = StartListLogic.Instance;
+        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
+        private readonly IStartListLogic startListLogic = StartListLogic.Instance;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
 	    private ICollection<SkierModel> possibleSkiersNotInStartList;

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic;
+using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
 using RaceControl.ViewModels.RaceManagementHelpers;
@@ -15,7 +16,7 @@ namespace RaceControl.ViewModels
 {
     public class RaceManagementViewModel : NotifyPropertyChanged
 	{
-	    private readonly RaceManagementLogic managementLogic = RaceManagementLogic.Instance;
+	    private readonly IRaceManagementLogic managementManagementLogic = RaceManagementLogic.Instance;
 	    private RaceViewModel selectedRaceViewModel;
 	    public ObservableCollection<RaceViewModel> RaceViewModels { get; } = new ObservableCollection<RaceViewModel>();
 
@@ -87,7 +88,7 @@ namespace RaceControl.ViewModels
 
 		private async void GetRaces()
         {
-	        var raceModels = await managementLogic.GetRaces();
+	        var raceModels = await managementManagementLogic.GetRaces();
 
 	        foreach (var raceModel in raceModels)
 	        {
@@ -99,7 +100,7 @@ namespace RaceControl.ViewModels
 
         private async void GetRaceTypes()
         {
-	        var types = await managementLogic.GetRaceTypes();
+	        var types = await managementManagementLogic.GetRaceTypes();
 	        foreach (var type in types)
 	        {
 		        RaceTypes.Add(type);
@@ -108,7 +109,7 @@ namespace RaceControl.ViewModels
 
         private async void GetRaceStates()
         {
-	        var states = await managementLogic.GetRaceStates();
+	        var states = await managementManagementLogic.GetRaceStates();
 	        foreach (var state in states)
 	        {
 		        RaceStates.Add(state);
@@ -121,18 +122,18 @@ namespace RaceControl.ViewModels
 	        SelectedRaceViewModel.RaceModel.Status.Name = SelectedState;
 	        if (SelectedRaceViewModel.NewRace)
 	        {
-		        await managementLogic.CreateRace(SelectedRaceViewModel.RaceModel);
+		        await managementManagementLogic.CreateRace(SelectedRaceViewModel.RaceModel);
 	        }
 	        else
 	        {
-				await managementLogic.SaveRace(SelectedRaceViewModel.RaceModel);
+				await managementManagementLogic.SaveRace(SelectedRaceViewModel.RaceModel);
 			}
             
         }
         
         private async void DeleteRace(object sender, EventArgs e)
         {
-	        await managementLogic.DeleteRace(SelectedRaceViewModel.RaceModel.Id);
+	        await managementManagementLogic.DeleteRace(SelectedRaceViewModel.RaceModel.Id);
 	        RaceViewModels.Remove(SelectedRaceViewModel);
 	        SelectedRaceViewModel = RaceViewModels[0];
         }
