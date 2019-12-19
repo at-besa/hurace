@@ -8,5 +8,7 @@ namespace Hurace.Core.Logic.Interface
     public interface IStartListLogic
     {
         Task<StartListModel> GetStartListForRaceId(int raceId);
+        Task<ICollection<SkierModel>> GetAllSkiersWithSameSex(string sex);
+        Task<bool> UpdateSkierStartPos(int raceId, int pos, int skierId);
     }
 }

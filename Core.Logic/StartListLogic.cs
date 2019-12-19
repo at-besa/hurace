@@ -65,7 +65,7 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<ObservableCollection<SkierModel>> GetAllSkiersWithSameSex(string sex)
+        public async Task<ICollection<SkierModel>> GetAllSkiersWithSameSex(string sex)
         {
             return await Task.Run(() => {
                 IEnumerable<Skier> allSkiers = new AdoSkierDao(connectionFactory).FindAll();

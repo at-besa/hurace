@@ -10,16 +10,16 @@ using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic
 {
-	public class RaceManagementLogic : IRaceLogic
+	public class RaceManagementManagementLogic : IRaceManagementLogic
 	{
-		public static RaceManagementLogic Instance = new RaceManagementLogic();
+		public static RaceManagementManagementLogic Instance = new RaceManagementManagementLogic();
 		private readonly IConnectionFactory connectionFactory;
 		private ICollection<RaceModel> Races { get; set; }
 		private ICollection<string> RaceTypes { get; set; } 
 		private ICollection<string> RaceStates { get; set; }
 
 
-		private RaceManagementLogic()
+		private RaceManagementManagementLogic()
 		{
 			var configuration = ConfigurationUtil.GetConfiguration();
 			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
