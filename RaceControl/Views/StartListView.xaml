@@ -5,8 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RaceControl.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:RaceControl.ViewModels"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource
+        Source="{Binding Path=RunningRaceStartList.StartListMembers}"
+        x:Key="startListMembers">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Startposition"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+        <CollectionViewSource
+            Source="{Binding Path=PossibleSkiersNotInStartList}"
+            x:Key="possibleSkiersNotInStartList">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="LastName"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -14,7 +32,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <ListBox ItemsSource="{Binding RunningRaceStartList.StartListMembers}" 
+        <ListBox ItemsSource="{Binding Source={StaticResource startListMembers}}" 
 			         SelectedItem="{Binding SelectedStartListMember}"
 			         BorderThickness="0"
 			         Grid.Row="0" 
@@ -60,7 +78,8 @@
                                 Kind="ArrowDownward" />
                         </Button>
                         <Button
-                            Command="{Binding DeleteStartListMemberCommand}"
+                            Command="{Binding DeleteButtonCommand}" 
+                            CommandParameter="{Binding}"
                             Style="{DynamicResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon
@@ -75,7 +94,7 @@
 
         <GridSplitter Grid.Column="1" Height="100" Width="5"/>
 
-        <ListBox ItemsSource="{Binding PossibleSkiersNotInStartList}" 
+        <ListBox ItemsSource="{Binding Source={StaticResource possibleSkiersNotInStartList}}" 
 			         SelectedItem="{Binding SelectedPossibleSkierNotInStartList}"
 			         BorderThickness="0"
 			         Grid.Row="0" 
