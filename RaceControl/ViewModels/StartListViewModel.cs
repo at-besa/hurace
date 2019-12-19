@@ -42,8 +42,10 @@ namespace RaceControl.ViewModels
             DeleteStartListMemberCommand = new CommandBase(DeleteStartListMember);
         }
 
-        private void DeleteStartListMember(object? sender, EventArgs e)
+        private void DeleteStartListMember(object sender, EventArgs e)
         {
+            String senderType = sender.GetType().ToString();
+            
             throw new NotImplementedException();
         }
 
@@ -53,6 +55,11 @@ namespace RaceControl.ViewModels
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
             PossibleSkiersNotInStartList = await startListLogic.GetAllSkiersWithSameSex(RunningRace.Sex);
             GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
+
+            foreach(var item in RunningRaceStartList.StartListMembers)
+            {
+                item.DeleteButtonCommand = new CommandBase(DeleteStartListMember);
+            }
         }
 
         private void GetPossibleSkiersNotInStartList(ICollection<StartListMemberModel> startListMembers)

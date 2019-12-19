@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Swack.UI.ViewModels;
 
 namespace Hurace.Core.Logic.Model
@@ -44,6 +45,13 @@ namespace Hurace.Core.Logic.Model
         {
             get => finished;
             set => Set(ref finished, value);
+        }
+
+        private ICommand _deleteButtonCommand;
+        public ICommand DeleteButtonCommand
+        {
+            get => _deleteButtonCommand;
+            set => Set(ref _deleteButtonCommand, value);
         }
 
         public int CompareTo(StartListMemberModel other)
