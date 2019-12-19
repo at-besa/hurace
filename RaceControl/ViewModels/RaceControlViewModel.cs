@@ -15,7 +15,7 @@ namespace RaceControl.ViewModels
     public class RaceControlViewModel : NotifyPropertyChanged
     {
         private readonly IRaceControlLogic raceControlLogic = RaceControlLogic.Instance;
-        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementManagementLogic.Instance;
+        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
 
         private ICollection<SplittimeModel> actualSplittimes;
         public ICollection<SplittimeModel> ActualSplittimes

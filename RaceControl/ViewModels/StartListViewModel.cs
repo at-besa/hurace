@@ -12,7 +12,7 @@ namespace RaceControl.ViewModels
 {
     public class StartListViewModel : NotifyPropertyChanged
     {
-        private readonly IRaceManagementLogic raceManagementManagementLogic = RaceManagementManagementLogic.Instance;
+        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
         private readonly IStartListLogic startListLogic = StartListLogic.Instance;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
@@ -76,7 +76,7 @@ namespace RaceControl.ViewModels
 
         private async Task<RaceModel> GetRunningRace()
         {
-            var raceModels = await raceManagementManagementLogic.GetRaces();
+            var raceModels = await raceManagementLogic.GetRaces();
             var runningRaceModel = raceModels.
                 FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
 

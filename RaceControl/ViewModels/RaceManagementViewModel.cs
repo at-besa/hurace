@@ -16,7 +16,7 @@ namespace RaceControl.ViewModels
 {
     public class RaceManagementViewModel : NotifyPropertyChanged
 	{
-	    private readonly IRaceManagementLogic managementManagementLogic = RaceManagementManagementLogic.Instance;
+	    private readonly IRaceManagementLogic managementManagementLogic = RaceManagementLogic.Instance;
 	    private RaceViewModel selectedRaceViewModel;
 	    public ObservableCollection<RaceViewModel> RaceViewModels { get; } = new ObservableCollection<RaceViewModel>();
 

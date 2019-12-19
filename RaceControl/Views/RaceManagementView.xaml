@@ -59,9 +59,9 @@
 		    <TextBlock Text="Name"></TextBlock>
 		    <TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Name}" Margin="4"></TextBox>
 			<TextBlock Text="Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedValue="{Binding SelectedRaceType}" Margin="4"></ComboBox>
+			<ComboBox ItemsSource="{Binding RaceTypes}" SelectedItem="{Binding SelectedRaceType}" Margin="4"></ComboBox>
 		    <TextBlock Text="Gender Type"></TextBlock>
-			<ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding SelectedRaceViewModel.RaceModel.Sex}" Margin="4"></ComboBox>
+			<ComboBox ItemsSource="{Binding Genders}" SelectedItem="{Binding SelectedRaceViewModel.RaceModel.Sex}" Margin="4"></ComboBox>
 			<TextBlock Text="Date"></TextBlock>
 			<DatePicker SelectedDate="{Binding SelectedRaceViewModel.RaceModel.Date, Mode=TwoWay}" Margin="4"></DatePicker>
 			<TextBlock Text="Time"></TextBlock>

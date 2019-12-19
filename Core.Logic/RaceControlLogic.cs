@@ -16,7 +16,7 @@ namespace Hurace.Core.Logic
     {
         public static RaceControlLogic Instance { get; } = new RaceControlLogic();
         private readonly StartListLogic startListLogic = StartListLogic.Instance;
-        private readonly RaceManagementManagementLogic raceManagementManagementLogic = RaceManagementManagementLogic.Instance;
+        private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
         public RaceControlModel RaceControlModel { get; private set; }
 
         private ICollection<SplittimeModel> WinnerSplitimes { get; set; }
