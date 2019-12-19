@@ -59,7 +59,7 @@ namespace RaceControl.Helpers {
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
         public virtual void Execute(object parameter) {
             if (null != Executed) {
-                Executed(this, new EventArgs());
+                Executed(parameter, new EventArgs());
             }
         }
 
