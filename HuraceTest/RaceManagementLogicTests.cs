@@ -32,6 +32,14 @@ namespace Hurace.Core.Logic.Tests
 					ObjectGenerator.GetRace(1),
 					ObjectGenerator.GetRace(2)
 				});
+			
+			var raceTypeMockDao = new Mock<IRaceTypeDao>();
+			raceTypeMockDao.Setup(dao => dao.FindAll()).Returns(
+				new List<RaceType>()
+				{
+					ObjectGenerator.GetRaceType(),
+					ObjectGenerator.GetRaceType()
+				});
 		}
 
 		public void Dispose()
