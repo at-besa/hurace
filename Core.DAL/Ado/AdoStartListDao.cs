@@ -85,9 +85,10 @@ namespace Hurace.Core.DAL.Ado
         public bool Delete(StartList startList)
         {
             return template.Execute(
-                       @"delete from startlist where raceId=@raceId and skierId=@skierId",
+                       @"delete from startlist where raceId=@raceId and skierId=@skierId and startposition=@startposition",
                        new QueryParameter("@raceId", startList.Race.Id),
-                       new QueryParameter("@skierId", startList.SkierId)) == 1;
+                       new QueryParameter("@skierId", startList.SkierId),
+                       new QueryParameter("@startposition", startList.StartPos)) == 1;
         }
     }
 }

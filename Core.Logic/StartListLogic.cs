@@ -79,7 +79,7 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<bool> UpdateSkierStartPos(int raceId, int pos, int skierId)
+        public async Task<bool> UpdateStartListMemberStartPos(int raceId, int pos, int skierId)
         {
             return await Task.Run(() =>
             {
@@ -95,6 +95,40 @@ namespace Hurace.Core.Logic
                 var result = startlistAdo.Update(startList);
                 
                 return result;
+            });
+        }
+
+        public async Task<bool> DeleteStartListMember(int skierId, int raceId, int startposition)
+        {
+            return await Task.Run(() =>
+            {
+                var startlistAdo = new AdoStartListDao(connectionFactory);
+                var race = new Race
+                {
+                    Id = raceId
+                };
+                var startList = new StartList
+                {
+                    Race = race,
+                    SkierId = skierId,
+                    StartPos = startposition
+                };
+                var result = startlistAdo.Delete(startList);
+                return result;
+            });
+        }
+
+
+        public async Task<bool> IsStartListMemberInStartList(int raceId, int skierId)
+        {
+            return await Task.Run(() => {
+                var startListAdo = new AdoStartListDao(connectionFactory);
+                StartList startListMember = startListAdo.FindByIds(raceId, skierId);
+                if(startListMember != null)
+                {
+                    return true;
+                }
+                return false;
             });
         }
     }
