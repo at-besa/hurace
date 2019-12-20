@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
+using Hurace.Core.DAL.Interface;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 
@@ -17,20 +18,32 @@ namespace Hurace.Core.Logic
 		private ICollection<RaceModel> Races { get; set; }
 		private ICollection<string> RaceTypes { get; set; } 
 		private ICollection<string> RaceStates { get; set; }
-
-
+		private IRaceDao raceDao;
+		private IRaceTypeDao raceTypeDao;
+		private IStatusDao statusDao;
+		
 		private RaceManagementLogic()
 		{
 			var configuration = ConfigurationUtil.GetConfiguration();
 			connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+			raceDao = new AdoRaceDao(connectionFactory);
+			raceTypeDao = new AdoRaceTypeDao(connectionFactory);
+			statusDao = new AdoStatusDao(connectionFactory);
 		}
 
+		public void MockSetup(IRaceDao rd, IRaceTypeDao rtd, IStatusDao sd)
+		{
+			raceDao = rd;
+			raceTypeDao = rtd;
+			statusDao = sd;
+		}
+		
 		public async Task<ICollection<RaceModel>> GetRaces()
 		{
 			return await Task.Run(() =>
 			{
 				Races = new Collection<RaceModel>();
-				var racecollection = new AdoRaceDao(connectionFactory).FindAll();
+				var racecollection = raceDao.FindAll();
 				foreach (var race in racecollection)
 				{
 					Races.Add(new RaceModel(race));
@@ -45,7 +58,7 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				var deleted = new AdoRaceDao(connectionFactory).Delete(raceId);
+				var deleted = raceDao.Delete(raceId);
 
 				return deleted;
 			});
@@ -55,10 +68,10 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
-				race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
+				race.Type = raceTypeDao.FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
+				race.Status = statusDao.FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
 
-				var saved= new AdoRaceDao(connectionFactory).Update(race.ToRace());
+				var saved= raceDao.Update(race.ToRace());
 
 				return saved;
 			});
@@ -68,10 +81,10 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				race.Type = new AdoRaceTypeDao(connectionFactory).FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
-				race.Status = new AdoStatusDao(connectionFactory).FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
+				race.Type = raceTypeDao.FindAll().FirstOrDefault(type => type.Type == race.Type.Type);
+				race.Status = statusDao.FindAll().FirstOrDefault(status => status.Name == race.Status.Name);
 
-				var created = new AdoRaceDao(connectionFactory).Insert(race.ToRace());
+				var created = raceDao.Insert(race.ToRace());
 				race.Id = created;
 				return created > 0;
 			});
@@ -81,7 +94,7 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				var raceTypes = new AdoRaceTypeDao(connectionFactory).FindAll();
+				var raceTypes = raceTypeDao.FindAll();
 				RaceTypes = new Collection<string>();
 				foreach (var raceType in raceTypes)
 				{
@@ -96,7 +109,7 @@ namespace Hurace.Core.Logic
 		{
 			return await Task.Run(() =>
 			{
-				var raceStates = new AdoStatusDao(connectionFactory).FindAll();
+				var raceStates = statusDao.FindAll();
 				RaceStates = new Collection<string>();
 				foreach (var raceState in raceStates)
 				{
