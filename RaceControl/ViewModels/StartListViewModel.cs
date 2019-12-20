@@ -16,24 +16,25 @@ namespace RaceControl.ViewModels
         private readonly IStartListLogic startListLogic = StartListLogic.Instance;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
-	    private ICollection<SkierModel> possibleSkiersNotInStartList;
+	    private ICollection<SkierModel> _possibleSkiersNotInStartList;
         public ICollection<SkierModel> PossibleSkiersNotInStartList
 	    {
-		    get => possibleSkiersNotInStartList;
-		    set => Set(ref possibleSkiersNotInStartList ,value);
+		    get => _possibleSkiersNotInStartList;
+		    set => Set(ref _possibleSkiersNotInStartList ,value);
 	    }
 
-	    private StartListModel runningRaceStartList;
+	    private StartListModel _runningRaceStartList;
         public StartListModel RunningRaceStartList
         {
-            get => runningRaceStartList;
-            set => Set(ref runningRaceStartList, value);
+            get => _runningRaceStartList;
+            set => Set(ref _runningRaceStartList, value);
         }
 
         public StartListMemberModel SelectedStartListMember { get; set; }
         public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
 
         public CommandBase DeleteStartListMemberCommand { get; set; }
+        public CommandBase AddStartListMemberCommand { get; set; }
 
 
 
@@ -41,6 +42,28 @@ namespace RaceControl.ViewModels
 	    {
             Init();
             DeleteStartListMemberCommand = new CommandBase(DeleteStartListMember);
+            AddStartListMemberCommand = new CommandBase(AddStartListMember);
+        }
+
+        private void AddStartListMember(object sender, EventArgs e)
+        {
+            var skierToAdd = (SkierModel)sender;
+            if(skierToAdd != null)
+            {
+                PossibleSkiersNotInStartList.Remove(skierToAdd);
+                //startListLogic.
+                //var sizeOfStartList = RunningRaceStartList.StartListMembers.Count();
+                //RunningRaceStartList.StartListMembers.Add(new StartListMemberModel
+                //{
+                //    Skier = skierToAdd,
+                //    Blocked = true,
+                //    Finished = false,
+                //    Running = false,
+                //    Disqualified = false,
+                //    Startposition = sizeOfStartList++,
+                //    DeleteButtonCommand = new CommandBase(DeleteStartListMember)
+                //});
+            }
         }
 
         private async void DeleteStartListMember(object sender, EventArgs e)
@@ -48,23 +71,28 @@ namespace RaceControl.ViewModels
             var startListMemberToRemove = (StartListMemberModel)sender;
             if (startListMemberToRemove != null)
             {
-                RunningRaceStartList.StartListMembers.Remove(startListMemberToRemove);
-                RearrangeStartPositionOfStartListMembers(startListMemberToRemove.Startposition);
-
+                var skierId = startListMemberToRemove.Skier.Id;
+                var startposition = startListMemberToRemove.Startposition;
+                var raceId = RunningRace.Id;
+                await startListLogic.DeleteStartListMember(skierId, raceId, startposition);
+                if(!await startListLogic.IsStartListMemberInStartList(raceId , skierId))
+                {
+                    await RearrangeStartPositionOfStartListMembers(startposition);
+                }
+                RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
                 PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
             }
         }
 
-        private void RearrangeStartPositionOfStartListMembers(int startposition)
+        private async Task RearrangeStartPositionOfStartListMembers(int startposition)
         {
             foreach (var startListMember in RunningRaceStartList.StartListMembers)
             {
                 if(startposition < startListMember.Startposition)
                 {
-                    startListMember.Startposition--;
+                    var updateded = await startListLogic.UpdateStartListMemberStartPos(RunningRace.Id, startListMember.Startposition - 1, startListMember.Skier.Id);
                 }
-            }
-                
+            }       
         }
 
         private async void Init()
