@@ -14,15 +14,16 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \lstset{
-	language=Java,
+	language=c++,
 	extendedchars=\true,
 	inputencoding=utf8,
+	basicstyle=\ttfamily\footnotesize,
+	identifierstyle=,
 	stringstyle=\ttfamily\small, 
 	showstringspaces=false,
 	commentstyle=\color{codegreen},
 	keywordstyle=\color{blue},
 	stringstyle=\color{codegray}, 
-	basicstyle=\ttfamily\small,
 	breakatwhitespace=false,         
 	breaklines=true, 
 	captionpos=b,                    
@@ -42,8 +43,6 @@
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 %\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstset{language=Java}
 
 \pagestyle{fancy}
 \lhead[Sascha Beyer, David Schneebauer]{Sascha Beyer, David Schneebauer}
@@ -78,17 +77,17 @@
 	%\\
 	%\includegraphics[width=.8\textwidth]{img/main_3.png}
 	\textbf{IRaceDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/IRaceDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceDao.cs}
 	\textbf{IRaceDataDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/IRaceDataDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceDataDao.cs}
 	\textbf{IRaceTypeDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/IRaceTypeDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceTypeDao.cs}
 	\textbf{ISkierDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/ISkierDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/ISkierDao.cs}
 	\textbf{ISplittimeDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/ISplittimeDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/ISplittimeDao.cs}
 	\textbf{IStartListDao}
-	\lstinputlisting[language=csh]{../Dal/Interface/IStartListDao.cs}
+	\lstinputlisting[language=c++]{../Core.Dal/Interface/IStartListDao.cs}
 	
 	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
 	
@@ -96,8 +95,42 @@
 	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
 	\newline
-	
 	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
+	
+	\section{Ausbaustufe 2}
+	\subsubsection{User Interface}
+	
+	Damit die optische Komponente einen guten Anstrich bekommt haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
+	Da der Code sehr umfangreich ist wurde dieser nicht in dieses Dokument eingepflegt.\\
+	\includegraphics[width=.7\textwidth]{img/ui1.png}\\
+	\includegraphics[width=.7\textwidth]{img/ui2.png}\\
+	\includegraphics[width=.7\textwidth]{img/ui3.png}\\
+	
+	
+	\newpage
+	\subsubsection{Core Logic}
+	Um eine Abtrennung der Logik von der Datenbankschicht zu schaffen wurden Interfaces verwendet damit die Datenbankschicht einfach ausgetauscht werden kann. Um die Daten sauber dem UI bereitzustellen wurden Models verwendet um das MVVM Muster umzusetzen.
+	\newline
+	
+	\textbf{IRaceControlLogic}
+	\lstinputlisting[language=c++]{../Core.Logic/Interface/IRaceControlLogic.cs}
+	\textbf{IRaceManagementLogic}
+	\lstinputlisting[language=c++]{../Core.Logic/Interface/IRaceManagementLogic.cs}
+	\textbf{IScreenControl}
+	\lstinputlisting[language=c++]{../Core.Logic/Interface/IScreenControl.cs}
+	\textbf{IStartListLogic}
+	\lstinputlisting[language=c++]{../Core.Logic/Interface/IStartListLogic.cs}
+	
+	
+	\subsection{UnitTests}
+	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
+	
+	Beispieltests:
+	\textbf{IStartListLogic}
+	\lstinputlisting[language=c++]{../HuraceTest/RaceManagementLogicTests.cs}
+	
+	
+	\includegraphics[width=.7\textwidth]{img/UnitTests2.png}
 
 	\newpage	
 \end{document}
