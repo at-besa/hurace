@@ -66,6 +66,24 @@ namespace Hurace.Core.Logic.Tests
 					ObjectGenerator.GetRace(2)
 				});
 			raceDao = raceDaoMock.Object;
+
+			var raceTypeDaoMock = new Mock<IRaceTypeDao>();
+			raceTypeDaoMock.Setup(dao => dao.FindAll()).Returns(
+				new List<RaceType>()
+				{
+					ObjectGenerator.GetRaceType(),
+					ObjectGenerator.GetRaceType()
+				});
+			raceTypeDao = raceTypeDaoMock.Object;
+
+			var statusDaoMock = new Mock<IStatusDao>();
+			statusDaoMock.Setup(dao => dao.FindAll()).Returns(
+				new List<Status>()
+				{
+					ObjectGenerator.GetStatus(),
+					ObjectGenerator.GetStatus()
+				});
+
 			//raceTypeDao = new AdoRaceTypeDao(connectionFactory);
 			//statusDao = new AdoStatusDao(connectionFactory);
 
