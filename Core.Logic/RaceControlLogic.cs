@@ -23,7 +23,6 @@ namespace Hurace.Core.Logic
         private ICollection<SplittimeModel> ActualSplitimes { get; set; } 
         private ICollection<SplittimeModel> LastSplitimes { get; set; } 
         
-        
         private IConnectionFactory connectionFactory;
         
         
@@ -33,6 +32,7 @@ namespace Hurace.Core.Logic
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
             
         }
+        
         
         public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId)
         {

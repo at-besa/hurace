@@ -49,7 +49,6 @@ namespace Hurace.Core.DAL.Ado
         {
             return template.Execute(
                        @"insert into Race(id, typeId, status, name, location, date, splittimes, sex, deleted) values (null, @type, @status, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
-                       new QueryParameter("@id", race.Id),             // TODO check the insertion of the ID 
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
                        new QueryParameter("@nam", race.Name),

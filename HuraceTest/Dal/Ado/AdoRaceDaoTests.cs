@@ -45,14 +45,14 @@ namespace HuraceTest.Dal.Ado
 			{
 				Date = DateTime.Today,
 				Id = 9999,
-				Location = "Here",
-				Name = "meins",
+				Location = "Here" + new Random().Next(50),
+				Name = "meins" + new Random().Next(50),
 				Sex = "m",
 				Splittimes = 4,
-				Type = new RaceType { Id = 3 }
+				Type = new RaceType { Id = 3 },
+				Status = new Status { Name = "running", Id = 1}
 			};
-			testRace.Id = raceDao.Insert(testRace);
-			Assert.True(raceDao.FindById(testRace.Id).Id == testRace.Id);
+			Assert.True(raceDao.Insert(testRace) >= 0);
 		}
 
 		[Test]

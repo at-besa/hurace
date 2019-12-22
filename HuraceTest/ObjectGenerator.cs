@@ -29,7 +29,7 @@ namespace HuraceTest
 			return new RaceType
 			{
 				Id = 1,
-				Type = "testType",
+				Type = "TestType",
 				NumberOfRuns = 2
 			};
 		}
@@ -38,8 +38,8 @@ namespace HuraceTest
 		{
 			return new Status
 			{
-				Id = 0,
-				Name = null
+				Id = 1,
+				Name = "running"
 			};
 		}
 
