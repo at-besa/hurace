@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuraceTest", "HuraceTest\HuraceTest.csproj", "{247B4B3E-7A40-41CF-BD21-4CCBE9AF7BA3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4A4798BF-E039-4E05-B2AC-B66015C35B1D} = {4A4798BF-E039-4E05-B2AC-B66015C35B1D}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timer", "Timer\Timer.csproj", "{17491513-8DB9-43A3-B7C2-5F8E7E47D1C9}"
 EndProject
@@ -13,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Logic", "Core.Logic\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RaceControl", "RaceControl\RaceControl.csproj", "{28377754-10AA-41E5-A1F8-457C3E13D7E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{4A4798BF-E039-4E05-B2AC-B66015C35B1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{4A4798BF-E039-4E05-B2AC-B66015C35B1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
