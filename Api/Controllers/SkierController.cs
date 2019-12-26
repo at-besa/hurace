@@ -16,26 +16,41 @@ namespace Api.Controllers
     {
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private IConnectionFactory _connectionFactory;
+        private AdoSkierDao _adoSkierDao;
 
         public SkierController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
             var configuration = ConfigurationUtil.GetConfiguration();
-            _connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+            var connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+            _adoSkierDao = new AdoSkierDao(connectionFactory);
         }
 
         [HttpGet]
-        public IEnumerable<SkierDto> Get()
+        public ActionResult<IEnumerable<SkierDto>> GetAll()
         {
-            var adoSkierDao = new AdoSkierDao(_connectionFactory);
-            IEnumerable<Skier> skiers = adoSkierDao.FindAll();
-            IEnumerable<SkierDto> skierDtos = new List<SkierDto>();
+            IEnumerable<Skier> skiers = _adoSkierDao.FindAll();
+            if(skiers == null)
+            {
+                return NotFound();
+            }
+            IList<SkierDto> skierDtos = new List<SkierDto>();
             foreach (var skier in skiers)
             {
-                skierDtos.Append(SkierDto.FromSkier(skier));
+                skierDtos.Add(SkierDto.FromSkier(skier));
             }
-            return skierDtos;
+            return Ok(skierDtos);
+        }
+
+        [HttpGet("{id:int}")]
+        public ActionResult<SkierDto> GetById(int id)
+        {
+            Skier skier = _adoSkierDao.FindById(id);
+            if(skier == null)
+            {
+                return NotFound();
+            }
+            return Ok(SkierDto.FromSkier(skier));
         }
     }
 }
