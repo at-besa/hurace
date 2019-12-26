@@ -25,7 +25,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SkierDto> Get()
+        public IEnumerable<SkierOutDto> Get()
         {
             
                 return null;

@@ -1,12 +1,9 @@
 ﻿using Hurace.Core.DAL.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api
 {
-    public class SkierDto
+    public class SkierOutDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -16,9 +13,9 @@ namespace Api
         public string ProfileImage { get; set; }
         public string Sex { get; set; }
 
-        public static SkierDto FromSkier(Skier skier)
+        public static SkierOutDto FromSkier(Skier skier)
         {
-            return new SkierDto()
+            return new SkierOutDto()
             {
                 Id = skier.Id,
                 FirstName = skier.FirstName,
