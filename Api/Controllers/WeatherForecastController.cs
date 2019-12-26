@@ -27,9 +27,8 @@ namespace Api.Controllers
         [HttpGet]
         public IEnumerable<SkierDto> Get()
         {
-            var adoSkierDao = new AdoSkierDao(_connectionFactory);
-            var skiers = adoSkierDao.FindAll();
-                return skiers;
+            
+                return null;
         }
     }
 }
