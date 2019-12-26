@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "14d34926-3a0f-4cf3-8c6c-4d067618fc34",
+		"name": "Hurace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Weatherforecast",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/weatherforecast",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"weatherforecast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAll Skier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/skier",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"skier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById Skier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/skier/10",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"skier",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Skier",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"asdfasdf\": \"aaa\",\r\n    \"firstName\": \"Christof\",\r\n    \"lastName\": \"Innerhofer\",\r\n    \"dateOfBirth\": \"1983-12-17T00:00:00\",\r\n    \"profileImage\": \"https://data.fis-ski.com/general/load-competitor-picture/26841.html\",\r\n    \"nation\": \"AUT\",\r\n    \"sex\": \"m\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/skier/10",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"skier",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Skier",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstName\": \"David\",\r\n        \"lastName\": \"Schneebauer\",\r\n        \"dateOfBirth\": \"1994-12-22T00:00:00\",\r\n        \"nation\": \"AUT\",\r\n        \"profileImage\": \"https://data.fis-ski.com/general/load-competitor-picture/196310.html\",\r\n        \"sex\": \"m\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/skier",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"skier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Skier",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/skier/310",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"skier",
+						"310"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "84b546b1-3915-4ba0-8acd-9d91a808d522",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ec209ea3-7a8f-4c8b-be51-68dec9eb2dee",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d0714429-699f-4238-a15b-529566e9f581",
+			"key": "api-url",
+			"value": "https://localhost:5001",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
