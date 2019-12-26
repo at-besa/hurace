@@ -57,29 +57,40 @@ namespace Api.Controllers
         [HttpPut("{id:int}")]
         public ActionResult<SkierOutDto> Update(int id, SkierInDto skierInDto)
         {
-            Skier skier = new Skier()
-            {
-                Id = id,
-                DateOfBirth = skierInDto.DateOfBirth,
-                FirstName = skierInDto.FirstName,
-                LastName = skierInDto.LastName,
-                Nation = skierInDto.Nation,
-                ProfileImage = skierInDto.ProfileImage,
-                Sex = skierInDto.Sex
-            };
+            Skier skier = SkierInDto.ToSkier(skierInDto);
+            skier.Id = id;
             _adoSkierDao.Update(skier);
             var updatedSkier = _adoSkierDao.FindById(id);
             if(updatedSkier == null)
             {
                 return NotFound();
             }
-            if(skier != updatedSkier)
+            if(skier.CompareTo(updatedSkier) != 0)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return Ok(SkierOutDto.FromSkier(updatedSkier));
         }
 
-        //[HttpPost]
+        [HttpPost]
+        public ActionResult<SkierOutDto> Insert(SkierInDto skierInDto)
+        {
+            //TODO does not work properly
+            Skier skier = SkierInDto.ToSkier(skierInDto);
+            var rowid = _adoSkierDao.Insert(skier);
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
+        {
+            Skier skier = _adoSkierDao.FindById(id);
+            if(skier == null)
+            {
+                return NotFound();
+            }
+            _adoSkierDao.Delete(skier);
+            return NoContent();
+        }
     }
 }

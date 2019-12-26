@@ -45,11 +45,11 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(Skier skier)
         {
             return template.Execute(
-                       @"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) values (null, @fn, @ln, @dob , @nat, null, @sex); SELECT last_insert_rowid();",
-                       new QueryParameter("@id", skier.Id),
+                       @"insert into skier(id, firstname, lastname, dateofbirth, nation, profileimage, sex) values (null, @fn, @ln, @dob , @nat, @profileImage, @sex); SELECT last_insert_rowid();",
                        new QueryParameter("@fn", skier.FirstName),
                        new QueryParameter("@ln", skier.LastName),
                        new QueryParameter("@dob", skier.DateOfBirth.ToString("yyyy-M-d")),
+                       new QueryParameter("@profileimage", skier.ProfileImage),
                        new QueryParameter("@nat", skier.Nation),
                        new QueryParameter("@sex", skier.Sex));
         }

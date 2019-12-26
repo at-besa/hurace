@@ -21,7 +21,8 @@ namespace Api
                 FirstName = skier.FirstName,
                 LastName = skier.LastName,
                 DateOfBirth = skier.DateOfBirth,
-                Nation = skier.ProfileImage,
+                Nation = skier.Nation,
+                ProfileImage = skier.ProfileImage,
                 Sex = skier.Sex
             };
         }
