@@ -28,6 +28,8 @@ namespace Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<SkierOutDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<SkierOutDto>> GetAll()
         {
             IEnumerable<Skier> skiers = _adoSkierDao.FindAll();
