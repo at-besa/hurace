@@ -28,7 +28,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<SkierOutDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<SkierOutDto>> GetAll()
         {
@@ -46,6 +46,8 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<SkierOutDto> GetById(int id)
         {
             Skier skier = _adoSkierDao.FindById(id);
@@ -57,6 +59,9 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SkierOutDto> Update(int id, SkierInDto skierInDto)
         {
             Skier skier = SkierInDto.ToSkier(skierInDto);
@@ -75,15 +80,18 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<SkierOutDto> Insert(SkierInDto skierInDto)
         {
             //TODO does not work properly
             Skier skier = SkierInDto.ToSkier(skierInDto);
             var rowid = _adoSkierDao.Insert(skier);
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(int id)
         {
             Skier skier = _adoSkierDao.FindById(id);
