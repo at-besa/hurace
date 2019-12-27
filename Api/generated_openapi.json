@@ -204,6 +204,43 @@
         }
       }
     },
+    "/RunningRace/{id}/StartList": {
+      "get": {
+        "tags": [
+          "StartList"
+        ],
+        "operationId": "StartList_Get",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StartListSkierOutDto"
+              }
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -378,6 +415,46 @@
           "type": "string"
         },
         "sex": {
+          "type": "string"
+        }
+      }
+    },
+    "StartListSkierOutDto": {
+      "type": "object",
+      "required": [
+        "blocked",
+        "running",
+        "disqualified",
+        "finished",
+        "startposition"
+      ],
+      "properties": {
+        "blocked": {
+          "type": "boolean"
+        },
+        "running": {
+          "type": "boolean"
+        },
+        "disqualified": {
+          "type": "boolean"
+        },
+        "finished": {
+          "type": "boolean"
+        },
+        "startposition": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "nation": {
+          "type": "string"
+        },
+        "profileImage": {
           "type": "string"
         }
       }
