@@ -13,7 +13,7 @@ namespace Hurace.Core.DAL.Importer
         private AdoRaceDao adoRaceDao;
         private AdoSkierDao adoSkierDao;
         private AdoStartListDao adoStartListDao;
-        public IList<StartList> StartLists { get; set; } = new List<StartList>();
+        public IList<StartListMember> StartLists { get; set; } = new List<StartListMember>();
         public StartListsImporter(IConnectionFactory connectionFactory)
         {
             adoRaceDao = new AdoRaceDao(connectionFactory);
@@ -44,10 +44,10 @@ namespace Hurace.Core.DAL.Importer
                 i = 1;
                 while (i < GetNumberOfStarters() + 1)
                 {
-                    StartList startList = new StartList { Race = race };
-                    startList.SkierId = GetNewRandomSkierIdForRace(race);
-                    startList.StartPos = i;
-                    StartLists.Add(startList);
+                    StartListMember startListMember = new StartListMember { Race = race };
+                    startListMember.SkierId = GetNewRandomSkierIdForRace(race);
+                    startListMember.StartPos = i;
+                    StartLists.Add(startListMember);
                     i++;
                 }
             }

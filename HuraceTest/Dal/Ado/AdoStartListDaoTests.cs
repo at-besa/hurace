@@ -41,7 +41,7 @@ namespace HuraceTest.Dal.Ado
 		[Test]
 		public void InsertTest()
 		{
-			var startlist = new StartList
+			var startlist = new StartListMember
 			{
 				Race = new Race {Id = 14},
 				SkierId = 44,

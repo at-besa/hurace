@@ -38,7 +38,7 @@ namespace Hurace.Core.DAL.Importer
 
             if (startLists.Count() == 0)
             {
-                throw new Exception("No StartList data in database to generate RaceData");
+                throw new Exception("No StartListMember data in database to generate RaceData");
             }
 
             foreach (var startList in startLists)

@@ -38,7 +38,7 @@ namespace Hurace.Core.Logic
                     throw new NullReferenceException("No skiers found");
                 }
 
-                IEnumerable<StartList> startListMembers = 
+                IEnumerable<StartListMember> startListMembers = 
                     new AdoStartListDao(connectionFactory)
                     .FindAllByRaceId(raceId)
                     .OrderBy(startListMember => startListMember.StartPos);
@@ -85,7 +85,7 @@ namespace Hurace.Core.Logic
             {
                 var startlistAdo = new AdoStartListDao(connectionFactory);
                 
-                var startList = new StartList
+                var startList = new StartListMember
                 {
                     Race = new AdoRaceDao(connectionFactory).FindById(raceId),
                     SkierId = skierId,
@@ -107,7 +107,7 @@ namespace Hurace.Core.Logic
                 {
                     Id = raceId
                 };
-                var startList = new StartList
+                var startList = new StartListMember
                 {
                     Race = race,
                     SkierId = skierId,
@@ -123,8 +123,8 @@ namespace Hurace.Core.Logic
         {
             return await Task.Run(() => {
                 var startListAdo = new AdoStartListDao(connectionFactory);
-                StartList startListMember = startListAdo.FindByIds(raceId, skierId);
-                if(startListMember != null)
+                StartListMember startListMemberMember = startListAdo.FindByIds(raceId, skierId);
+                if(startListMemberMember != null)
                 {
                     return true;
                 }

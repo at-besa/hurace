@@ -5,10 +5,10 @@ namespace Hurace.Core.DAL.Interface
 {
     interface IStartListDao
     {
-        IEnumerable<StartList> FindAll();
-        StartList FindByIds(int raceId, int skierId);
-        int Insert(StartList startList);
-        bool Update(StartList startList);
-        bool Delete(StartList startList);
+        IEnumerable<StartListMember> FindAll();
+        StartListMember FindByIds(int raceId, int skierId);
+        int Insert(StartListMember startListMember);
+        bool Update(StartListMember startListMember);
+        bool Delete(StartListMember startListMember);
     }
 }
