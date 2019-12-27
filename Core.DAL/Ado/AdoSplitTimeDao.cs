@@ -54,29 +54,29 @@ namespace Hurace.Core.DAL.Ado
         {
             return template.Execute(
                        @"insert into Splittime(racedataId, runNo, splittimeNo, splittime) values (@racedataId, @runNo, @splittimeNo, @splittime); SELECT last_insert_rowid();",
-                       new QueryParameter("@racedataId", splittime.RaceDataId),
-                       new QueryParameter("@runNo", splittime.RunNo),
-                       new QueryParameter("@splittimeNo", splittime.SplittimeNo),
-                       new QueryParameter("@splittime", splittime.Time.ToLongTimeString()));
+                       new QueryParameter("@racedataId", splitTime.RaceDataId),
+                       new QueryParameter("@runNo", splitTime.RunNo),
+                       new QueryParameter("@splittimeNo", splitTime.SplittimeNo),
+                       new QueryParameter("@splittime", splitTime.Time.ToLongTimeString()));
         }
         
         public bool Update(SplitTime splitTime)
         {
             return template.Execute(
                        @"update Splittime set splittime=@splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",
-                       new QueryParameter("@splittime", splittime.Time),
-                       new QueryParameter("@racedataId", splittime.RaceDataId),
-                       new QueryParameter("@runNo", splittime.RunNo),
-                       new QueryParameter("@splittimeNo", splittime.SplittimeNo)) == 1;
+                       new QueryParameter("@splittime", splitTime.Time),
+                       new QueryParameter("@racedataId", splitTime.RaceDataId),
+                       new QueryParameter("@runNo", splitTime.RunNo),
+                       new QueryParameter("@splittimeNo", splitTime.SplittimeNo)) == 1;
         }
         
         public bool Delete(SplitTime splitTime)
         {
             return template.Execute(
                        @"delete from Splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",
-                       new QueryParameter("@racedataId", splittime.RaceDataId),
-                       new QueryParameter("@runNo", splittime.RunNo),
-                       new QueryParameter("@splittimeNo", splittime.SplittimeNo)) >= 1;
+                       new QueryParameter("@racedataId", splitTime.RaceDataId),
+                       new QueryParameter("@runNo", splitTime.RunNo),
+                       new QueryParameter("@splittimeNo", splitTime.SplittimeNo)) >= 1;
         }
     }
 }

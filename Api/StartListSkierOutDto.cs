@@ -1,4 +1,5 @@
-﻿using Hurace.Core.DAL.Domain;
+﻿using System.Dynamic;
+using Hurace.Core.DAL.Domain;
 
 namespace Api
 {
@@ -9,6 +10,7 @@ namespace Api
         public bool Disqualified { get; set; }
         public bool Finished { get; set; }
         public int Startposition { get; set; }
+        public int SkierId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Nation { get; set; }
@@ -23,6 +25,7 @@ namespace Api
                 Disqualified = raceData.Disqualified,
                 Finished = raceData.Finished,
                 Startposition = startListMember.StartPos,
+                SkierId = skier.Id,
                 FirstName = skier.FirstName,
                 LastName = skier.LastName,
                 Nation = skier.Nation,
