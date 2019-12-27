@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Hurace.Core.DAL.Common;
@@ -7,18 +7,18 @@ using Hurace.Core.DAL.Interface;
 
 namespace Hurace.Core.DAL.Ado
 {
-    public class AdoSplittimeDao : ISplittimeDao
+    public class AdoSplitTimeDao : ISplittimeDao
     {
         private readonly AdoTemplate template;
 
-        public AdoSplittimeDao(IConnectionFactory connectionFactory)
+        public AdoSplitTimeDao(IConnectionFactory connectionFactory)
         {
             template = new AdoTemplate(connectionFactory);
         }
 
-        private Splittime MapRowToSplittime(IDataRecord row)
+        private SplitTime MapRowToSplittime(IDataRecord row)
         {
-            return new Splittime
+            return new SplitTime
             {
                 RaceDataId = Convert.ToInt32(row["racedataId"]),
                 RunNo = Convert.ToInt32(row["runNo"]),
@@ -27,12 +27,12 @@ namespace Hurace.Core.DAL.Ado
             };
         }
 
-        public IEnumerable<Splittime> FindAll()
+        public IEnumerable<SplitTime> FindAll()
         {
             return template.Query("select * from Splittime", MapRowToSplittime);
         }
 
-        public IEnumerable<Splittime> FindByRaceDataId(int raceDataId)
+        public IEnumerable<SplitTime> FindByRaceDataId(int raceDataId)
         {
             return template.Query(
                 @"select * from Splittime where racedataId=@raceDataId",
@@ -40,7 +40,7 @@ namespace Hurace.Core.DAL.Ado
                 new QueryParameter("@raceDataId", raceDataId));
         }
 
-        public Splittime FindByIds(int raceDataId, int runNo, int splittimeNo)
+        public SplitTime FindByIds(int raceDataId, int runNo, int splittimeNo)
         {
             return template.QueryById(
                 @"select * from Splittime where racedataId=@raceDataId and runNo=@runNo and splittimeNo=@splittimeNo",
@@ -50,7 +50,7 @@ namespace Hurace.Core.DAL.Ado
                 new QueryParameter("@splittimeNo", splittimeNo));
         }
 
-        public int Insert(Splittime splittime)
+        public int Insert(SplitTime splitTime)
         {
             return template.Execute(
                        @"insert into Splittime(racedataId, runNo, splittimeNo, splittime) values (@racedataId, @runNo, @splittimeNo, @splittime); SELECT last_insert_rowid();",
@@ -60,7 +60,7 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@splittime", splittime.Time.ToLongTimeString()));
         }
         
-        public bool Update(Splittime splittime)
+        public bool Update(SplitTime splitTime)
         {
             return template.Execute(
                        @"update Splittime set splittime=@splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",
@@ -70,7 +70,7 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@splittimeNo", splittime.SplittimeNo)) == 1;
         }
         
-        public bool Delete(Splittime splittime)
+        public bool Delete(SplitTime splitTime)
         {
             return template.Execute(
                        @"delete from Splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",

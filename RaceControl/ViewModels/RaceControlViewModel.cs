@@ -17,15 +17,15 @@ namespace RaceControl.ViewModels
         private readonly IRaceControlLogic raceControlLogic = RaceControlLogic.Instance;
         private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
 
-        private ICollection<SplittimeModel> actualSplittimes;
-        public ICollection<SplittimeModel> ActualSplittimes
+        private ICollection<SplitTimeModel> actualSplittimes;
+        public ICollection<SplitTimeModel> ActualSplittimes
         {
 	        get => actualSplittimes;
 	        set => Set(ref actualSplittimes, value);
         }
 
-        private ICollection<SplittimeModel> lastSplittimes;
-        public ICollection<SplittimeModel> LastSplittimes
+        private ICollection<SplitTimeModel> lastSplittimes;
+        public ICollection<SplitTimeModel> LastSplittimes
         {
 	        get => lastSplittimes;
 	        set => Set(ref lastSplittimes, value);

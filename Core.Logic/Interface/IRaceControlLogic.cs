@@ -9,6 +9,6 @@ namespace Hurace.Core.Logic.Interface
     {
         Task<RaceControlModel> GetRaceControlForRaceId(int raceId);
         Task<bool> StartRun(StartListMemberModel slm, int raceId);
-        Task<ICollection<SplittimeModel>> GetSplittimesForSkier(int skierId, int runNo);
+        Task<ICollection<SplitTimeModel>> GetSplittimesForSkier(int skierId, int runNo);
     }
 }

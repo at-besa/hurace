@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using Hurace.Core.DAL.Domain;
 
-namespace Hurace.Core.Logic.Model
+namespace Hurace.Core.DAL.Domain
 {
-    public class SplittimeModel : IComparable<SplittimeModel>
+    // DTO/Domain Object
+    public class SplitTime : IComparable<SplitTime>
     {
         public int RaceDataId { get; set; }
         public int RunNo { get; set; }
         public int SplittimeNo { get; set; }
         public DateTime Time { get; set; }
-        public TimeSpan TimeOffsetToWinner { get; set; }
-
         public override string ToString() =>
-            $"Splittime(RaceDataId:{RaceDataId}, RunNo:{RunNo}, SplittimeNo:{SplittimeNo}, Time:{Time})";
+            $"SplitTime(RaceDataId:{RaceDataId}, RunNo:{RunNo}, SplittimeNo:{SplittimeNo}, Time:{Time})";
 
-        public int CompareTo(SplittimeModel other) {
+        public int CompareTo(SplitTime other) {
             if (ReferenceEquals(this, other)) return 0;
             if (ReferenceEquals(null, other)) return 1;
             var raceDataIdComparison = RaceDataId.CompareTo(other.RaceDataId);

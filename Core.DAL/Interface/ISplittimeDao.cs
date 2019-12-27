@@ -5,11 +5,11 @@ namespace Hurace.Core.DAL.Interface
 {
     interface ISplittimeDao
     {
-        IEnumerable<Splittime> FindAll();
-        IEnumerable<Splittime> FindByRaceDataId(int raceDataId);
-        Splittime FindByIds(int raceDataId, int runNo, int splittimeNo);
-        bool Update(Splittime splittime);
-        int Insert(Splittime splittime);
-        bool Delete(Splittime splittime);
+        IEnumerable<SplitTime> FindAll();
+        IEnumerable<SplitTime> FindByRaceDataId(int raceDataId);
+        SplitTime FindByIds(int raceDataId, int runNo, int splittimeNo);
+        bool Update(SplitTime splitTime);
+        int Insert(SplitTime splitTime);
+        bool Delete(SplitTime splitTime);
     }
 }

@@ -16,10 +16,10 @@ namespace Api.Controllers
     public class SkierController : ControllerBase
     {
 
-        private readonly ILogger<WeatherForecastController> _logger;
-        private AdoSkierDao _adoSkierDao;
+        private readonly ILogger<SkierController> _logger;
+        private readonly AdoSkierDao _adoSkierDao;
 
-        public SkierController(ILogger<WeatherForecastController> logger)
+        public SkierController(ILogger<SkierController> logger)
         {
             _logger = logger;
             var configuration = ConfigurationUtil.GetConfiguration();

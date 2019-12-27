@@ -42,9 +42,9 @@ namespace HuraceTest.Dal.Ado
 			//{
 			//	Disqualified = false,
 			//	RaceId = new AdoRaceDao(connectionFactory).FindById(15),
-			//	Splittime = new []{
-			//		new AdoSplittimeDao(connectionFactory).FindByRaceDataId(45, 1), 
-			//		new AdoSplittimeDao(connectionFactory).FindByRaceDataId(45, 2)},
+			//	SplitTime = new []{
+			//		new AdoSplitTimeDao(connectionFactory).FindByRaceDataId(45, 1), 
+			//		new AdoSplitTimeDao(connectionFactory).FindByRaceDataId(45, 2)},
 			//	SkierId = 5
 			//};
 			//raceData.SkierId = 45;

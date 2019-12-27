@@ -14,7 +14,7 @@ namespace Api.Controllers
     public class RunningRaceController : ControllerBase    
     {
         private readonly ILogger<RunningRaceController> _logger;
-        private AdoRaceDao _adoRaceDao;
+        private readonly AdoRaceDao _adoRaceDao;
 
         public RunningRaceController(ILogger<RunningRaceController> logger)
         {

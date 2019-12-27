@@ -20,11 +20,11 @@ namespace Hurace.Core.DAL.Ado
         private RaceData MapRowToRaceData(IDataRecord row)
         {
             int id = Convert.ToInt32(row["id"]);
-            IEnumerable<Splittime>[] runs = new IEnumerable<Splittime>[2];
+            IEnumerable<SplitTime>[] runs = new IEnumerable<SplitTime>[2];
             for (int i = 0; i <= 1; i++)
             {
                 var i1 = i;
-                runs[i] = new AdoSplittimeDao(template.ConnectionFactory).FindByRaceDataId(id).Where(splittime => splittime.RunNo == i1+1);
+                runs[i] = new AdoSplitTimeDao(template.ConnectionFactory).FindByRaceDataId(id).Where(splittime => splittime.RunNo == i1+1);
             }
 
             return new RaceData

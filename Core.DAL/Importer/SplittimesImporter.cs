@@ -9,14 +9,14 @@
 //    class SplittimesImporter : IImporter
 //    {
 //        private AdoRaceDataDao adoRaceDataDao;
-//        private AdoSplittimeDao adoSplittimeDao;
-//        private IList<Splittime> Splittimes { get; set; } = new List<Splittime>();
+//        private AdoSplitTimeDao adoSplittimeDao;
+//        private IList<SplitTime> Splittimes { get; set; } = new List<SplitTime>();
 //
 //        public DateTime[] BaseTimeForRaceType { get; set; }
 //        public SplittimesImporter(IConnectionFactory connectionfactroy)
 //        {
 //            adoRaceDataDao = new AdoRaceDataDao(connectionfactroy);
-//            adoSplittimeDao = new AdoSplittimeDao(connectionfactroy);
+//            adoSplittimeDao = new AdoSplitTimeDao(connectionfactroy);
 //            BaseTimeForRaceType = new DateTime[]{
 //                    new DateTime().AddSeconds(30).AddMilliseconds(300),
 //                    new DateTime().AddSeconds(28).AddMilliseconds(100),
@@ -51,7 +51,7 @@
 //
 //                        for (int splittimeNo = 1; splittimeNo <= splittimes; splittimeNo++)
 //                        {
-//                            var splittime = new Splittime();
+//                            var splittime = new SplitTime();
 //                            splittime.RunNo = 1;
 //                            splittime.RaceDataId = raceData.Id;
 //                            splittime.SplittimeNo = splittimeNo;
@@ -74,7 +74,7 @@
 //                            }
 //                            for (int splittimeNo = 1; splittimeNo <= splittimes; splittimeNo++)
 //                            {
-//                                var splittime = new Splittime();
+//                                var splittime = new SplitTime();
 //                                splittime.RunNo = runNo;
 //                                splittime.RaceDataId = raceData.Id;
 //                                splittime.SplittimeNo = splittimeNo;
@@ -92,7 +92,7 @@
 //                    {
 //                        for (int splittimeNo = 1; splittimeNo <= raceData.RaceId.Splittimes; splittimeNo++)
 //                        {
-//                            var splittime = new Splittime();
+//                            var splittime = new SplitTime();
 //                            splittime.RunNo = runNo;
 //                            splittime.RaceDataId = raceData.Id;
 //                            splittime.SplittimeNo = splittimeNo;

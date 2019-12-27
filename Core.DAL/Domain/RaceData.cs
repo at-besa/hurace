@@ -7,7 +7,7 @@ namespace Hurace.Core.DAL.Domain
     public class RaceData : IComparable<RaceData>
     {
         private const string Seperator = " - ";
-        private Func<IEnumerable<Splittime>, string> splitter = splittimes => String.Join(Seperator, splittimes);
+        private Func<IEnumerable<SplitTime>, string> splitter = splittimes => String.Join(Seperator, splittimes);
         public int Id { get; set; }
         public int RaceId { get; set; }
         public int SkierId { get; set; }
@@ -15,7 +15,7 @@ namespace Hurace.Core.DAL.Domain
         public bool Running { get; set; }
         public bool Blocked { get; set; }
         public bool Finished { get; set; }
-        public IEnumerable<Splittime>[] Splittime { get; set; }
+        public IEnumerable<SplitTime>[] Splittime { get; set; }
 
         public override string ToString() =>
             $"RaceData(id:{SkierId}, RaceId:{RaceId}, Runs: [1: {splitter(Splittime[0])} 2: {splitter(Splittime[1])}], Disqualified:{Disqualified})";

@@ -19,9 +19,9 @@ namespace Hurace.Core.Logic
         private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
         public RaceControlModel RaceControlModel { get; private set; }
 
-        private ICollection<SplittimeModel> WinnerSplitimes { get; set; }
-        private ICollection<SplittimeModel> ActualSplitimes { get; set; } 
-        private ICollection<SplittimeModel> LastSplitimes { get; set; } 
+        private ICollection<SplitTimeModel> WinnerSplitimes { get; set; }
+        private ICollection<SplitTimeModel> ActualSplitimes { get; set; } 
+        private ICollection<SplitTimeModel> LastSplitimes { get; set; } 
         
         private IConnectionFactory connectionFactory;
         
@@ -96,7 +96,7 @@ namespace Hurace.Core.Logic
 	        }
         }
 
-        public async Task<ICollection<SplittimeModel>> GetSplittimesForSkier(int skierId, int runNo)
+        public async Task<ICollection<SplitTimeModel>> GetSplittimesForSkier(int skierId, int runNo)
         {
             return await Task.Run(() =>
             {
@@ -107,20 +107,20 @@ namespace Hurace.Core.Logic
 
                 if (raceDataForThisRaceRun != null)
                 {
-                    var splittimes = new AdoSplittimeDao(connectionFactory).FindByRaceDataId(raceDataForThisRaceRun.Id).Where(splittime => splittime.RunNo == runNo);
+                    var splittimes = new AdoSplitTimeDao(connectionFactory).FindByRaceDataId(raceDataForThisRaceRun.Id).Where(splittime => splittime.RunNo == runNo);
 
                     EvaluateWinnerSplittimes();
 
-                    ActualSplitimes = new ObservableCollection<SplittimeModel>();
+                    ActualSplitimes = new ObservableCollection<SplitTimeModel>();
                     foreach (var splittime in splittimes)
                     {
-                        ActualSplitimes.Add(new SplittimeModel
+                        ActualSplitimes.Add(new SplitTimeModel
                         {
                             RaceDataId = splittime.RaceDataId,
                             RunNo = splittime.RunNo,
-                            SplittimeNo = splittime.SplittimeNo,
+                            SplitTimeNo = splittime.SplittimeNo,
                             Time = splittime.Time,
-                            TimeOffsetToWinner = WinnerSplitimes != null ? WinnerSplitimes.FirstOrDefault(model => model.SplittimeNo == splittime.SplittimeNo).Time - splittime.Time : splittime.Time- splittime.Time
+                            TimeOffsetToWinner = WinnerSplitimes != null ? WinnerSplitimes.FirstOrDefault(model => model.SplitTimeNo == splittime.SplittimeNo).Time - splittime.Time : splittime.Time- splittime.Time
                         });
                     }
                 }

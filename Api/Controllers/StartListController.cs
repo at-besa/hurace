@@ -16,9 +16,9 @@ namespace Api.Controllers
     public class StartListController : ControllerBase
     {
         private readonly ILogger<StartListController> _logger;
-        private AdoStartListDao _adoStartListDao;
-        private AdoRaceDataDao _adoRaceDataDao;
-        private AdoSkierDao _adoSkierDao;
+        private readonly AdoStartListDao _adoStartListDao;
+        private readonly AdoRaceDataDao _adoRaceDataDao;
+        private readonly AdoSkierDao _adoSkierDao;
         public StartListController(ILogger<StartListController> logger)
         {
             _logger = logger;
@@ -34,6 +34,7 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IList<StartListSkierOutDto>> Get(int id)
         {
+            //TODO act on second turn, maybe with startlist turn id parameter
             IList<StartListSkierOutDto> startListSkierOutDtos = new List<StartListSkierOutDto>();
             IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(id);
             if (startListMembers == null)
