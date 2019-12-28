@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Util;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
@@ -22,9 +23,7 @@ namespace Api.Controllers
         public SkierController(ILogger<SkierController> logger)
         {
             _logger = logger;
-            var configuration = ConfigurationUtil.GetConfiguration();
-            var connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
-            _adoSkierDao = new AdoSkierDao(connectionFactory);
+            _adoSkierDao = new AdoSkierDao(ConnectionFactoryHolder.getInstace().getConnectionFactory());
         }
 
         [HttpGet]

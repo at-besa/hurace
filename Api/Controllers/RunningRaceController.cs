@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Api.Util;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
@@ -19,9 +20,7 @@ namespace Api.Controllers
         public RunningRaceController(ILogger<RunningRaceController> logger)
         {
             _logger = logger;
-            var configuration = ConfigurationUtil.GetConfiguration();
-            var connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
-            _adoRaceDao = new AdoRaceDao(connectionFactory);
+            _adoRaceDao = new AdoRaceDao(ConnectionFactoryHolder.getInstace().getConnectionFactory());
         }
 
         [HttpGet]

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Api.Util;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
@@ -20,8 +21,7 @@ namespace Api.Controllers
         public SplitTimesController(ILogger<StartListController> logger)
         {
             _logger = logger;
-            var configuration = ConfigurationUtil.GetConfiguration();
-            var connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+            var connectionFactory = ConnectionFactoryHolder.getInstace().getConnectionFactory();
             _adoSplitTimeDao = new AdoSplitTimeDao(connectionFactory);
             _adoRaceDataDao = new AdoRaceDataDao(connectionFactory);
         }
