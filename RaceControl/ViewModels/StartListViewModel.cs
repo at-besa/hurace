@@ -71,11 +71,12 @@ namespace RaceControl.ViewModels
             var startListMemberToRemove = (StartListMemberModel)sender;
             if (startListMemberToRemove != null)
             {
+                var raceId = RunningRace.Id;
                 var skierId = startListMemberToRemove.Skier.Id;
                 var startposition = startListMemberToRemove.Startposition;
-                var raceId = RunningRace.Id;
-                await startListLogic.DeleteStartListMember(skierId, raceId, startposition);
-                if(!await startListLogic.IsStartListMemberInStartList(raceId , skierId))
+                var runNo = startListMemberToRemove.RunNo;
+                await startListLogic.DeleteStartListMember(skierId, raceId, runNo ,startposition);
+                if(!await startListLogic.IsStartListMemberInStartList(raceId , skierId, runNo))
                 {
                     await RearrangeStartPositionOfStartListMembers(startposition);
                 }
@@ -90,7 +91,7 @@ namespace RaceControl.ViewModels
             {
                 if(startposition < startListMember.Startposition)
                 {
-                    var updateded = await startListLogic.UpdateStartListMemberStartPos(RunningRace.Id, startListMember.Startposition - 1, startListMember.Skier.Id);
+                    var updateded = await startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMember.Skier.Id, startListMember.RunNo,startListMember.Startposition - 1);
                 }
             }       
         }

@@ -22,7 +22,8 @@ namespace Hurace.Core.DAL.Ado
             {
                 Race = new AdoRaceDao(template.ConnectionFactory).FindById(Convert.ToInt32(row["raceId"])),
                 SkierId = Convert.ToInt32(row["skierId"]),
-                StartPos = Convert.ToInt32(row["startpos"])
+                StartPos = Convert.ToInt32(row["startpos"]),
+                RunNo = Convert.ToInt32(row["runNo"])
             };
         }
 
@@ -31,13 +32,14 @@ namespace Hurace.Core.DAL.Ado
             return template.Query("select * from startlist", MapRowToStartList);
         }
 
-        public StartListMember FindByIds(int raceId, int skierId)
+        public StartListMember FindByIds(int raceId, int skierId, int runNo)
         {
             return template.QueryById(
-                @"select * from startlist where raceId=@raceId and skierId=@skierId",
+                @"select * from startlist where raceId=@raceId and skierId=@skierId and runNo=@runNo",
                 MapRowToStartList,
                 new QueryParameter("@raceId", raceId),
-                new QueryParameter("@skierId", skierId));
+                new QueryParameter("@skierId", skierId),
+                new QueryParameter("@runNo", runNo));
         }
         
         public IEnumerable<StartListMember> FindAllByRaceId(int raceId)
@@ -56,7 +58,7 @@ namespace Hurace.Core.DAL.Ado
                 new QueryParameter("@skierId", skierId));
         }
 
-        internal IEnumerable<StartListMember> FindById(int raceId)
+        internal IEnumerable<StartListMember> FindByRaceId(int raceId)
         {
             return template.Query(
                 @"select * from startlist where raceId=@raceId",
@@ -67,27 +69,30 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(StartListMember startListMember)
         {
             return template.Execute(
-                       @"insert into startlist(raceId, skierId, startpos) values (@raceId, @skierId, @startpos); SELECT last_insert_rowid();",
+                       @"insert into startlist(raceId, skierId, runNo, startpos) values (@raceId, @skierId, @runNo,@startpos); SELECT last_insert_rowid();",
                        new QueryParameter("@raceId", startListMember.Race.Id),
                        new QueryParameter("@skierId", startListMember.SkierId),
+                       new QueryParameter("@runNo", startListMember.RunNo),
                        new QueryParameter("@startpos", startListMember.StartPos));
         }
 
         public bool Update(StartListMember startListMember)
         {
             return template.Execute(
-                       @"update startlist set startpos=@startpos where raceId=@raceId and skierId=@skierId",
+                       @"update startlist set startpos=@startpos where raceId=@raceId and skierId=@skierId and runNo=@runNo",
                        new QueryParameter("@raceId", startListMember.Race.Id),
                        new QueryParameter("@skierId", startListMember.SkierId),
+                       new QueryParameter("@runNo", startListMember.RunNo),
                        new QueryParameter("@startpos", startListMember.StartPos)) == 1;
         }
 
         public bool Delete(StartListMember startListMember)
         {
             return template.Execute(
-                       @"delete from startlist where raceId=@raceId and skierId=@skierId and startposition=@startposition",
+                       @"delete from startlist where raceId=@raceId and skierId=@skierId and runNo=@runNo and startposition=@startposition",
                        new QueryParameter("@raceId", startListMember.Race.Id),
                        new QueryParameter("@skierId", startListMember.SkierId),
+                       new QueryParameter("@runNo", startListMember.RunNo),
                        new QueryParameter("@startposition", startListMember.StartPos)) == 1;
         }
     }

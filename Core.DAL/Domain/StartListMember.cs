@@ -9,9 +9,10 @@ namespace Hurace.Core.DAL.Domain
         public Race Race { get; set; }
         public int SkierId { get; set; }
         public int StartPos { get; set; }
+        public int RunNo { get; set; }
 
         public override string ToString() =>
-            $"StartListMember(raceId: {Race.Id}, Name:{Race.Name}, skierId:{SkierId}, StartPos:{StartPos})";
+            $"StartListMember(raceId: {Race.Id}, Name:{Race.Name}, skierId:{SkierId}, StartPos:{StartPos}, RunNo:{RunNo})";
 
         public int CompareTo(StartListMember other) {
             if (ReferenceEquals(this, other)) return 0;
@@ -20,6 +21,8 @@ namespace Hurace.Core.DAL.Domain
             if (raceComparison != 0) return raceComparison;
             var skierIdComparison = SkierId.CompareTo(other.SkierId);
             if (skierIdComparison != 0) return skierIdComparison;
+            var runNoComparison = RunNo.CompareTo(other.RunNo);
+            if (runNoComparison != 0) return runNoComparison;
             return StartPos.CompareTo(other.StartPos);
         }
     }

@@ -9,8 +9,8 @@ namespace Hurace.Core.Logic.Interface
     {
         Task<StartListModel> GetStartListForRaceId(int raceId);
         Task<ICollection<SkierModel>> GetAllSkiersWithSameSex(string sex);
-        Task<bool> UpdateStartListMemberStartPos(int raceId, int pos, int skierId);
-        Task<bool> DeleteStartListMember(int skierId, int raceId, int startposition);
-        Task<bool> IsStartListMemberInStartList(int raceId, int skierId);
+        Task<bool> UpdateStartListMemberStartPosition(int raceId, int skierId, int runNo, int startPosition);
+        Task<bool> DeleteStartListMember(int raceId, int skierId, int runNo, int startPosition);
+        Task<bool> IsStartListMemberInStartList(int raceId, int skierId, int runNo);
     }
 }

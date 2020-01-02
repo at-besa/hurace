@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging.EventSource;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("RunningRace/{id:int}/[controller]")]
+    [Route("RunningRace/{runningRaceId:int}/Run/{runNo:int}/[controller]")]
     public class StartListController : ControllerBase
     {
         private readonly ILogger<StartListController> _logger;
@@ -32,16 +32,18 @@ namespace Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IList<StartListSkierOutDto>> Get(int id)
+        public ActionResult<IList<StartListSkierOutDto>> Get(int runningRaceId, int runNo)
         {
             //TODO act on second turn, maybe with startlist turn id parameter
             IList<StartListSkierOutDto> startListSkierOutDtos = new List<StartListSkierOutDto>();
-            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(id);
+            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(runningRaceId);
             if (startListMembers == null)
             {
                 return NotFound();
             }
-            IEnumerable<RaceData> raceDatas = _adoRaceDataDao.FindAllByRaceId(id);
+            //TODO: reduce startListMembers to the right run!
+            //startListMembers = startListMembers.Where(member => member.)
+            IEnumerable<RaceData> raceDatas = _adoRaceDataDao.FindAllByRaceId(runningRaceId);
             if (raceDatas == null)
             {
                 return NotFound();
@@ -49,6 +51,10 @@ namespace Api.Controllers
             foreach (var startListMember in startListMembers)
             {
                 var raceData = raceDatas.FirstOrDefault(data => data.SkierId == startListMember.SkierId);
+                if (raceData == null)
+                {
+                    continue;
+                }
                 var skier = _adoSkierDao.FindById(raceData.SkierId);
                 startListSkierOutDtos.Add(StartListSkierOutDto.FromSkierRaceDataAndStartListMember(skier, raceData, startListMember));
             }

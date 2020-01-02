@@ -79,7 +79,7 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<bool> UpdateStartListMemberStartPos(int raceId, int pos, int skierId)
+        public async Task<bool> UpdateStartListMemberStartPosition(int raceId, int skierId, int runNo, int startPosition)
         {
             return await Task.Run(() =>
             {
@@ -89,7 +89,7 @@ namespace Hurace.Core.Logic
                 {
                     Race = new AdoRaceDao(connectionFactory).FindById(raceId),
                     SkierId = skierId,
-                    StartPos = pos
+                    StartPos = startPosition
                 };
 
                 var result = startlistAdo.Update(startList);
@@ -98,7 +98,7 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<bool> DeleteStartListMember(int skierId, int raceId, int startposition)
+        public async Task<bool> DeleteStartListMember(int raceId, int skierId, int runNo, int startposition)
         {
             return await Task.Run(() =>
             {
@@ -119,11 +119,11 @@ namespace Hurace.Core.Logic
         }
 
 
-        public async Task<bool> IsStartListMemberInStartList(int raceId, int skierId)
+        public async Task<bool> IsStartListMemberInStartList(int raceId, int skierId, int runNo)
         {
             return await Task.Run(() => {
                 var startListAdo = new AdoStartListDao(connectionFactory);
-                StartListMember startListMemberMember = startListAdo.FindByIds(raceId, skierId);
+                StartListMember startListMemberMember = startListAdo.FindByIds(raceId, skierId, runNo);
                 if(startListMemberMember != null)
                 {
                     return true;

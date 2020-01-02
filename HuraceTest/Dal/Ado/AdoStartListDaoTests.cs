@@ -35,7 +35,7 @@ namespace HuraceTest.Dal.Ado
 		[Test]
 		public void FindByIdsTest()
 		{
-			Assert.True(startlistDao.FindByIds(4,4).SkierId == 4);
+			Assert.True(startlistDao.FindByIds(4,4, 1).SkierId == 4);
 		}
 
 		[Test]
@@ -45,7 +45,8 @@ namespace HuraceTest.Dal.Ado
 			{
 				Race = new Race {Id = 14},
 				SkierId = 44,
-				StartPos = 2
+				StartPos = 2,
+				RunNo = 1
 			};
 			Assert.True(startlistDao.Insert(startlist) > 0);
 		}
@@ -53,10 +54,10 @@ namespace HuraceTest.Dal.Ado
 		[Test]
 		public void UpdateTest()
 		{
-			var test = startlistDao.FindByIds(6, 2);
+			var test = startlistDao.FindByIds(6, 2, 1);
 			test.StartPos = 66;
 			startlistDao.Update(test);
-			Assert.True(startlistDao.FindByIds(6,2).StartPos == 66);
+			Assert.True(startlistDao.FindByIds(6,2, 1).StartPos == 66);
 		}
 	}
 }
