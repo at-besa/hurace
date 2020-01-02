@@ -34,15 +34,14 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IList<StartListSkierOutDto>> Get(int runningRaceId, int runNo)
         {
-            //TODO act on second turn, maybe with startlist turn id parameter
             IList<StartListSkierOutDto> startListSkierOutDtos = new List<StartListSkierOutDto>();
             IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(runningRaceId);
             if (startListMembers == null)
             {
                 return NotFound();
             }
-            //TODO: reduce startListMembers to the right run!
-            //startListMembers = startListMembers.Where(member => member.)
+            
+            startListMembers = startListMembers.Where(member => member.RunNo == runNo);
             IEnumerable<RaceData> raceDatas = _adoRaceDataDao.FindAllByRaceId(runningRaceId);
             if (raceDatas == null)
             {

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("RunningRace/{runningRaceId:int}/Skier/{skierId:int}/[Controller]")]
+    [Route("RunningRace/{runningRaceId:int}/Run/{runNo:int}/Skier/{skierId:int}/[Controller]")]
     public class SplitTimesController : ControllerBase
     {
         private readonly ILogger<StartListController> _logger;
@@ -29,7 +29,7 @@ namespace Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IList<SplitTimeOutDto>> Get(int runningRaceId, int skierId)
+        public ActionResult<IList<SplitTimeOutDto>> Get(int runningRaceId, int runNo, int skierId)
         {
             IEnumerable<RaceData> raceDatasByRaceId = _adoRaceDataDao.FindAllByRaceId(runningRaceId);
             if (raceDatasByRaceId == null)
@@ -48,10 +48,12 @@ namespace Api.Controllers
             {
                 return NotFound();
             }
+
+            var splitTimesForRun = splitTimes.Where(time => time.RunNo == runNo);
             IList<SplitTimeOutDto> splitTimeOutDtos = new List<SplitTimeOutDto>();
-            foreach (var splitTime in splitTimes)
+            foreach (var splitTimeForRun in splitTimesForRun)
             {
-                splitTimeOutDtos.Add(SplitTimeOutDto.FromSplitTime(splitTime));
+                splitTimeOutDtos.Add(SplitTimeOutDto.FromSplitTime(splitTimeForRun));
             }
             return Ok(splitTimeOutDtos);
         }
