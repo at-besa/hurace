@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("RunningRace/{runningRaceId:int}/[Controller]")]
+    [Route("RunningRace/{runningRaceId:int}/Run/{runNo:int}/[Controller]")]
     public class RankingController : ControllerBase
     {
         private readonly ILogger<RankingController> _logger;
@@ -35,10 +35,14 @@ namespace Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<IList<RankingSkierOutDto>> Get(int runningRaceId)
+        public ActionResult<IList<RankingSkierOutDto>> Get(int runningRaceId, int runNo)
         {
             IList<RankingSkierOutDto> rankingSkierOutDtos = new List<RankingSkierOutDto>();
             IList<RaceData> finishedStartListMemberRaceDatas = new List<RaceData>();
+            if (runNo < 1 || runNo > 2)
+            {
+                return BadRequest();
+            }
             Race runningRace = _adoRaceDao.FindById(runningRaceId);
             if (runningRace == null)
             {
@@ -53,7 +57,7 @@ namespace Api.Controllers
             {
                 RaceData raceData = _adoRaceDataDao.FindAllBySkierId(startListMember.SkierId)
                     .FirstOrDefault(data => data.RaceId == runningRaceId);
-                if (raceData.Finished && !raceData.Disqualified)
+                if (raceData != null && (!raceData.Finished && !raceData.Disqualified))
                 {
                     finishedStartListMemberRaceDatas.Add(raceData);
                 }
@@ -62,7 +66,12 @@ namespace Api.Controllers
             foreach (var finishedStartListMemberRaceData in finishedStartListMemberRaceDatas)
             {
                 var lastSplitTime = _adoSplitTimeDao.FindByRaceDataId(finishedStartListMemberRaceData.Id)
-                    .FirstOrDefault(splitTimeEntry => splitTimeEntry.SplittimeNo == runningRace.Splittimes);
+                    .FirstOrDefault(splitTimeEntry => (splitTimeEntry.SplittimeNo == runningRace.Splittimes) 
+                                                      && splitTimeEntry.RunNo == runNo);
+                if (lastSplitTime == null)
+                {
+                    continue;
+                }                                                      
                 var skier = _adoSkierDao.FindById(finishedStartListMemberRaceData.SkierId);
                 rankingSkierOutDtos.Add(new RankingSkierOutDto()
                 {
