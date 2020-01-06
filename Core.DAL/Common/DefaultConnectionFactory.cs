@@ -1,4 +1,6 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
@@ -38,7 +40,13 @@ namespace Hurace.Core.DAL.Common
         public DbConnection CreateConnection()
         {
             var connection = dbProviderFactory.CreateConnection();
-            connection.ConnectionString = this.ConnectionString;
+
+            string actualPathOfAssembly = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string directoryNamePathOfAssembly = Path.GetDirectoryName(actualPathOfAssembly);
+            string absolutePathForConnectionString = @"DataSource=" + directoryNamePathOfAssembly + @"\\" + this.ConnectionString.Split('=')[1];
+
+            connection.ConnectionString = absolutePathForConnectionString;
+
             connection.Open();
             return connection;
         }

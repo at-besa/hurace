@@ -29,7 +29,6 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<RunningRunOutDto> Get(int runningRaceId)
         {
-            //new RunImporter(ConnectionFactoryHolder.getInstace().getConnectionFactory()).Import();
             RunningRunOutDto runningRun = null;
             Race race = _adoRaceDao.FindById(runningRaceId);
             if (race == null)

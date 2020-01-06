@@ -34,7 +34,7 @@ namespace Hurace.Core.DAL.Ado
 
         public Run FindById(int raceId, int runNo)
         {
-            return template.QueryById("select * from Status where raceId=@raceId and runNo=@runNo",
+            return template.QueryById("select * from Run where raceId=@raceId and runNo=@runNo",
                 MapRowToRun,
                 new QueryParameter("@raceId", raceId),
                 new QueryParameter("@runNo", runNo));
@@ -43,10 +43,11 @@ namespace Hurace.Core.DAL.Ado
         public bool Update(Run Run)
         {
             return template.Execute(
-                       @"update Run set run=@run where raceId=@raceId and runNo=@runNo",
+                       @"update Run set raceId=@raceId, runNo=@runNo, running=@running, finished=@finished where raceId=@raceId and runNo=@runNo",
                        new QueryParameter("@raceId", Run.RaceId),
                        new QueryParameter("@runNo", Run.RunNo),
-                       new QueryParameter("@run", Run)) == 1;
+                       new QueryParameter("@running", Run.Running),
+                       new QueryParameter("@finished", Run.Finished)) == 1;
         }
 
         public int Insert(Run Run)

@@ -35,6 +35,7 @@ namespace Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<IList<RankingSkierOutDto>> Get(int runningRaceId, int runNo)
         {
             IList<RankingSkierOutDto> rankingSkierOutDtos = new List<RankingSkierOutDto>();
