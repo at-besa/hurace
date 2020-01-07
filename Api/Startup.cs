@@ -15,7 +15,7 @@ namespace Api
 {
     public class Startup
     {
-        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly string _myAllowAnyOriginsHeaderAndMethods = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,8 +30,8 @@ namespace Api
             services.AddSwaggerDocument();
             services.AddCors(options =>
             {
-                options.AddPolicy(_myAllowSpecificOrigins,
-                    builder => { builder.AllowAnyOrigin(); });
+                options.AddPolicy(_myAllowAnyOriginsHeaderAndMethods,
+                    builder => { builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin(); });
             });
         }
 
@@ -43,7 +43,7 @@ namespace Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(_myAllowSpecificOrigins);
+            app.UseCors(_myAllowAnyOriginsHeaderAndMethods);
             
             app.UseHttpsRedirection();
 

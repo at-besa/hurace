@@ -60,7 +60,6 @@ namespace Api.Controllers
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SkierOutDto> Update(int id, SkierInDto skierInDto)
         {
             Skier skier = SkierInDto.ToSkier(skierInDto);
@@ -70,10 +69,6 @@ namespace Api.Controllers
             if(updatedSkier == null)
             {
                 return NotFound();
-            }
-            if(skier.CompareTo(updatedSkier) != 0)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return Ok(SkierOutDto.FromSkier(updatedSkier));
         }
