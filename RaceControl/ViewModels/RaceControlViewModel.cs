@@ -86,7 +86,6 @@ namespace RaceControl.ViewModels
         {
             if (SelectedSkierViewModel != null)
             {
-                //SelectedSkierViewModel.Blocked = false;
                 await raceControlLogic.StartRun(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
             }
         }

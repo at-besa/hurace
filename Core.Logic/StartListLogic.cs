@@ -21,6 +21,18 @@ namespace Hurace.Core.Logic
         {
             var configuration = ConfigurationUtil.GetConfiguration();
             connectionFactory = DefaultConnectionFactory.FromConfiguration(configuration, "HuraceDbConnection");
+            
+            // AdoSplitTimeDao std = new AdoSplitTimeDao(connectionFactory);
+            // var data = std.FindAll();
+            //
+            // foreach (var splitTime in data)
+            // {
+            //     var random = new Random();
+            //     splitTime.Time = splitTime.Time.AddMilliseconds(random.Next(0, 999));
+            //     std.Update(splitTime);
+            //     Console.WriteLine($"Updated {splitTime}");
+            // }
+
         }
 
         public async Task<StartListModel> GetStartListForRaceId(int raceId)

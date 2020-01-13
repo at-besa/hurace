@@ -57,14 +57,14 @@ namespace Hurace.Core.DAL.Ado
                        new QueryParameter("@racedataId", splitTime.RaceDataId),
                        new QueryParameter("@runNo", splitTime.RunNo),
                        new QueryParameter("@splittimeNo", splitTime.SplittimeNo),
-                       new QueryParameter("@splittime", splitTime.Time.ToLongTimeString()));
+                       new QueryParameter("@splittime", splitTime.Time.ToString("HH:mm:ss.fff")));
         }
         
         public bool Update(SplitTime splitTime)
         {
             return template.Execute(
                        @"update Splittime set splittime=@splittime where racedataId=@racedataId and runNo=@runNo and splittimeNo=@splittimeNo",
-                       new QueryParameter("@splittime", splitTime.Time),
+                       new QueryParameter("@splittime", splitTime.Time.ToString("HH:mm:ss.fff")),
                        new QueryParameter("@racedataId", splitTime.RaceDataId),
                        new QueryParameter("@runNo", splitTime.RunNo),
                        new QueryParameter("@splittimeNo", splitTime.SplittimeNo)) == 1;

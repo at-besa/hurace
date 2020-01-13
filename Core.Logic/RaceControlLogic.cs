@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Xml.Schema;
 using Hurace.Core.DAL.Ado;
@@ -9,6 +11,7 @@ using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
+using Hurace.Core.Logic.Simulator;
 
 namespace Hurace.Core.Logic
 {
@@ -22,6 +25,9 @@ namespace Hurace.Core.Logic
         private ICollection<SplitTimeModel> WinnerSplitimes { get; set; }
         private ICollection<SplitTimeModel> ActualSplitimes { get; set; } 
         private ICollection<SplitTimeModel> LastSplitimes { get; set; } 
+        private bool SimulatorActivated { get; set; }
+        
+        private SkierSimulator simulator = new SkierSimulator();
         
         private IConnectionFactory connectionFactory;
         
@@ -33,7 +39,17 @@ namespace Hurace.Core.Logic
             
         }
         
-        
+        public async Task<bool> SimulatorOnOff(bool onOff, int raceId)
+        {
+            return await Task.Run(() =>
+            {
+                SimulatorActivated = onOff;
+                
+                return SimulatorActivated;
+            });
+        }
+
+
         public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId)
         {
             return await Task.Run(async () =>
@@ -96,6 +112,27 @@ namespace Hurace.Core.Logic
 	        }
         }
 
+        public async Task InsertNewSplittime(SplitTimeModel splittime)
+        {
+            await Task.Run(() =>
+            {
+                if (ActualSplitimes != null)
+                {
+                    splittime.TimeOffsetToWinner = GetTimeOffsetToWinner(splittime.Time, splittime.RunNo);
+                    ActualSplitimes.Append(splittime);
+                }
+            });
+        }
+
+        private TimeSpan GetTimeOffsetToWinner(DateTime time, int splitTimeNo)
+        {
+	        EvaluateWinnerSplittimes();
+            var first = WinnerSplitimes.FirstOrDefault(model => model.SplitTimeNo == splitTimeNo);
+            if (first != null)
+                return WinnerSplitimes != null ? first.Time - time : time - time;
+            return time - time; // when no first skier was found
+        } 
+        
         public async Task<ICollection<SplitTimeModel>> GetSplittimesForSkier(int skierId, int runNo)
         {
             return await Task.Run(() =>
@@ -120,7 +157,7 @@ namespace Hurace.Core.Logic
                             RunNo = splittime.RunNo,
                             SplitTimeNo = splittime.SplittimeNo,
                             Time = splittime.Time,
-                            TimeOffsetToWinner = WinnerSplitimes != null ? WinnerSplitimes.FirstOrDefault(model => model.SplitTimeNo == splittime.SplittimeNo).Time - splittime.Time : splittime.Time- splittime.Time
+                            TimeOffsetToWinner = GetTimeOffsetToWinner(splittime.Time ,splittime.SplittimeNo)
                         });
                     }
                 }
