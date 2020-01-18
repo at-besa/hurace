@@ -38,6 +38,7 @@
 }
 \usepackage{color}
 \usepackage{comment}
+\usepackage{todonotes}
 
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -58,7 +59,9 @@
 	\maketitle
 	\tableofcontents
 	\newpage
-	\section{Ausbaustufe 1}
+	\section{Installationsanleitung}
+	\todo{Installationsanleitung schreiben}
+	\section{Hurace.Core}
 	\subsubsection{Datenbankmodell}
 
 	\includegraphics[width=.7\textwidth]{img/huraceDB.png}
@@ -90,14 +93,26 @@
 	\lstinputlisting[language=c++]{../Core.Dal/Interface/IStartListDao.cs}
 	
 	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
+	\subsection{Verwaltung der Rennläuferinnen}
+	\todo{Verwaltung der Rennläuferinnen schreiben}
 	
+	\subsection{Interaktion mit dem Zeitmesssystem}
+	\todo{Interaktion mit dem Zeitmesssystem: schreiben}
+	
+	\subsection{Wiederaufsetzen}
+	\todo{Wiederaufsetzen}
+	
+	\subsection{Abfragen}
+	\todo{Abfragen}
+	
+	\subsection{Erfassung der Renndaten}
 	\subsection{UnitTests}
 	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
 	\newline
 	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
 	
-	\section{Ausbaustufe 2}
+	\section{Hurace.RaceControl}
 	\subsubsection{User Interface}
 	
 	Damit die optische Komponente einen guten Anstrich bekommt haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
@@ -121,6 +136,20 @@
 	\textbf{IStartListLogic}
 	\lstinputlisting[language=c++]{../Core.Logic/Interface/IStartListLogic.cs}
 	
+	\subsection{Verwaltung von Rennen}
+	\todo{Verwaltung von Rennen}
+	
+	\subsection{Zuordnung von Rennläuferinnen}
+	\todo{Zuordnung von Rennläuferinnen}
+	
+	\subsection{Steuerung des Rennablaufs}
+	\todo{Steuerung des Rennablaufs}
+	
+	\subsection{Steuerung der Anzeigetafel}
+	\todo{Steuerung der Anzeigetafel}
+	
+	\subsection{Kapselung der Logik}
+	\todo{Kapselung der Logik}
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
@@ -132,5 +161,70 @@
 	
 	\includegraphics[width=.7\textwidth]{img/UnitTests2.png}
 
-	\newpage	
+	\newpage
+	
+	\section{Hurace.Api}
+	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Druch entsprechende Attribute in den Kontrollern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Kontroller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wuren erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
+	\subsection{Swagger}
+	Swagger wurde dem Container als Service hinzugefügt um sich die Endpunkte im Browser ansehen zu können und die Clients generieren zu können.
+	\subsubsection{Endpunkte}
+	\includegraphics[width=.7\textwidth]{img/Controller_race.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_ranking_1.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_ranking_2.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_runningRace_get.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_runningRun_get.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_delete.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_get_all.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_get_byId.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_post.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_put_1.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_skier_put_2.png}
+	\newline	
+	\includegraphics[width=.7\textwidth]{img/Controller_splitTimes_get_1.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_splitTimes_get_2.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_startList_get_1.png}
+	\newline
+	\includegraphics[width=.7\textwidth]{img/Controller_startList_get_2.png}
+	\newline
+	\subsubsection{Dto`s}
+	\includegraphics[width=.7\textwidth]{img/Models_1.png}
+	\newline		
+	\includegraphics[width=.7\textwidth]{img/Models_2.png}
+	\newline		
+	\includegraphics[width=.7\textwidth]{img/Models_3.png}
+	\newline		
+	\subsubsection{Controller}
+	Als Bespiel wird hier der SkierController angeführt. Die Rückgabewerte sind immer in ein ActionResult eingebettet. Dadurch sind einfach lesbare Rückgabefunktionen für verschiedene StatusCodes möglich. Die Controller selbst greifen auf die Dao-Klassen von Core.DAL zu.
+	\textbf{IRaceControlLogic}
+	\lstinputlisting[language=c++]{../Api/Controllers/SkierController.cs}
+	\subsubsection{Dto`s}
+	Wie schon beschrieben gibt es beim Skier ein 'In' Dto und ein 'Out' Dto.
+	\lstinputlisting[language=c++]{../Api/Dtos/In/SkierInDto.cs}
+	\lstinputlisting[language=c++]{../Api/Dtos/Out/SkierOutDto.cs}
+	\subsection{CORS}
+	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der einfachheithalber wurde CORS für weitestgehend aktiviert.
+	\lstinputlisting[language=c++]{../Api/Startup.cs}
+	
+	\section{Hurace.Simulator}
+	\subsection{Simulation der Zeitnehmung}
+	\todo{Simulation der Zeitnehmung}
+	
+	\subsection{Benutzerinteraktion}
+	\todo{Benutzerinteraktion}
+	
+	\subsection{Kapselung}
+	\todo{Kapselung}
+	
 \end{document}
