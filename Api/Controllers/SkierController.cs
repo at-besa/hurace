@@ -77,7 +77,6 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<SkierOutDto> Insert(SkierInDto skierInDto)
         {
-            //TODO does not work properly
             Skier skier = SkierInDto.ToSkier(skierInDto);
             var rowid = _adoSkierDao.Insert(skier);
             return Ok();
