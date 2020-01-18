@@ -15,6 +15,18 @@ namespace Hurace.Core.Logic.Model
         public override string ToString() =>
             $"SplitTime(RaceDataId:{RaceDataId}, RunNo:{RunNo}, SplitTimeNo:{SplitTimeNo}, Time:{Time})";
 
+        public SplitTime ToSplitTime()
+        {
+	        return new SplitTime
+	        {
+		        RaceDataId = RaceDataId,
+		        RunNo = RunNo,
+		        SplittimeNo = SplitTimeNo,
+		        Time = Time
+	        };
+
+        }
+
         public int CompareTo(SplitTimeModel other) {
             if (ReferenceEquals(this, other)) return 0;
             if (ReferenceEquals(null, other)) return 1;

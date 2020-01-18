@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Schema;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
@@ -12,6 +16,8 @@ using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using Hurace.Core.Logic.Simulator;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
+using System.Windows.Threading;
 
 namespace Hurace.Core.Logic
 {
@@ -21,6 +27,7 @@ namespace Hurace.Core.Logic
         private readonly StartListLogic startListLogic = StartListLogic.Instance;
         private readonly RaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
         public RaceControlModel RaceControlModel { get; private set; }
+        private StartListMemberModel actualStartListMember { get; set; }
 
         private ICollection<SplitTimeModel> WinnerSplitimes { get; set; }
         private ICollection<SplitTimeModel> ActualSplitimes { get; set; } 
@@ -30,8 +37,9 @@ namespace Hurace.Core.Logic
         private SkierSimulator simulator = new SkierSimulator();
         
         private IConnectionFactory connectionFactory;
-        
-        
+
+        RaceData raceDataForThisRaceRun;
+
         private RaceControlLogic()
         {
             var configuration = ConfigurationUtil.GetConfiguration();
@@ -44,7 +52,8 @@ namespace Hurace.Core.Logic
             return await Task.Run(() =>
             {
                 SimulatorActivated = onOff;
-                
+                simulator.Start(SimulatorActivated, raceId);
+
                 return SimulatorActivated;
             });
         }
@@ -71,15 +80,50 @@ namespace Hurace.Core.Logic
         {
             return await Task.Run(() =>
             {
-                //if (RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model => !model.Blocked) == null)
-                //{
-                    slm.Blocked = false;
-                    return Update(slm, raceId);
-                //}
-                return false;
+	            if (!slm.Finished && !slm.Disqualified && !slm.Running)
+	            {
+		            slm.Blocked = false;
+		            actualStartListMember = slm;
+		            if (SimulatorActivated)
+		            {
+			            if (raceDataForThisRaceRun != null)
+				            simulator.GenerateSplittimesForSkierRun(RaceControlModel.RaceModel.Type.Id, raceDataForThisRaceRun.Id, slm.RunNo, RaceControlModel.RaceModel.Splittimes);
+		            }
+		            return Update(slm, raceId);
+
+                }
+	            return false;
             });
         }
 
+        public async Task<bool> Clearance(StartListMemberModel slm, int raceId)
+        {
+	        return await Task.Run(() =>
+	        {
+		        var member = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model => model.Startposition == slm.Startposition+1);
+		        if (member != null)
+		        {
+                    member.Blocked = false;
+			        return Update(member, raceId);
+                }
+
+		        return false;
+	        });
+        }
+        public async Task<bool> Disqualify(StartListMemberModel slm, int raceId)
+        {
+	        return await Task.Run(() =>
+	        {
+		        if (actualStartListMember != null)
+		        {
+			        actualStartListMember.Disqualified = true;
+			        actualStartListMember.Running = false;
+			        return Update(actualStartListMember, raceId);
+		        }
+
+		        return false;
+	        });
+        }
         private bool Update(StartListMemberModel slm, int raceId)
         {
             var raceData = new RaceData
@@ -103,7 +147,7 @@ namespace Hurace.Core.Logic
 		            WinnerSplitimes = ActualSplitimes;
 	            else
 	            {
-		            if (ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
+		            if (ActualSplitimes.Count > 0 && ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
 		            {
 			            WinnerSplitimes = ActualSplitimes;
 		            }
@@ -112,16 +156,42 @@ namespace Hurace.Core.Logic
 	        }
         }
 
-        public async Task InsertNewSplittime(SplitTimeModel splittime)
+        public bool InsertNewSplittime(SplitTimeModel splittime)
         {
-            await Task.Run(() =>
+            if (ActualSplitimes != null && splittime.RaceDataId == raceDataForThisRaceRun.Id)
             {
-                if (ActualSplitimes != null)
+                splittime.TimeOffsetToWinner = GetTimeOffsetToWinner(splittime.Time, splittime.SplitTimeNo);
+
+                Application.Current.Dispatcher?.BeginInvoke((Action)(() =>
                 {
-                    splittime.TimeOffsetToWinner = GetTimeOffsetToWinner(splittime.Time, splittime.RunNo);
-                    ActualSplitimes.Append(splittime);
-                }
-            });
+	                AddSplitTime(splittime);
+                }));
+                return true;
+            }
+
+            return false;
+        }
+
+        private void AddSplitTime(SplitTimeModel splitTime)
+        {
+	        if (!actualStartListMember.Disqualified)
+	        {
+		        ActualSplitimes.Add(splitTime);
+                Task.Run(() => new AdoSplitTimeDao(connectionFactory).Insert(splitTime.ToSplitTime()));
+            }
+
+            if (splitTime.SplitTimeNo == 1 && !actualStartListMember.Disqualified)
+	        {
+		        actualStartListMember.Running = true;
+                Update(actualStartListMember, RaceControlModel.RaceModel.Id);
+            }
+
+            if (splitTime.SplitTimeNo == RaceControlModel.RaceModel.Splittimes && actualStartListMember.Running && !actualStartListMember.Disqualified)
+	        {
+		        actualStartListMember.Running = false;
+                actualStartListMember.Finished = true;
+		        Update(actualStartListMember, RaceControlModel.RaceModel.Id);
+	        }
         }
 
         private TimeSpan GetTimeOffsetToWinner(DateTime time, int splitTimeNo)
@@ -131,16 +201,16 @@ namespace Hurace.Core.Logic
             if (first != null)
                 return WinnerSplitimes != null ? first.Time - time : time - time;
             return time - time; // when no first skier was found
-        } 
-        
+        }
+
         public async Task<ICollection<SplitTimeModel>> GetSplittimesForSkier(int skierId, int runNo)
         {
-            return await Task.Run(() =>
+	        return await Task.Run(() =>
             {
                 var raceDatas = new AdoRaceDataDao(connectionFactory).FindAllBySkierId(skierId);
-                var raceDataForThisRaceRun =
-                    raceDatas.FirstOrDefault(data => data.RaceId == RaceControlModel.StartListModel.raceId);
+                raceDataForThisRaceRun = raceDatas.FirstOrDefault(data => data.RaceId == RaceControlModel.StartListModel.raceId);
 
+                ActualSplitimes = new ObservableCollection<SplitTimeModel>();
 
                 if (raceDataForThisRaceRun != null)
                 {
@@ -148,7 +218,6 @@ namespace Hurace.Core.Logic
 
                     EvaluateWinnerSplittimes();
 
-                    ActualSplitimes = new ObservableCollection<SplitTimeModel>();
                     foreach (var splittime in splittimes)
                     {
                         ActualSplitimes.Add(new SplitTimeModel

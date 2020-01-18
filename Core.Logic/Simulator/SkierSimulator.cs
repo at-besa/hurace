@@ -1,49 +1,68 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Hurace.Core.Logic.Model;
 
 namespace Hurace.Core.Logic.Simulator
 {
     public class SkierSimulator
     {
-        RaceControlLogic raceControlLogic = RaceControlLogic.Instance;
-        public DateTime[] BaseTimeForRaceType { get; set; }
-        
+	    private RaceControlLogic raceControlLogic;
+        public int[] BaseTimeForRaceType { get; set; }
+        private int raceId;
+        private bool start;
+
         public SkierSimulator()
         {
-            BaseTimeForRaceType = new DateTime[]
+            BaseTimeForRaceType = new []
             {
-                new DateTime().AddSeconds(30).AddMilliseconds(300),
-                new DateTime().AddSeconds(28).AddMilliseconds(100),
-                new DateTime().AddSeconds(32).AddMilliseconds(800),
-                new DateTime().AddSeconds(35).AddMilliseconds(800),
-                new DateTime().AddSeconds(29).AddMilliseconds(500),
-                new DateTime().AddSeconds(25).AddMilliseconds(500)
+                10,
+                8,
+                12,
+                11,
+                9,
+                7
             };
             
         }
 
         public void Start(bool start, int raceid)
         {
-
-
-//            raceControlLogic.InsertNewSplittime();
+	        raceControlLogic = RaceControlLogic.Instance;
+            this.raceId = raceid;
+	        this.start = start;
         }
         
-        private DateTime GetCorrectSplittime(int raceTypeId, int runNo, int splittimeNo)
+        public async void GenerateSplittimesForSkierRun(int raceTypeId,int raceDataId, int runNo, int splittimeNo)
         {
-            var random = new Random();
-            DateTime splittime = GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo);
-            for (int i = 1; i < splittimeNo; i++)
-            {
-                splittime = splittime.Add(new TimeSpan(0,0,0, 
-                    GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo).Second, 
-                    GetBaseSplittimeForRaceType(raceTypeId).AddSeconds(runNo).Millisecond + random.Next(0, 1501)));
-            }
-            return splittime;
+	        await Task.Run(() =>
+	        {
+		        var random = new Random();
+		        DateTime splittime = new DateTime();
+		        for (int i = 1; i <= splittimeNo; i++)
+		        {
+			        var val = GetBaseSplittimeForRaceType(i, raceTypeId);
+			        splittime = splittime.Add(new TimeSpan(0, 0, 0, val, i == 1 ? 0 : random.Next(0, 999)));
+                    Thread.Sleep(splittime.Millisecond + (val*100));
+                    if (!raceControlLogic.InsertNewSplittime(new SplitTimeModel()
+                    {
+	                    Time = splittime,
+	                    RunNo = runNo,
+	                    RaceDataId = raceDataId,
+	                    SplitTimeNo = i
+                    }))
+                    {
+                        break;
+                    }
+		        }
+
+            });
+
         }
         
-        private DateTime GetBaseSplittimeForRaceType(int raceTypeId)
+        private int GetBaseSplittimeForRaceType(int splittimenumber, int racetype)
         {
-            return BaseTimeForRaceType[raceTypeId];
+	        return splittimenumber == 1 ? 0 : BaseTimeForRaceType[racetype] * splittimenumber-1;
         }
     }
 }

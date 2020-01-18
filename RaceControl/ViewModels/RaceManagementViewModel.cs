@@ -11,6 +11,7 @@ using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
 using RaceControl.ViewModels.RaceManagementHelpers;
 using Swack.UI.ViewModels;
+using NotifyPropertyChanged = RaceControl.Helpers.NotifyPropertyChanged;
 
 namespace RaceControl.ViewModels
 {

@@ -14,7 +14,7 @@ namespace Api.Controllers
     [Route("RunningRace/{runningRaceId:int}/[controller]")]
     public class RunningRunController : ControllerBase
     {
-        private readonly ILogger<RaceController> _logger;
+        //private readonly ILogger<RaceController> _logger;
         private readonly AdoRunDao _adoRunDao;
         private readonly AdoRaceDao _adoRaceDao;
         public RunningRunController(ILogger<RunningRunController> _logger)

@@ -64,6 +64,7 @@ namespace Hurace.Core.Logic
                         {
                             Skier = new SkierModel(skiers.FirstOrDefault(skier => skier.Id == startListMember.SkierId)),
                             Startposition = startListMember.StartPos,
+                            RunNo = startListMember.RunNo,
                             Blocked = skierdata != null && skierdata.Blocked,
                             Disqualified = skierdata != null && skierdata.Disqualified,
                             Finished = skierdata != null && skierdata.Finished,

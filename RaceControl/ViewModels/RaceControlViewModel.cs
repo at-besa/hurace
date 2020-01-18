@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
 using Swack.UI.ViewModels;
+using NotifyPropertyChanged = RaceControl.Helpers.NotifyPropertyChanged;
 
 namespace RaceControl.ViewModels
 {
@@ -31,6 +33,13 @@ namespace RaceControl.ViewModels
 	        set => Set(ref lastSplittimes, value);
         }
 
+        public bool SimulatorOnOff
+        {
+	        get => simulatorOnOff;
+	        set => Set(ref simulatorOnOff, value);
+        }
+
+
         private RaceControlModel raceControlModel;
         public RaceControlModel RaceControlModel
         {
@@ -44,13 +53,32 @@ namespace RaceControl.ViewModels
 	        set  {
 				Set(ref selectedSkierViewModel, value);
 
+				SelectedSkierBoxVisible = Visibility.Visible;
+
 				StartRunCommand.IsExecutionPossible = true;
 				ClearanceCommand.IsExecutionPossible = true;
+				SimulatorOnOffCommand.IsExecutionPossible = true;
                 ShowSplittimesForActualSkier();
 	        }
         }
 
+        private Visibility selectedSkierBoxVisible = Visibility.Collapsed;
+        public Visibility SelectedSkierBoxVisible
+        {
+	        get => selectedSkierBoxVisible;
+	        set => Set(ref selectedSkierBoxVisible, value);
+        }
+
+        private Visibility lastSkierBoxVisible = Visibility.Collapsed;
+        public Visibility LastSkierBoxVisible {
+	        get => lastSkierBoxVisible;
+	        set => Set(ref lastSkierBoxVisible, value);
+        }
+
+
         private StartListMemberModel lastSkierViewModel;
+        private bool simulatorOnOff;
+
         public StartListMemberModel LastSkierViewModel {
 	        get => lastSkierViewModel;
 	        set {
@@ -60,15 +88,20 @@ namespace RaceControl.ViewModels
 
         public CommandBase StartRunCommand { get; set; }
         public CommandBase ClearanceCommand { get; set; }
+        public CommandBase DisqualifyCommand { get; set; }
+        public CommandBase SimulatorOnOffCommand { get; set; }
 
         public RaceControlViewModel()
         {
             Init();
             StartRunCommand = new CommandBase(StartRun);
             ClearanceCommand = new CommandBase(Clearance);
+            DisqualifyCommand = new CommandBase(Disqualify);
+            SimulatorOnOffCommand = new CommandBase(SetSimulator);
 
             StartRunCommand.IsExecutionPossible = false;
             ClearanceCommand.IsExecutionPossible = false;
+            SimulatorOnOffCommand.IsExecutionPossible = false;
         }
 
         private async void Init()
@@ -89,23 +122,44 @@ namespace RaceControl.ViewModels
                 await raceControlLogic.StartRun(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
             }
         }
-        
+
+        private async void Disqualify(object sender, EventArgs e)
+        {
+	        if (SelectedSkierViewModel != null)
+	        {
+		        await raceControlLogic.Disqualify(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
+	        }
+        }
+
+        private async void SetSimulator(object sender, EventArgs e)
+        {
+	        if (SelectedSkierViewModel != null)
+	        {
+		        SimulatorOnOff = !SimulatorOnOff;
+                await raceControlLogic.SimulatorOnOff(SimulatorOnOff, RaceControlModel.RaceModel.Id);
+	        }
+        }
+
         private async void Clearance(object sender, EventArgs e)
         {
 	        if ((ActualSplittimes.Count >= RaceControlModel.RaceModel.Splittimes && !SelectedSkierViewModel.Blocked) 
 	            || SelectedSkierViewModel.Disqualified)
 	        {
-		        LastSkierViewModel = SelectedSkierViewModel;
+
+		        LastSkierBoxVisible = Visibility.Visible;
+
+                await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
+                LastSkierViewModel = SelectedSkierViewModel;
 		        SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
 			        model.Startposition == SelectedSkierViewModel.Startposition + 1);
 
 		        LastSplittimes = ActualSplittimes;
 		        ShowSplittimesForActualSkier();
 
-		        if (SelectedSkierViewModel != null)
-		        {
-			        SelectedSkierViewModel.Finished = true;
-		        }
+		        //if (SelectedSkierViewModel != null)
+		        //{
+			       // SelectedSkierViewModel.Finished = true;
+		        //}
             }
 	    }
 

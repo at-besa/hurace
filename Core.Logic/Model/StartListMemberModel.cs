@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using Swack.UI.ViewModels;
+using Hurace.Core.Logic.Helpers;
 
 namespace Hurace.Core.Logic.Model
 {

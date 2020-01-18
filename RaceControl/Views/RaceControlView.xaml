@@ -105,7 +105,7 @@
 					</ListBox.ItemTemplate>
 				</ListBox>
 
-				<Button Grid.Column="0" Grid.Row="1" Command="{Binding DisqualifySkierCommand}" Height="35" Margin="1" Style="{DynamicResource MaterialDesignRaisedButton}">
+				<Button Grid.Column="0" Grid.Row="1" Command="{Binding DisqualifyCommand}" Height="35" Margin="1" Style="{DynamicResource MaterialDesignRaisedButton}">
 					<TextBlock Text="disqualify selected skier" />
 				</Button>
 
@@ -129,6 +129,9 @@
 							<materialDesign:PackIcon Kind="FlagCheckered" />
 						</Button>
 						<Separator />
+						<ToggleButton HorizontalAlignment="Right" Command="{Binding SimulatorOnOffCommand}" ToolTip="Simulator On/Off" >
+							<materialDesign:PackIcon Kind="Brain"></materialDesign:PackIcon>
+						</ToggleButton>
 					</ToolBar>
 				</ToolBarTray>
 
@@ -140,7 +143,7 @@
 
 					<materialDesign:Card Grid.Column="0" Margin="10" Background="{DynamicResource MaterialDesignCardBackground}">
 						<Grid>
-							<StackPanel Orientation="Vertical"  Margin="5">
+							<StackPanel Orientation="Vertical" Visibility="{Binding SelectedSkierBoxVisible}" Margin="5">
 								<Grid>
 									<TextBlock Text="Actual Skier" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Left" />
 									<materialDesign:PackIcon Kind="CheckboxBlankCircle" Visibility="{Binding SelectedSkierViewModel.Blocked, Converter={StaticResource BoolToVisInvert}}" Foreground="Lime" Height="20" Width="20" HorizontalAlignment="Right" />
@@ -176,12 +179,11 @@
 					</Grid.ColumnDefinitions>
 					<materialDesign:Card Margin="10" Background="{DynamicResource MaterialDesignCardBackground}">
 						<Grid>
-							<StackPanel Orientation="Vertical"  Margin="5">
+							<StackPanel Orientation="Vertical" Visibility="{Binding LastSkierBoxVisible}" Margin="5">
 								<Grid>
 									<TextBlock Text="Last Skier" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Left" />
-									<TextBlock Text="DSQ" Visibility="{Binding SelectedSkierViewModel.Disqualified, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" Margin="5,0"/>
-									<TextBlock Text="RUN" Visibility="{Binding SelectedSkierViewModel.Running, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Lime"  HorizontalAlignment="Right" Margin="5,0"/>
-									<TextBlock Text="FIN" Visibility="{Binding SelectedSkierViewModel.Finished, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Blue" HorizontalAlignment="Right" Margin="5,0"/>
+									<TextBlock Text="DSQ" Visibility="{Binding LastSkierViewModel.Disqualified, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Red" HorizontalAlignment="Right" Margin="5,0"/>
+									<TextBlock Text="FIN" Visibility="{Binding LastSkierViewModel.Finished, Converter={StaticResource BoolToVis}}" FontSize="20" Foreground="Blue" HorizontalAlignment="Right" Margin="5,0"/>
 								</Grid>
 							<StackPanel Orientation="Horizontal" Margin="0,6" >
 								<TextBlock Text="{Binding LastSkierViewModel.Startposition}" Style="{DynamicResource MaterialDesignCaptionTextBlock}" Width="35" FontSize="35"/>

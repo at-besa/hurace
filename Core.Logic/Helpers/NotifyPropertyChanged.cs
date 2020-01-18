@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Swack.UI.ViewModels
+namespace Hurace.Core.Logic.Helpers
 {
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {

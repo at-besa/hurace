@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Swack.UI.ViewModels
+namespace RaceControl.Helpers
 {
     public class NotifyPropertyChanged : INotifyPropertyChanged
     {

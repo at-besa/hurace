@@ -65,7 +65,7 @@ namespace Hurace.Core.Logic.Tests
 
 
 		[Fact()]
-		public async void GetRacesTest()
+		public void GetRacesTest()
 		{
 			// var races = await rcl.GetRaces();
 			// Assert.True(races.Count == 2);
@@ -73,40 +73,40 @@ namespace Hurace.Core.Logic.Tests
 		}
 
 		[Fact()]
-		public async void DeleteRaceTest()
+		public void DeleteRaceTest()
 		{
 			// Assert.True(await rcl.DeleteRace(1));
 		}
 
 		[Fact()]
-		public async void SaveRaceTest()
+		public void SaveRaceTest()
 		{
 			;
 			// Assert.True(await rcl.SaveRace(new RaceModel(ObjectGenerator.GetRace(1))));
 		}
 
 		[Fact()]
-		public async  void CreateRaceTest()
+		public  void CreateRaceTest()
 		{
 			// Assert.True(await rcl.CreateRace(new RaceModel(ObjectGenerator.GetRace(3))));
 		}
 
 		[Fact()]
-		public async void GetRaceTypesTest()
+		public void GetRaceTypesTest()
 		{
 			// var types = await rcl.GetRaceTypes();
 			// Assert.True(types.Count == 2);
 		}
 
 		[Fact()]
-		public async void GetRaceStatesTest()
+		public void GetRaceStatesTest()
 		{
 			// var states = await rcl.GetRaceStates();
 			// Assert.True(states.Count == 2);
 		}
 
 		[Fact()]
-		public async void GetRunningRaceTest()
+		public void GetRunningRaceTest()
 		{
 			// var race = await rcl.GetRunningRace();
 			// Assert.True(race != null);
