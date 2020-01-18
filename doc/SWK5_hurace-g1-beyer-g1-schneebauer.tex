@@ -38,6 +38,7 @@
 }
 \usepackage{color}
 \usepackage{comment}
+\usepackage{todonotes}
 
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -59,6 +60,7 @@
 	\tableofcontents
 	\newpage
 	\section{Installationsanleitung}
+	\todo{Installationsanleitung schreiben}
 	\section{Hurace.Core}
 	\subsubsection{Datenbankmodell}
 
@@ -91,7 +93,19 @@
 	\lstinputlisting[language=c++]{../Core.Dal/Interface/IStartListDao.cs}
 	
 	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
+	\subsection{Verwaltung der Rennläuferinnen}
+	\todo{Verwaltung der Rennläuferinnen schreiben}
 	
+	\subsection{Interaktion mit dem Zeitmesssystem}
+	\todo{Interaktion mit dem Zeitmesssystem: schreiben}
+	
+	\subsection{Wiederaufsetzen}
+	\todo{Wiederaufsetzen}
+	
+	\subsection{Abfragen}
+	\todo{Abfragen}
+	
+	\subsection{Erfassung der Renndaten}
 	\subsection{UnitTests}
 	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
@@ -122,6 +136,20 @@
 	\textbf{IStartListLogic}
 	\lstinputlisting[language=c++]{../Core.Logic/Interface/IStartListLogic.cs}
 	
+	\subsection{Verwaltung von Rennen}
+	\todo{Verwaltung von Rennen}
+	
+	\subsection{Zuordnung von Rennläuferinnen}
+	\todo{Zuordnung von Rennläuferinnen}
+	
+	\subsection{Steuerung des Rennablaufs}
+	\todo{Steuerung des Rennablaufs}
+	
+	\subsection{Steuerung der Anzeigetafel}
+	\todo{Steuerung der Anzeigetafel}
+	
+	\subsection{Kapselung der Logik}
+	\todo{Kapselung der Logik}
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
@@ -178,7 +206,7 @@
 	\includegraphics[width=.7\textwidth]{img/Models_3.png}
 	\newline		
 	\subsubsection{Controller}
-	Als Bespiel wird hier der SkierController angeführt. Die Rückgabewerte sind immer in ein ActionResult eingebettet. Dadurch sind einfach lesbare Rückgabefunktionen für verschiedene StatusCodes möglich.
+	Als Bespiel wird hier der SkierController angeführt. Die Rückgabewerte sind immer in ein ActionResult eingebettet. Dadurch sind einfach lesbare Rückgabefunktionen für verschiedene StatusCodes möglich. Die Controller selbst greifen auf die Dao-Klassen von Core.DAL zu.
 	\textbf{IRaceControlLogic}
 	\lstinputlisting[language=c++]{../Api/Controllers/SkierController.cs}
 	\subsubsection{Dto`s}
@@ -188,4 +216,15 @@
 	\subsection{CORS}
 	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der einfachheithalber wurde CORS für weitestgehend aktiviert.
 	\lstinputlisting[language=c++]{../Api/Startup.cs}
+	
+	\section{Hurace.Simulator}
+	\subsection{Simulation der Zeitnehmung}
+	\todo{Simulation der Zeitnehmung}
+	
+	\subsection{Benutzerinteraktion}
+	\todo{Benutzerinteraktion}
+	
+	\subsection{Kapselung}
+	\todo{Kapselung}
+	
 \end{document}
