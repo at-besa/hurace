@@ -103,6 +103,8 @@
 	Für jegliche Abfragen der Clients ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
 	
 	\subsection{Erfassung der Renndaten}
+	Wird über den Simulator realisiert.
+	
 	\subsection{UnitTests}
 	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
@@ -150,10 +152,10 @@
 	
 	
 	\subsection{Steuerung der Anzeigetafel}
-	\todo{Steuerung der Anzeigetafel}
+	Die steuerung der Anzeigetafel wurde aus Zeitgründen nicht mehr umgesetzt.
 	
 	\subsection{Kapselung der Logik}
-	\todo{Kapselung der Logik}
+	Um die Logik weitstgehend zu Kapseln verwendet enthält RaceControl selbst wenig Logik. Es grauft auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.

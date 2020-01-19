@@ -101,8 +101,6 @@ namespace Hurace.Core.DAL.Common
             {
                 query = query.Replace(((SqliteParameter)parameter).ParameterName, ((SqliteParameter)parameter).Value.ToString());
             }
-            //TODO: Log DB query
-            //Log.AddVerbose(String.Format("SQL query: {0}", GetGeneratedQuery(dbCommand)));
             return query;
         }
     }
