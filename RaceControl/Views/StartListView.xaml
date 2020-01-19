@@ -123,6 +123,8 @@
                                    Margin="0,0,4,0"
                                    />
                         <Button
+                            Command="{Binding AddButtonCommand}" 
+                            CommandParameter="{Binding}"
                             Style="{DynamicResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon

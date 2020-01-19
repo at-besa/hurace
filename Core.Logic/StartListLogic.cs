@@ -52,7 +52,7 @@ namespace Hurace.Core.Logic
 
                 IEnumerable<StartListMember> startListMembers = 
                     new AdoStartListDao(connectionFactory)
-                    .FindAllByRaceId(raceId)
+                    .FindAllByRaceIdAndRunNo(raceId, 1)//TODO change to Method Parameter
                     .OrderBy(startListMember => startListMember.StartPos);
 
                 foreach (var startListMember in startListMembers)
@@ -102,6 +102,7 @@ namespace Hurace.Core.Logic
                 {
                     Race = new AdoRaceDao(connectionFactory).FindById(raceId),
                     SkierId = skierId,
+                    RunNo = runNo,
                     StartPos = startPosition
                 };
 
@@ -111,7 +112,7 @@ namespace Hurace.Core.Logic
             });
         }
 
-        public async Task<bool> DeleteStartListMember(int raceId, int skierId, int runNo, int startposition)
+        public async Task<bool> DeleteStartListMember(int raceId, int skierId, int runNo)
         {
             return await Task.Run(() =>
             {
@@ -124,13 +125,33 @@ namespace Hurace.Core.Logic
                 {
                     Race = race,
                     SkierId = skierId,
-                    StartPos = startposition
+                    RunNo = runNo
                 };
                 var result = startlistAdo.Delete(startList);
                 return result;
             });
         }
 
+        public async Task<bool> InsertStartListMember(int raceId, int skierId, int runNo, int startPosition)
+        {
+            return await Task.Run(() =>
+            {
+                var startListAdo = new AdoStartListDao(connectionFactory);
+                var race = new Race
+                {
+                    Id = raceId
+                };
+                var startListMember = new StartListMember
+                {
+                    Race = race,
+                    SkierId = skierId,
+                    RunNo = runNo,
+                    StartPos = startPosition
+                };
+                var result = startListAdo.Insert(startListMember);
+                return result != 0;
+            });
+        }
 
         public async Task<bool> IsStartListMemberInStartList(int raceId, int skierId, int runNo)
         {

@@ -1,9 +1,11 @@
 ﻿using Hurace.Core.DAL.Domain;
 using System;
+using System.Windows.Input;
+using Hurace.Core.Logic.Helpers;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class SkierModel : IComparable<SkierModel>
+    public class SkierModel : NotifyPropertyChanged, IComparable<SkierModel>
     {
 
         public SkierModel(Skier skier)
@@ -23,6 +25,13 @@ namespace Hurace.Core.Logic.Model
         public string Nation { get; set; }
         public string ProfileImage { get; set; }
         public string Sex { get; set; }
+        
+        private ICommand _addButtonCommand;
+        public ICommand AddButtonCommand
+        {
+            get => _addButtonCommand;
+            set => Set(ref _addButtonCommand, value);
+        }
 
         public int CompareTo(SkierModel other)
         {

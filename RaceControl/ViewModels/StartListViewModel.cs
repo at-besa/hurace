@@ -6,6 +6,7 @@ using Hurace.Core.Logic;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
+using SQLitePCL;
 using Swack.UI.ViewModels;
 using NotifyPropertyChanged = RaceControl.Helpers.NotifyPropertyChanged;
 
@@ -13,8 +14,9 @@ namespace RaceControl.ViewModels
 {
     public class StartListViewModel : NotifyPropertyChanged
     {
-        private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
-        private readonly IStartListLogic startListLogic = StartListLogic.Instance;
+        private readonly IRaceManagementLogic _raceManagementLogic = RaceManagementLogic.Instance;
+        private readonly IStartListLogic _startListLogic = StartListLogic.Instance;
+        private readonly int _runNo = 1;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
 	    private ICollection<SkierModel> _possibleSkiersNotInStartList;
@@ -42,28 +44,20 @@ namespace RaceControl.ViewModels
         public StartListViewModel()
 	    {
             Init();
-            DeleteStartListMemberCommand = new CommandBase(DeleteStartListMember);
-            AddStartListMemberCommand = new CommandBase(AddStartListMember);
         }
 
-        private void AddStartListMember(object sender, EventArgs e)
+        private async void AddStartListMember(object sender, EventArgs e)
         {
             var skierToAdd = (SkierModel)sender;
             if(skierToAdd != null)
             {
-                PossibleSkiersNotInStartList.Remove(skierToAdd);
-                //startListLogic.
-                //var sizeOfStartList = RunningRaceStartList.StartListMembers.Count();
-                //RunningRaceStartList.StartListMembers.Add(new StartListMemberModel
-                //{
-                //    Skier = skierToAdd,
-                //    Blocked = true,
-                //    Finished = false,
-                //    Running = false,
-                //    Disqualified = false,
-                //    Startposition = sizeOfStartList++,
-                //    DeleteButtonCommand = new CommandBase(DeleteStartListMember)
-                //});
+                var raceId = RunningRace.Id;
+                var startPosition = RunningRaceStartList.StartListMembers.Count() + 1;
+                var inserted = await _startListLogic.InsertStartListMember(raceId, skierToAdd.Id, _runNo, startPosition);
+                if (inserted)
+                {
+                    Init();
+                }
             }
         }
 
@@ -76,13 +70,12 @@ namespace RaceControl.ViewModels
                 var skierId = startListMemberToRemove.Skier.Id;
                 var startposition = startListMemberToRemove.Startposition;
                 var runNo = startListMemberToRemove.RunNo;
-                await startListLogic.DeleteStartListMember(skierId, raceId, runNo ,startposition);
-                if(!await startListLogic.IsStartListMemberInStartList(raceId , skierId, runNo))
+                await _startListLogic.DeleteStartListMember(raceId, skierId, runNo);
+                if(!await _startListLogic.IsStartListMemberInStartList(raceId , skierId, runNo))
                 {
                     await RearrangeStartPositionOfStartListMembers(startposition);
                 }
-                RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
-                PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
+                Init();
             }
         }
 
@@ -92,7 +85,7 @@ namespace RaceControl.ViewModels
             {
                 if(startposition < startListMember.Startposition)
                 {
-                    var updateded = await startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMember.Skier.Id, startListMember.RunNo,startListMember.Startposition - 1);
+                    var updateded = await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMember.Skier.Id, startListMember.RunNo,startListMember.Startposition - 1);
                 }
             }       
         }
@@ -107,14 +100,21 @@ namespace RaceControl.ViewModels
             {
                 item.DeleteButtonCommand = new CommandBase(DeleteStartListMember);
             }
+
+            foreach (var possibleSkierNotInStartList in PossibleSkiersNotInStartList)
+            {
+                possibleSkierNotInStartList.AddButtonCommand = new CommandBase(AddStartListMember);
+            }
         }
 
         private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(ICollection<StartListMemberModel> startListMembers)
         {
-            var possibleSkiersNotInStartList = await startListLogic.GetAllSkiersWithSameSex(RunningRace.Sex);
+            var possibleSkiersNotInStartList = await _startListLogic.GetAllSkiersWithSameSex(RunningRace.Sex);
             foreach (var startListMember in startListMembers)
             {
-	            possibleSkiersNotInStartList.Remove(startListMember.Skier);
+                SkierModel skierToRemove = possibleSkiersNotInStartList.FirstOrDefault(possibleSkierNotInStartList =>
+                    possibleSkierNotInStartList.Id == startListMember.Skier.Id);
+                var removed = possibleSkiersNotInStartList.Remove(skierToRemove);
             }
 
             return possibleSkiersNotInStartList;
@@ -126,13 +126,13 @@ namespace RaceControl.ViewModels
             {
                 return null;
             }
-            StartListModel startListModel = await startListLogic.GetStartListForRaceId(runningRace.Id);
+            StartListModel startListModel = await _startListLogic.GetStartListForRaceId(runningRace.Id);
             return startListModel;
         }
 
         private async Task<RaceModel> GetRunningRace()
         {
-            var raceModels = await raceManagementLogic.GetRaces();
+            var raceModels = await _raceManagementLogic.GetRaces();
             var runningRaceModel = raceModels.
                 FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
 

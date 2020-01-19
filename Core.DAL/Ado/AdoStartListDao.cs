@@ -4,6 +4,7 @@ using System.Data;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
 using Hurace.Core.DAL.Interface;
+using Microsoft.Data.SqlClient;
 
 namespace Hurace.Core.DAL.Ado
 {
@@ -42,12 +43,13 @@ namespace Hurace.Core.DAL.Ado
                 new QueryParameter("@runNo", runNo));
         }
         
-        public IEnumerable<StartListMember> FindAllByRaceId(int raceId)
+        public IEnumerable<StartListMember> FindAllByRaceIdAndRunNo(int raceId, int runNo)
         {
             return template.Query(
-                @"select * from startlist where raceId=@raceId",
+                @"select * from startlist where raceId=@raceId and runNo=@runNo",
                 MapRowToStartList,
-                new QueryParameter("@raceId", raceId));
+                new QueryParameter("@raceId", raceId),
+                new QueryParameter("@runNo", runNo));
         }
 
         public IEnumerable<StartListMember> FindAllBySkierId(int skierId)
@@ -89,11 +91,11 @@ namespace Hurace.Core.DAL.Ado
         public bool Delete(StartListMember startListMember)
         {
             return template.Execute(
-                       @"delete from startlist where raceId=@raceId and skierId=@skierId and runNo=@runNo and startposition=@startposition",
+                       @"delete from startlist where raceId=@raceId and skierId=@skierId and runNo=@runNo",
                        new QueryParameter("@raceId", startListMember.Race.Id),
                        new QueryParameter("@skierId", startListMember.SkierId),
-                       new QueryParameter("@runNo", startListMember.RunNo),
-                       new QueryParameter("@startposition", startListMember.StartPos)) == 1;
+                       new QueryParameter("@runNo", startListMember.RunNo)) == 1;
         }
+       
     }
 }

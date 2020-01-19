@@ -65,6 +65,20 @@ namespace Hurace.Core.Logic.Model
             get => _deleteButtonCommand;
             set => Set(ref _deleteButtonCommand, value);
         }
+        
+        private ICommand _upButtonCommand;
+        public ICommand UpButtonCommand
+        {
+            get => _upButtonCommand;
+            set => Set(ref _upButtonCommand, value);
+        }
+        
+        private ICommand _downButtonCommand;
+        public ICommand DownButtonCommand
+        {
+            get => _downButtonCommand;
+            set => Set(ref _downButtonCommand, value);
+        }
 
         public int CompareTo(StartListMemberModel other)
         {
