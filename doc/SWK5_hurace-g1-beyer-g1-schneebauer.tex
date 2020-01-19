@@ -62,11 +62,14 @@
 	\section{Installationsanleitung}
 	
 	\todo{Installationsanleitung schreiben}
-	\section{Hurace.Core}
-	\todo{UML Diagramm}
-	\subsubsection{Datenbankmodell}
+	
+	
 
-	\includegraphics[width=.7\textwidth]{img/huraceDB.png}
+	\section{Hurace.Core}
+	\subsection{DAL}
+	\includegraphics[width=.9\textwidth]{img/DAL.png}
+	\subsubsection{Datenbankmodell}
+	\includegraphics[width=.5\textwidth]{img/huraceDB.png}
 	%\lstinputlisting[language=Java]{../Dal/Interface/IRaceDao.cs}
 	%\newpage
 	%\lstinputlisting[language=Java]{../src/queues/DHeapQueue.java}
@@ -88,6 +91,8 @@
 	
 	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
 	
+	\subsection{Logic}
+	\includegraphics[width=.9\textwidth]{img/Logic.png}\\
 	\subsection{Interaktion mit dem Zeitmesssystem}
 	\todo{Interaktion mit dem Zeitmesssystem: schreiben}
 	
@@ -105,7 +110,7 @@
 	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
 	
 	\section{Hurace.RaceControl}
-	\todo{UML Diagramm}
+	\includegraphics[width=.9\textwidth]{img/RaceControl.png}
 	\subsubsection{User Interface}
 	
 	Damit die optische Komponente einen guten Anstrich bekommt haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
@@ -218,15 +223,14 @@
 	\lstinputlisting[language=c++]{../Api/Startup.cs}
 	
 	\section{Hurace.Simulator}
-	\todo{UML Diagramm}
+
 	\subsection{Simulation der Zeitnehmung}
-	\todo{Simulation der Zeitnehmung}
+	Der Simulator ist in eine eigene Klasse im RaceControl und bekommt vom RaceControl die Aktivierung, wenn dieser Aktiv geschalten wurde und ein Skiläufer nicht mehr geblockt ist dann startet der Simulator automatisch den Lauf des Rennläufers. Dieser ruft dann die die Methode auf um eine neue Zwischenzeit anzulegen. 
+	Die Logik vom Racecontrol kümmert sich dann darum um zu entscheiden ob es die erste Zwischenzeit war oder die letzte um den lauf zu beenden. Ist ein Läufer vom Steuermann disqualifiziert worden so werden keine weiteren Zwischenzeiten von dieser Instanz vom Simulator akzeptiert.
 	
 	\subsection{Benutzerinteraktion}
-	\todo{Benutzerinteraktion}
+	Der Simulator kann mit einem Switch im Racecontrol aktiviert werden, je nach Renntyp und Durchgang generiert er andere Zeiten.
 	
-	\subsection{Kapselung}
-	\todo{Kapselung}
 	
 	\listoftodos
 \end{document}
