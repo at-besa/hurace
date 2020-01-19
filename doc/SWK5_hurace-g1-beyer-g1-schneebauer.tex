@@ -82,7 +82,7 @@
 	%\newpage
 	\newpage
 	\subsubsection{Datenbankzugriffsschicht}
-	Zur persistierung der Daten wird eine SQLite Datenbank verwendet. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt. Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Um generisch zu bleiben wird gegen Interfaces implementiert.
+	Zur Persistierung der Daten wird eine SQLite Datenbank verwendet. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt. Für jede Entität sind DAO Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Um generisch zu bleiben wird gegen Interfaces implementiert.
 	\newline
 	 
 	\textbf{ISkierDao}
@@ -90,7 +90,7 @@
 	\textbf{AdoSkierDao}
 	\lstinputlisting[language=c++]{../Core.Dal/Ado/AdoSkierDao.cs}
 	
-	Die Dao Klassen instanzieren ein Ado-Template welches die Datenbank Operationen generisch regelt.
+	Die DAO Klassen instanzieren ein Ado-Template welches die Datenbank Operationen generisch regelt.
 	
 	\textbf{AdoTemplate}
 	\lstinputlisting[language=c++]{../Core.Dal/Common/AdoTemplate.cs}
@@ -101,15 +101,15 @@
 	\includegraphics[width=.9\textwidth]{img/Logic.png}\\
 	
 	\subsection{Wiederaufsetzen}
-	Nachdem die werte in der Datenbank persistiert werden kann ein leicht ein neustart der Anwengung erfolgen ohne den Status zu verlieren.
+	Nachdem die Werte in der Datenbank persistiert werden kann ein Neustart der Anwendung leicht erfolgen ohne den Status zu verlieren.
 	
 	\subsection{Abfragen}
-	Für jegliche Abfragen der Clients ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
+	Für jegliche Abfragen der Clients, ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
 	
 	\subsection{Erfassung der Renndaten}
 	Wird über den Simulator realisiert.
 	\subsection{UnitTests}
-	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
+	Die entsprechenden DAO Klassen wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
 	\newline
 	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
@@ -118,7 +118,7 @@
 	\includegraphics[width=.9\textwidth]{img/RaceControl.png}
 	\subsubsection{User Interface}
 	
-	Damit die optische Komponente einen guten Anstrich bekommt haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
+	Damit die optische Komponente einen guten Anstrich bekommt, haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
 	Da der Code sehr umfangreich ist wurde dieser nicht in dieses Dokument eingepflegt.
 	
 	\newpage
@@ -158,7 +158,7 @@
 	Die Steuerung der Anzeigetafel wurde aus Zeitgründen nicht mehr umgesetzt.
 	
 	\subsection{Kapselung der Logik}
-	Um die Logik weitstgehend zu Kapseln verwendet enthält RaceControl selbst wenig Logik. Es grauft auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
+	Um die Logik weitestgehend zu Kapseln verwendet enthält RaceControl selbst wenig Logik. Es greift auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
@@ -173,7 +173,7 @@
 	\newpage
 	
 	\section{Hurace.Api}
-	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Durch entsprechende Attribute in den Controllern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Kontroller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wuren erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
+	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Durch entsprechende Attribute in den Controllern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Controller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wurden erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur Unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
 	\subsection{Swagger}
 	Swagger wurde dem Container als Service hinzugefügt um sich die Endpunkte im Browser ansehen zu können und die Clients generieren zu können.
 	\subsubsection{Endpunkte}
@@ -223,14 +223,14 @@
 	\lstinputlisting[language=c++]{../Api/Dtos/In/SkierInDto.cs}
 	\lstinputlisting[language=c++]{../Api/Dtos/Out/SkierOutDto.cs}
 	\subsection{CORS}
-	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der Einfachheit halber wurde CORS für weitestgehend aktiviert.
+	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der Einfachheit halber wurde CORS für alle Domänen und alle Header weitestgehend aktiviert.
 	\lstinputlisting[language=c++]{../Api/Startup.cs}
 	
 	\section{Hurace.Simulator}
 
 	\subsection{Simulation der Zeitnehmung}
 	Der Simulator ist in eine eigene Klasse im RaceControl und bekommt vom RaceControl die Aktivierung, wenn dieser aktiv geschalten wurde und ein Skiläufer nicht mehr geblockt ist dann startet der Simulator automatisch den Lauf des Rennläufers. Dieser ruft dann die Methode auf um eine neue Zwischenzeit anzulegen. 
-	Die Logik vom RaceControl kümmert sich dann darum um zu entscheiden ob es die erste Zwischenzeit war oder die letzte um den lauf zu beenden. Ist ein Läufer vom Steuermann disqualifiziert worden so werden keine weiteren Zwischenzeiten von dieser Instanz vom Simulator akzeptiert.
+	Die Logik vom RaceControl kümmert sich dann darum um zu entscheiden ob es die erste Zwischenzeit war oder die letzte um den Lauf zu beenden. Ist ein Läufer vom Steuermann disqualifiziert worden so werden keine weiteren Zwischenzeiten von dieser Instanz des Simulators akzeptiert.
 	
 	\subsection{Benutzerinteraktion}
 	Der Simulator kann mit einem Switch im RaceControl aktiviert werden, je nach Renntyp und Durchgang generiert er andere Zeiten.
