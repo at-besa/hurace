@@ -62,10 +62,10 @@
 	\section{Installationsanleitung}
 	
 	\begin{enumerate}
-		\item{Sourcecode aus GitHub clonen (https://github.com/swk5-2019ws/bb-hurace-g1-beyer-g1-schneebauer.git)}
+		\item{Sourcecode von GitHub clonen (https://github.com/swk5-2019ws/bb-hurace-g1-beyer-g1-schneebauer.git)}
 		\item{Die Solution Hurace.sln mit Visual Studio oder Rider öffnen}
-		\item{RaceControl und oder Api als Projekt starten}
-		\item{Die Datenbank wird automatisch mit den entsprechenden Daten gestartet}
+		\item{RaceControl und / oder Api als Projekt starten}
+		\item{Die Datenbank wird automatisch mit den entsprechenden Daten befüllt und gestartet}
 		\item{Die Api bzw. das RaceControl kann verwendet werden}
 	\end{enumerate}
 	
@@ -95,7 +95,7 @@
 	\textbf{AdoTemplate}
 	\lstinputlisting[language=c++]{../Core.Dal/Common/AdoTemplate.cs}
 	
-	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
+	Um mit schlüssigen Daten arbeiten zu können, bevor der Simulator fertig implementiert ist, wurden Importer geschrieben die diese generieren und in der Datenbank speichern.
 	
 	\subsection{Logic}
 	\includegraphics[width=.9\textwidth]{img/Logic.png}\\
@@ -106,8 +106,6 @@
 	\subsection{Abfragen}
 	Für jegliche Abfragen der Clients, ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
 	
-	\subsection{Erfassung der Renndaten}
-	Wird über den Simulator realisiert.
 	\subsection{UnitTests}
 	Die entsprechenden DAO Klassen wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
@@ -148,7 +146,7 @@
 	\newline
 	
 	\subsection{Steuerung des Rennablaufs}
-	In Race Control wird der Rennablauf des aktuell laufendem Rennen verwaltet. Der Simulator kann ein und ausgeschaltet werden. Es werden die Zwischenzeiten der bereits gefahrenen Rennläufer dargestellt. Für den aktuell fahrenden Rennläufer werden die Zwischenzeiten in Echtzeit angezeigt. Ein Rennläufer kann freigegeben, disqualifiziert werden.
+	In Race Control wird der Rennablauf des aktuell laufendem Rennen verwaltet. Der Simulator kann ein und ausgeschaltet werden. Es werden die Zwischenzeiten der bereits gefahrenen Rennläufer dargestellt. Für den aktuell fahrenden Rennläufer werden die Zwischenzeiten in Echtzeit angezeigt. Ein Rennläufer kann freigegeben und disqualifiziert werden. Es muss explizit angegeben werden, dass der Rennläufer im Ziel ist.
 	\newline
 	\includegraphics[width=.7\textwidth]{img/ui_raceControl.png}
 	\newline
@@ -158,7 +156,7 @@
 	Die Steuerung der Anzeigetafel wurde aus Zeitgründen nicht mehr umgesetzt.
 	
 	\subsection{Kapselung der Logik}
-	Um die Logik weitestgehend zu Kapseln verwendet enthält RaceControl selbst wenig Logik. Es greift auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
+	Um die Logik weitestgehend zu Kapseln enthält RaceControl selbst wenig Logik. Es greift auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
@@ -173,7 +171,7 @@
 	\newpage
 	
 	\section{Hurace.Api}
-	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Durch entsprechende Attribute in den Controllern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Controller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wurden erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur Unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
+	Bei der Api handelt es sich um ein ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Durch entsprechende Attribute in den Controllern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Controller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wurden erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier ein anderes Dto`s als für ausgehende. Zur Unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
 	\subsection{Swagger}
 	Swagger wurde dem Container als Service hinzugefügt um sich die Endpunkte im Browser ansehen zu können und die Clients generieren zu können.
 	\subsubsection{Endpunkte}
@@ -236,5 +234,4 @@
 	Der Simulator kann mit einem Switch im RaceControl aktiviert werden, je nach Renntyp und Durchgang generiert er andere Zeiten.
 	
 	
-	\listoftodos
 \end{document}
