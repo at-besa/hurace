@@ -61,7 +61,13 @@
 	\newpage
 	\section{Installationsanleitung}
 	
-	\todo{Installationsanleitung schreiben}
+	\begin{enumerate}
+		\item{Sourcecode aus GitHub clonen (https://github.com/swk5-2019ws/bb-hurace-g1-beyer-g1-schneebauer.git)}
+		\item{Die Solution Hurace.sln mit Visual Studio oder Rider öffnen}
+		\item{RaceControl und oder Api als Projekt starten}
+		\item{Die Datenbank wird automatisch mit den entsprechenden Daten gestartet}
+		\item{Die Api bzw. das RaceControl kann verwendet werden}
+	\end{enumerate}
 	
 	
 
@@ -69,7 +75,7 @@
 	\subsection{DAL}
 	\includegraphics[width=.9\textwidth]{img/DAL.png}
 	\subsubsection{Datenbankmodell}
-	\include graphics[width=.5\textwidth]{img/huraceDB.png}
+	\includegraphics[width=.5\textwidth]{img/huraceDB.png}
 	%\lstinputlisting[language=Java]{../Dal/Interface/IRaceDao.cs}
 	%\newpage
 	%\lstinputlisting[language=Java]{../src/queues/DHeapQueue.java}
@@ -93,8 +99,6 @@
 	
 	\subsection{Logic}
 	\includegraphics[width=.9\textwidth]{img/Logic.png}\\
-	\subsection{Interaktion mit dem Zeitmesssystem}
-	\todo{Interaktion mit dem Zeitmesssystem: schreiben}
 	
 	\subsection{Wiederaufsetzen}
 	Nachdem die werte in der Datenbank persistiert werden kann ein leicht ein neustart der Anwengung erfolgen ohne den Status zu verlieren.
@@ -103,6 +107,7 @@
 	Für jegliche Abfragen der Clients ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
 	
 	\subsection{Erfassung der Renndaten}
+	Wird über den Simulator realisiert.
 	\subsection{UnitTests}
 	Die entsprechenden Dao Klassen und wurden zusammen mit der restlichen Datenbankzugriffsschicht getestet. 
 	\newline
@@ -150,10 +155,10 @@
 	
 	
 	\subsection{Steuerung der Anzeigetafel}
-	\todo{Steuerung der Anzeigetafel}
+	Die Steuerung der Anzeigetafel wurde aus Zeitgründen nicht mehr umgesetzt.
 	
 	\subsection{Kapselung der Logik}
-	\todo{Kapselung der Logik}
+	Um die Logik weitstgehend zu Kapseln verwendet enthält RaceControl selbst wenig Logik. Es grauft auf die Komponente Hurace.Logic zu welches wiederum auf die Hurace.Core und Hurace.DAL Komponenten zugreift.
 	
 	\subsection{UnitTests}
 	Zum Testen der Logik wurde das Mocking Framework Moq verwendet, dieses bietet die Möglichkeit die Datenbankschickt mit gemockten Daten zu abstrahieren wenn man diese mittels Interfaces implementiert hat.
@@ -168,8 +173,7 @@
 	\newpage
 	
 	\section{Hurace.Api}
-	\todo{UML Diagramm}
-	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Druch entsprechende Attribute in den Kontrollern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Kontroller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wuren erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
+	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Durch entsprechende Attribute in den Controllern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Kontroller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wuren erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
 	\subsection{Swagger}
 	Swagger wurde dem Container als Service hinzugefügt um sich die Endpunkte im Browser ansehen zu können und die Clients generieren zu können.
 	\subsubsection{Endpunkte}
@@ -211,7 +215,7 @@
 	\includegraphics[width=.7\textwidth]{img/Models_3.png}
 	\newline		
 	\subsubsection{Controller}
-	Als Bespiel wird hier der SkierController angeführt. Die Rückgabewerte sind immer in ein ActionResult eingebettet. Dadurch sind einfach lesbare Rückgabefunktionen für verschiedene StatusCodes möglich. Die Controller selbst greifen auf die Dao-Klassen von Core.DAL zu.
+	Als Beispiel wird hier der SkierController angeführt. Die Rückgabewerte sind immer in ein ActionResult eingebettet. Dadurch sind einfach lesbare Rückgabefunktionen für verschiedene StatusCodes möglich. Die Controller selbst greifen auf die Dao-Klassen von Core.DAL zu.
 	\textbf{IRaceControlLogic}
 	\lstinputlisting[language=c++]{../Api/Controllers/SkierController.cs}
 	\subsubsection{Dto`s}
@@ -219,17 +223,17 @@
 	\lstinputlisting[language=c++]{../Api/Dtos/In/SkierInDto.cs}
 	\lstinputlisting[language=c++]{../Api/Dtos/Out/SkierOutDto.cs}
 	\subsection{CORS}
-	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der einfachheithalber wurde CORS für weitestgehend aktiviert.
+	Um die Api für den WebClient zugänglich zu machen wird CORS aktiviert. Der Einfachheit halber wurde CORS für weitestgehend aktiviert.
 	\lstinputlisting[language=c++]{../Api/Startup.cs}
 	
 	\section{Hurace.Simulator}
 
 	\subsection{Simulation der Zeitnehmung}
-	Der Simulator ist in eine eigene Klasse im RaceControl und bekommt vom RaceControl die Aktivierung, wenn dieser Aktiv geschalten wurde und ein Skiläufer nicht mehr geblockt ist dann startet der Simulator automatisch den Lauf des Rennläufers. Dieser ruft dann die die Methode auf um eine neue Zwischenzeit anzulegen. 
-	Die Logik vom Racecontrol kümmert sich dann darum um zu entscheiden ob es die erste Zwischenzeit war oder die letzte um den lauf zu beenden. Ist ein Läufer vom Steuermann disqualifiziert worden so werden keine weiteren Zwischenzeiten von dieser Instanz vom Simulator akzeptiert.
+	Der Simulator ist in eine eigene Klasse im RaceControl und bekommt vom RaceControl die Aktivierung, wenn dieser aktiv geschalten wurde und ein Skiläufer nicht mehr geblockt ist dann startet der Simulator automatisch den Lauf des Rennläufers. Dieser ruft dann die Methode auf um eine neue Zwischenzeit anzulegen. 
+	Die Logik vom RaceControl kümmert sich dann darum um zu entscheiden ob es die erste Zwischenzeit war oder die letzte um den lauf zu beenden. Ist ein Läufer vom Steuermann disqualifiziert worden so werden keine weiteren Zwischenzeiten von dieser Instanz vom Simulator akzeptiert.
 	
 	\subsection{Benutzerinteraktion}
-	Der Simulator kann mit einem Switch im Racecontrol aktiviert werden, je nach Renntyp und Durchgang generiert er andere Zeiten.
+	Der Simulator kann mit einem Switch im RaceControl aktiviert werden, je nach Renntyp und Durchgang generiert er andere Zeiten.
 	
 	
 	\listoftodos
