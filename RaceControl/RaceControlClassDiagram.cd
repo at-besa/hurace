@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RaceControl.MainWindow" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAABEAACAAAAAAAAAAAAgAAAAAAAAAAACAAAAAAAABA=</HashCode>
+      <FileName>Views\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RaceControl.Views.RaceControlView" BaseTypeListCollapsed="true">
+    <Position X="1.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\RaceControlView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RaceControl.Views.RaceManagementView" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\RaceManagementView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RaceControl.Views.ScreenControlView" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\ScreenControlView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RaceControl.Views.StartListView" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Views\StartListView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="RaceControl.ViewModels.MainViewModel">
+    <Position X="5.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.ViewModels.RaceControlViewModel">
+    <Position X="1.5" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>A0LAgAGIEIAAABEAEADAAEAAwQBAAAAAAAECAgACgAA=</HashCode>
+      <FileName>ViewModels\RaceControlViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.ViewModels.RaceManagementViewModel">
+    <Position X="8.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIQAEAAkAEAEAAAAAJAAAAoSAAAIAoCAAAGAAA=</HashCode>
+      <FileName>ViewModels\RaceManagementViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.ViewModels.StartListViewModel">
+    <Position X="4.5" Y="5.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AQAgAAsAQAQADAAACACAAAgAAAoAAAAAAAACAAAAQAA=</HashCode>
+      <FileName>ViewModels\StartListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.ViewModels.RaceManagementHelpers.RaceViewModel">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAEAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\RaceManagementHelpers\RaceViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.Helpers.NotifyPropertyChanged">
+    <Position X="5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\NotifyPropertyChanged.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RaceControl.ViewModels.ScreenControlViewModel">
+    <Position X="12" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ScreenControlViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
