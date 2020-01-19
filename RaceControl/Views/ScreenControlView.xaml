@@ -4,9 +4,89 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RaceControl.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:Hurace.Core.Logic.Model;assembly=Core.Logic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+
+	<UserControl.Resources>
+		<DataTemplate x:Key="SplittimeTemplate" DataType="{x:Type models:SplitTimeModel}">
+			<DockPanel LastChildFill="True">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Column="0" Text="{Binding SplitTimeNo}" FontWeight="Bold" Margin="10,0" />
+
+					<StackPanel Grid.Column="1" Orientation="Vertical" DockPanel.Dock="Top">
+						<TextBlock Text="{Binding Time, StringFormat='mm:ss.fff'}" />
+						<TextBlock>
+							<TextBlock.Text>
+								<MultiBinding StringFormat="{}{0:D2}.{1:fff}">
+									<Binding Path="TimeOffsetToWinner.Seconds"/>
+									<Binding Path="TimeOffsetToWinner"/>
+								</MultiBinding>
+							</TextBlock.Text>
+						</TextBlock>
+					</StackPanel>
+				</Grid>
+			</DockPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+	    <Grid.ColumnDefinitions>
+		    <ColumnDefinition></ColumnDefinition>
+		    <ColumnDefinition></ColumnDefinition>
+	    </Grid.ColumnDefinitions>
+
+	    <ToolBarTray Grid.Row="0" Grid.ColumnSpan="2">
+		    <ToolBar>
+			    <Button Command="{Binding OpenScreenCommand}" ToolTip="Open the Info Screen" >
+					<materialDesign:PackIcon Kind="DockWindow" />
+			    </Button>
+			    <Separator />
+		    </ToolBar>
+	    </ToolBarTray>
+		<StackPanel Grid.Column="0" Grid.Row="1"  >
+			<Button Content="Set Screen to Actual Skier"></Button>
+
+			<materialDesign:Card  Margin="4" Background="{DynamicResource MaterialDesignCardBackground}">
+				<Grid>
+					<StackPanel Orientation="Vertical" Visibility="{Binding SelectedSkierBoxVisible}" Margin="5">
+						<Grid>
+							<TextBlock Text="Actual Skier" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Left" FontSize="10" />
+							<materialDesign:PackIcon Kind="CheckboxBlankCircle" Visibility="{Binding SelectedSkierViewModel.Blocked, Converter={StaticResource BoolToVisInvert}}" Foreground="Lime" Height="10" Width="10" HorizontalAlignment="Right" />
+							<materialDesign:PackIcon Kind="CheckboxBlankCircleOutline" Visibility="{Binding SelectedSkierViewModel.Blocked, Converter={StaticResource BoolToVis}}" Foreground="Orange"  Height="10" Width="10" HorizontalAlignment="Right" />
+							<TextBlock Text="DSQ" Visibility="{Binding SelectedSkierViewModel.Disqualified, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Red" HorizontalAlignment="Right" Margin="25,0"/>
+							<TextBlock Text="RUN" Visibility="{Binding SelectedSkierViewModel.Running, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Lime"  HorizontalAlignment="Right" Margin="25,0"/>
+							<TextBlock Text="FIN" Visibility="{Binding SelectedSkierViewModel.Finished, Converter={StaticResource BoolToVis}}" FontSize="10" Foreground="Blue" HorizontalAlignment="Right" Margin="25,0"/>
+						</Grid>
+						<StackPanel Orientation="Horizontal" Margin="0,6" >
+							<TextBlock Text="{Binding SelectedSkierViewModel.Startposition}" Style="{DynamicResource MaterialDesignCaptionTextBlock}" Width="25" FontSize="15"/>
+							<Image Source="{Binding SelectedSkierViewModel.Skier.ProfileImage}" Margin="2" Height="50" Width="50" VerticalAlignment="Top" />
+							<StackPanel Orientation="Vertical" Width="100" Margin="5,0">
+								<TextBlock Text="{Binding SelectedSkierViewModel.Skier.FirstName}" FontSize="10" FontWeight="Bold" />
+								<TextBlock Text="{Binding SelectedSkierViewModel.Skier.LastName}" FontSize="10" FontWeight="Bold" />
+								<TextBlock Text="{Binding SelectedSkierViewModel.Skier.Nation}"  FontSize="12"  />
+							</StackPanel>
+
+							<Grid Width="150" HorizontalAlignment="Right">
+								<ListBox ItemsSource="{Binding ActualSplittimes}"  ItemTemplate="{DynamicResource SplittimeTemplate}" />
+							</Grid>
+						</StackPanel>
+
+					</StackPanel>
+				</Grid>
+			</materialDesign:Card>
+
+		</StackPanel>
+
+	</Grid>
 </UserControl>

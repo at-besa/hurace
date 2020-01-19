@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="Hurace.Core.DAL.Common.AdoTemplate">
+    <Position X="1.5" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAQAAAAAAAAAAAAAAAgQAAAAFAAAAAA=</HashCode>
+      <FileName>Common\AdoTemplate.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="connectionFactory" />
+      <Property Name="ConnectionFactory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Hurace.Core.DAL.Common.ConfigurationUtil">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAIAAAACAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Common\ConfigurationUtil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AdoTemplate" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Hurace.Core.DAL.Common.DbUtil" Collapsed="true">
+    <Position X="8" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\DbUtil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AdoTemplate" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Hurace.Core.DAL.Common.DefaultConnectionFactory" BaseTypeListCollapsed="true">
+    <Position X="16.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACEAAAAAABAAAAQAABAAACAAAAAQAAA=</HashCode>
+      <FileName>Common\DefaultConnectionFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AdoTemplate" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoRaceDao">
+    <Position X="15" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAQAAEAAAAAAAABAAAAQAAAAAAEBAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Ado\AdoRaceDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="Race" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoRaceDataDao" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="6.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAkAAAIAAAQBAAAAQAAAAAAEBAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Ado\AdoRaceDataDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="RaceData" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoRaceTypeDao" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAAAAABAAAAQAAAAAAEBCAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Ado\AdoRaceTypeDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="RaceType" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoRunDao" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="6.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ACQAAEAAAAAAAABAAAAQAAAAAAEBAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Ado\AdoRunDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="Run" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoSkierDao" BaseTypeListCollapsed="true">
+    <Position X="20.25" Y="6.25" Width="2.25" />
+    <AssociationLine Name="template" Type="Hurace.Core.DAL.Common.AdoTemplate" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.375" Y="6.25" />
+        <Point X="21.375" Y="5.875" />
+        <Point X="6.958" Y="5.875" Type="JumpStart" />
+        <Point X="6.792" Y="5.875" Type="JumpEnd" />
+        <Point X="3.896" Y="5.875" Type="JumpStart" />
+        <Point X="3.729" Y="5.875" Type="JumpEnd" />
+        <Point X="2.801" Y="5.875" />
+        <Point X="2.801" Y="2.882" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAUAAEAAAAAAAABAAAAQAAAAAAEBAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Ado\AdoSkierDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="Skier" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoSplitTimeDao" BaseTypeListCollapsed="true">
+    <Position X="9" Y="6.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAEEAAAAAAAABAAAAQAAAAAAEBAAAAAEAEAAAAAAA=</HashCode>
+      <FileName>Ado\AdoSplitTimeDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="SplitTime" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoStartListDao" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="6.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAkAAAIAAAABAAAAQAAAAAAEBQAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Ado\AdoStartListDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="StartListMember" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Ado.AdoStatusDao" BaseTypeListCollapsed="true">
+    <Position X="17.5" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAEAAAAAABACAAQAAAAAAEBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ado\AdoStatusDao.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="template" />
+      <Property Name="Status" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.Race" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACgAAEAAAABAQEAAIAAAQAAAAAAAABAQAAAAAAAAA=</HashCode>
+      <FileName>Domain\Race.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.RaceData" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="10.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACEAAAQEAARAQIAAAAAAAAAIAAAMAAAAAAA=</HashCode>
+      <FileName>Domain\RaceData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.RaceType" BaseTypeListCollapsed="true">
+    <Position X="22.75" Y="10.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAQEAAAAABAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Domain\RaceType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.Run" BaseTypeListCollapsed="true">
+    <Position X="13" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAQAAAAAAAAAAAAIAAAIAAAAEAA=</HashCode>
+      <FileName>Domain\Run.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.Skier" BaseTypeListCollapsed="true">
+    <Position X="20.25" Y="10.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAkAAAAAABAQGAAAAAAAAAAAQAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Domain\Skier.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.SplitTime" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAQEAAAAAAAAAAIAAAAAAAAAAAAAEQA=</HashCode>
+      <FileName>Domain\SplitTime.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.StartListMember" BaseTypeListCollapsed="true">
+    <Position X="1.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAgAAACAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Domain\StartListMember.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Bottom" Position="0.834" />
+  </Class>
+  <Class Name="Hurace.Core.DAL.Domain.Status" BaseTypeListCollapsed="true">
+    <Position X="18" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAQEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Domain\Status.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="Hurace.Core.DAL.Common.IConnectionFactory">
+    <Position X="12.25" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAACAAAAAQAAA=</HashCode>
+      <FileName>Common\IConnectionFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

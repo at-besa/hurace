@@ -1,49 +1,87 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
-
-//using Microsoft.Toolkit.Uwp.UI.Animations;
-//
-//using RaceControl.Core.Models;
-//using RaceControl.Core.Services;
+using System.Windows;
+using Hurace.Core.Logic;
+using Hurace.Core.Logic.Interface;
+using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
-//using RaceControl.Services;
-//using RaceControl.Views;
 
 namespace RaceControl.ViewModels
 {
-    public class ScreenControlViewModel : Observable
-    {
-//        private ICommand _itemClickCommand;
-//
-//        public ICommand ItemClickCommand => _itemClickCommand ?? (_itemClickCommand = new RelayCommand<SampleOrder>(OnItemClick));
-//
-//        public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();
-//
-//        public ScreenControlViewModel()
-//        {
-//        }
-//
-//        public async Task LoadDataAsync()
-//        {
-//            Source.Clear();
-//
-//            // TODO WTS: Replace this with your actual data
-//            var data = await SampleDataService.GetContentGridDataAsync();
-//            foreach (var item in data)
-//            {
-//                Source.Add(item);
-//            }
-//        }
-//
-//        private void OnItemClick(SampleOrder clickedItem)
-//        {
-//            if (clickedItem != null)
-//            {
-//                NavigationService.Frame.SetListDataItemForNextConnectedAnimation(clickedItem);
-//                NavigationService.Navigate<ScreenControlDetailPage>(clickedItem.OrderID);
-//            }
-//        }
-    }
+    public class ScreenControlViewModel : NotifyPropertyChanged
+	{
+
+	    private readonly IRaceControlLogic raceControlLogic = RaceControlLogic.Instance;
+	    private readonly IRaceManagementLogic raceManagementLogic = RaceManagementLogic.Instance;
+
+	    private ICollection<SplitTimeModel> actualSplittimes;
+	    public ICollection<SplitTimeModel> ActualSplittimes {
+		    get => actualSplittimes;
+		    set => Set(ref actualSplittimes, value);
+	    }
+
+
+	    private RaceControlModel raceControlModel;
+	    public RaceControlModel RaceControlModel {
+		    get => raceControlModel;
+		    set => Set(ref raceControlModel, value);
+		}
+
+	    private Visibility selectedSkierBoxVisible = Visibility.Collapsed;
+	    public Visibility SelectedSkierBoxVisible {
+		    get => selectedSkierBoxVisible;
+		    set => Set(ref selectedSkierBoxVisible, value);
+	    }
+
+		private StartListMemberModel selectedSkierViewModel;
+	    public StartListMemberModel SelectedSkierViewModel {
+		    get => selectedSkierViewModel;
+		    set {
+			    Set(ref selectedSkierViewModel, value);
+
+			    SelectedSkierBoxVisible = Visibility.Visible;
+
+			    ShowSplittimesForActualSkier();
+		    }
+		}
+	    public CommandBase OpenScreenCommand { get; set; }
+	    public CommandBase ClearanceCommand { get; set; }
+	    public CommandBase DisqualifyCommand { get; set; }
+	    public CommandBase SimulatorOnOffCommand { get; set; }
+
+		public ScreenControlViewModel()
+	    {
+			Init();
+			OpenScreenCommand = new CommandBase(OpenScreen);
+
+		}
+		private void OpenScreen(object sender, EventArgs e)
+		{
+			
+		}
+
+		private async void Init()
+	    {
+		    await LoadDataAsync();
+	    }
+
+	    private async Task LoadDataAsync()
+	    {
+		    var race = await raceManagementLogic.GetRunningRace();
+		    RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id);
+
+	    }
+
+
+
+	    private async void ShowSplittimesForActualSkier()
+	    {
+		    if (SelectedSkierViewModel != null)
+			    ActualSplittimes = await raceControlLogic.GetSplittimesForSkier(SelectedSkierViewModel.Skier.Id, 1);
+	    }
+
+
+	}
 }

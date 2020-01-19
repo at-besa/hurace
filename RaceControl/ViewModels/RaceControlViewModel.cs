@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,7 +7,6 @@ using Hurace.Core.Logic;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
 using RaceControl.Helpers;
-using Swack.UI.ViewModels;
 using NotifyPropertyChanged = RaceControl.Helpers.NotifyPropertyChanged;
 
 namespace RaceControl.ViewModels
