@@ -60,8 +60,10 @@
 	\tableofcontents
 	\newpage
 	\section{Installationsanleitung}
+	
 	\todo{Installationsanleitung schreiben}
 	\section{Hurace.Core}
+	\todo{UML Diagramm}
 	\subsubsection{Datenbankmodell}
 
 	\includegraphics[width=.7\textwidth]{img/huraceDB.png}
@@ -74,36 +76,26 @@
 	Zur persistierung der Daten wird eine SQLite Datenbank verwendet. Zur Herstellung der Verbindung wird das Factory Pattern verwendet. Über eine Konfigurationsdatei werden Informationen zum Datenbanktyp zur Verfügung gestellt. Für jede Entität sind Dao Klassen implementiert. Diese stellen Methoden für Operationen auf der Datenbank zur Verfügung. Um generisch zu bleiben wird gegen Interfaces implementiert.
 	\newline
 	 
-	%\includegraphics[width=.8\textwidth]{img/main_1.png}
-	%\\
-	%\includegraphics[width=.8\textwidth]{img/main_2.png}
-	%\\
-	%\includegraphics[width=.8\textwidth]{img/main_3.png}
-	\textbf{IRaceDao}
-	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceDao.cs}
-	\textbf{IRaceDataDao}
-	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceDataDao.cs}
-	\textbf{IRaceTypeDao}
-	\lstinputlisting[language=c++]{../Core.Dal/Interface/IRaceTypeDao.cs}
 	\textbf{ISkierDao}
 	\lstinputlisting[language=c++]{../Core.Dal/Interface/ISkierDao.cs}
-	\textbf{ISplittimeDao}
-	\lstinputlisting[language=c++]{../Core.Dal/Interface/ISplittimeDao.cs}
-	\textbf{IStartListDao}
-	\lstinputlisting[language=c++]{../Core.Dal/Interface/IStartListDao.cs}
+	\textbf{AdoSkierDao}
+	\lstinputlisting[language=c++]{../Core.Dal/Ado/AdoSkierDao.cs}
+	
+	Die Dao Klassen instanzieren ein Ado-Template welches die Datenbank Operationen generisch regelt.
+	
+	\textbf{AdoTemplate}
+	\lstinputlisting[language=c++]{../Core.Dal/Common/AdoTemplate.cs}
 	
 	Um mit schlüssigen Daten arbeiten zu können wurden Importer geschrieben die diese Generieren und in der Datenbank speichern.
-	\subsection{Verwaltung der Rennläuferinnen}
-	\todo{Verwaltung der Rennläuferinnen schreiben}
 	
 	\subsection{Interaktion mit dem Zeitmesssystem}
 	\todo{Interaktion mit dem Zeitmesssystem: schreiben}
 	
 	\subsection{Wiederaufsetzen}
-	\todo{Wiederaufsetzen}
+	Nachdem die werte in der Datenbank persistiert werden kann ein leicht ein neustart der Anwengung erfolgen ohne den Status zu verlieren.
 	
 	\subsection{Abfragen}
-	\todo{Abfragen}
+	Für jegliche Abfragen der Clients ist eine wie oben dargestellte Dao Klasse mit entsprechenden Methoden definiert. Mögliche weitere Anpassungen an den Ergebnissen werden im Client durchgeführt.
 	
 	\subsection{Erfassung der Renndaten}
 	\subsection{UnitTests}
@@ -113,14 +105,11 @@
 	\includegraphics[width=.7\textwidth]{img/UnitTests.png}
 	
 	\section{Hurace.RaceControl}
+	\todo{UML Diagramm}
 	\subsubsection{User Interface}
 	
 	Damit die optische Komponente einen guten Anstrich bekommt haben wir uns entschieden Material Design zu verwenden, dieses wurde als Nuget Package hinzugefügt und eingebunden, hierbei haben wir uns für das DarkTheme entschieden. Das UI ist nach dem MVVM Muster gebaut und verwendet dessen Vorteile.\\
-	Da der Code sehr umfangreich ist wurde dieser nicht in dieses Dokument eingepflegt.\\
-	\includegraphics[width=.7\textwidth]{img/ui1.png}\\
-	\includegraphics[width=.7\textwidth]{img/ui2.png}\\
-	\includegraphics[width=.7\textwidth]{img/ui3.png}\\
-	
+	Da der Code sehr umfangreich ist wurde dieser nicht in dieses Dokument eingepflegt.
 	
 	\newpage
 	\subsubsection{Core Logic}
@@ -137,13 +126,23 @@
 	\lstinputlisting[language=c++]{../Core.Logic/Interface/IStartListLogic.cs}
 	
 	\subsection{Verwaltung von Rennen}
-	\todo{Verwaltung von Rennen}
+	Im Race Management können Rennen hinzugefügt, bearbeitet und gelöscht werden. Ausserdem kann angegeben werden ob das Rennen gerade läuft oder nicht.
+	\newline
+	\includegraphics[width=.7\textwidth]{img/ui_raceManagement.png}
+	\newline
 	
 	\subsection{Zuordnung von Rennläuferinnen}
-	\todo{Zuordnung von Rennläuferinnen}
+	In Start List werden die Rennläufer bzw. Rennläuferinnen dem gerade laufendem Rennen zugewiesen. Die Rennläufer können auch wieder aus der Startliste entfernt werden. Das Geschlecht wird bei der Auswahl berücksichtigt.
+	\newline
+	\includegraphics[width=.7\textwidth]{img/ui_startList.png}
+	\newline
 	
 	\subsection{Steuerung des Rennablaufs}
-	\todo{Steuerung des Rennablaufs}
+	In Race Control wird der Rennablauf des aktuell laufendem Rennen verwaltet. Der Simulator kann ein und ausgeschaltet werden. Es werden die Zwischenzeiten der bereits gefahrenen Rennläufer dargestellt. Für den aktuell fahrenden Rennläufer werden die Zwischenzeiten in Echtzeit angezeigt. Ein Rennläufer kann freigegeben, disqualifiziert werden.
+	\newline
+	\includegraphics[width=.7\textwidth]{img/ui_raceControl.png}
+	\newline
+	
 	
 	\subsection{Steuerung der Anzeigetafel}
 	\todo{Steuerung der Anzeigetafel}
@@ -164,6 +163,7 @@
 	\newpage
 	
 	\section{Hurace.Api}
+	\todo{UML Diagramm}
 	Bei der Api handelt es sich um eine ASP.NET Core Projekt. Es handelt sich um eine REST Api. Die Api wurde vor Hurace.Web entwickelt und diente somit als Vorlage. Druch entsprechende Attribute in den Kontrollern konnte eine OpenApi-Spezifikation für die Api erstellt werden. Über das Tool NSwag von Microsoft wurden über die OpenApi-Spezifikation die TypeScript Clients für das Hurace.Web erstellt. Die einzelnen Kontroller mit ihren Endpunkten wurden entsprechend der Aufgaben für das Hurace.Web Projekt entwickelt. Die benötigten Dto`s wuren erstellt. Da die Id eines Skiers beim erstellen nicht bekannt ist, gibt es für eingehende Skier eingehende Skier ein anderes Dto`s als für ausgehende. Zur unterscheidung befindet sich im Namen entweder 'In' (für eingehend) oder 'Out'(für ausgehend). 
 	\subsection{Swagger}
 	Swagger wurde dem Container als Service hinzugefügt um sich die Endpunkte im Browser ansehen zu können und die Clients generieren zu können.
@@ -218,6 +218,7 @@
 	\lstinputlisting[language=c++]{../Api/Startup.cs}
 	
 	\section{Hurace.Simulator}
+	\todo{UML Diagramm}
 	\subsection{Simulation der Zeitnehmung}
 	\todo{Simulation der Zeitnehmung}
 	
@@ -227,4 +228,5 @@
 	\subsection{Kapselung}
 	\todo{Kapselung}
 	
+	\listoftodos
 \end{document}

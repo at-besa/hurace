@@ -40,16 +40,26 @@
 			         Background="{DynamicResource MaterialDesignCardBackground}"
 			         Foreground="{DynamicResource MaterialDesignDarkForeground}"
         >
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal"
-						            Margin="0,6" >
-                        <TextBlock Text="{Binding Startposition}"
-                                   FontSize="14"
-                                   FontWeight="Bold" 
-                                   Margin="4,0,6,0"
-                                   />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Grid.Column>0</Grid.Column>
+                            <TextBlock Text="{Binding Startposition}"
+                                       FontSize="14"
+                                       FontWeight="Bold" 
+                                       Margin="4,0,6,0"
+                            />
                         <TextBlock Text="{Binding Skier.FirstName}"
                                    FontSize="14"
                                    FontWeight="Bold"
@@ -60,34 +70,36 @@
 							       FontWeight="Bold" 
                                    Margin="0,0,4,0"
                                    />
-                        <TextBlock Text="{Binding Skier.Sex}"
-                                   FontSize="14"
-                                   FontWeight="Bold" 
-                                   Margin="0,0,4,0"
-                                   />
-                        <Button
-                            Style="{DynamicResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="ArrowUpward" />
-                        </Button>
-                        <Button
-                            Style="{DynamicResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="ArrowDownward" />
-                        </Button>
-                        <Button
-                            Command="{Binding DeleteButtonCommand}" 
-                            CommandParameter="{Binding}"
-                            Style="{DynamicResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="Delete" />
-                            
-                        </Button>
-                    </StackPanel>
-
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Grid.Column>1</Grid.Column>
+                            <Button
+                                Command="{Binding UpButtonCommand}" 
+                                CommandParameter="{Binding}"
+                                Style="{DynamicResource MaterialDesignIconButton}"
+                                ToolTip="MaterialDesignIconButton">
+                                <materialDesign:PackIcon
+                                    Kind="ArrowUpward" 
+                                />
+                            </Button>
+                            <Button
+                                Command="{Binding DownButtonCommand}" 
+                                CommandParameter="{Binding}"
+                                Style="{DynamicResource MaterialDesignIconButton}"
+                                ToolTip="MaterialDesignIconButton">
+                                <materialDesign:PackIcon
+                                    Kind="ArrowDownward" />
+                            </Button>
+                            <Button
+                                Command="{Binding DeleteButtonCommand}" 
+                                CommandParameter="{Binding}"
+                                Style="{DynamicResource MaterialDesignIconButton}"
+                                ToolTip="MaterialDesignIconButton">
+                                <materialDesign:PackIcon
+                                    Kind="Delete" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -102,34 +114,44 @@
 			         Background="{DynamicResource MaterialDesignCardBackground}"
 			         Foreground="{DynamicResource MaterialDesignDarkForeground}"
 			>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
 
-            <ListBox.ItemTemplate>
+            <ListBox.ItemTemplate>    
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal"
-						            Margin="0,6" >
-                        <TextBlock Text="{Binding FirstName}"
-                                   FontSize="14"
-                                   FontWeight="Bold"
-                                   Margin="0,0,4,0"
-                        />
-						<TextBlock Text="{Binding LastName}"
-                                   FontSize="14"
-							       FontWeight="Bold" 
-                                   Margin="0,0,4,0"
-                                   />
-						<TextBlock Text="{Binding Sex}"
-                                   FontSize="14"
-                                   FontWeight="Bold" 
-                                   Margin="0,0,4,0"
-                                   />
-                        <Button
-                            Style="{DynamicResource MaterialDesignIconButton}"
-                            ToolTip="MaterialDesignIconButton">
-                            <materialDesign:PackIcon
-                                Kind="Plus" />
-                        </Button>
-                    </StackPanel>
-
+                    <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="300"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Grid.Column>0</Grid.Column>
+                                <TextBlock Text="{Binding FirstName}"
+                                           FontSize="14"
+                                           FontWeight="Bold"
+                                           Margin="0,0,4,0"
+                                />
+                                <TextBlock Text="{Binding LastName}"
+                                           FontSize="14"
+                                           FontWeight="Bold" 
+                                           Margin="0,0,4,0"
+                                />
+                            </StackPanel>
+                            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Grid.Column>1</Grid.Column>
+                                <Button
+                                    Command="{Binding AddButtonCommand}" 
+                                    CommandParameter="{Binding}"
+                                    Style="{DynamicResource MaterialDesignIconButton}"
+                                    ToolTip="MaterialDesignIconButton">
+                                    <materialDesign:PackIcon
+                                        Kind="Plus" />
+                                </Button>
+                            </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -35,7 +35,7 @@ namespace Api.Controllers
         public ActionResult<IList<StartListSkierOutDto>> Get(int runningRaceId, int runNo)
         {
             IList<StartListSkierOutDto> startListSkierOutDtos = new List<StartListSkierOutDto>();
-            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(runningRaceId);
+            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceIdAndRunNo(runningRaceId, runNo);
             if (startListMembers == null)
             {
                 return NotFound();

@@ -49,7 +49,7 @@ namespace Api.Controllers
             {
                 return NotFound();
             }
-            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceId(runningRaceId);
+            IEnumerable<StartListMember> startListMembers = _adoStartListDao.FindAllByRaceIdAndRunNo(runningRaceId, runNo);
             if (startListMembers == null)
             {
                 return NotFound();

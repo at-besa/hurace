@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using Microsoft.Data.Sqlite;
 
 namespace Hurace.Core.DAL.Common
 {
@@ -42,6 +43,7 @@ namespace Hurace.Core.DAL.Common
                     items.Add(rowMapper(reader));
                 }
             }
+
             return items;
         }
 
@@ -60,12 +62,13 @@ namespace Hurace.Core.DAL.Common
             command.Connection = connection;
             DbTransaction transaction = connection.BeginTransaction();
             command.Transaction = transaction;
-                    
+
             try
             {
                 command.CommandText = sql;
                 AddParameters(command, parameters);
-                retval = Convert.ToInt32(command.ExecuteScalar());
+                GetGeneratedQuery(command);
+                retval = Convert.ToInt32(command.ExecuteNonQuery());
                 transaction.Commit();
                 connection.Close();
             }
@@ -87,8 +90,20 @@ namespace Hurace.Core.DAL.Common
                     Console.WriteLine("  Message: {0}", ex2.Message);
                 }
             }
-                    
+
             return retval;
+        }
+
+        public static string GetGeneratedQuery(DbCommand dbCommand)
+        {
+            var query = dbCommand.CommandText;
+            foreach (var parameter in dbCommand.Parameters)
+            {
+                query = query.Replace(((SqliteParameter)parameter).ParameterName, ((SqliteParameter)parameter).Value.ToString());
+            }
+            //TODO: Log DB query
+            //Log.AddVerbose(String.Format("SQL query: {0}", GetGeneratedQuery(dbCommand)));
+            return query;
         }
     }
 }
