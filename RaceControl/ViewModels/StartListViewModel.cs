@@ -96,15 +96,77 @@ namespace RaceControl.ViewModels
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
             PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
 
-            foreach(var item in RunningRaceStartList.StartListMembers)
+            foreach(var startListMember in RunningRaceStartList.StartListMembers)
             {
-                item.DeleteButtonCommand = new CommandBase(DeleteStartListMember);
+                startListMember.DeleteButtonCommand = new CommandBase(DeleteStartListMember);
+                startListMember.UpButtonCommand = new CommandBase(MoveUpStartListMember);
+                startListMember.DownButtonCommand = new CommandBase(MoveDownStartListMember);
             }
 
             foreach (var possibleSkierNotInStartList in PossibleSkiersNotInStartList)
             {
                 possibleSkierNotInStartList.AddButtonCommand = new CommandBase(AddStartListMember);
             }
+        }
+
+        private async void MoveDownStartListMember(object? sender, EventArgs e)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+            var startListMemberToMoveDown = (StartListMemberModel) sender;
+            if (startListMemberToMoveDown.Startposition == RunningRaceStartList.StartListMembers.Count)
+            {
+                return;
+            }
+
+            int oldStartPosition = startListMemberToMoveDown.Startposition;
+            var startListMemberToMoveUp = RunningRaceStartList.StartListMembers.FirstOrDefault(startListMember => startListMember.Startposition == (oldStartPosition + 1));
+            if (startListMemberToMoveUp == null)
+            {
+                return;
+            }
+
+            int newStartPosition = startListMemberToMoveUp.Startposition;
+            bool movedToOldStartPosition =  await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveUp.Skier.Id,
+                startListMemberToMoveUp.RunNo, oldStartPosition);
+            if (movedToOldStartPosition)
+            {
+                bool movedToNewStartPosition = await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveDown.Skier.Id,
+                    startListMemberToMoveDown.RunNo, newStartPosition);   
+            }
+            Init();
+        }
+
+        private async void MoveUpStartListMember(object? sender, EventArgs e)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+            var startListMemberToMoveUp = (StartListMemberModel) sender;
+            if (startListMemberToMoveUp.Startposition == 1)
+            {
+                return;
+            }
+
+            int oldStartPosition = startListMemberToMoveUp.Startposition;
+            var startListMemberToMoveDown = RunningRaceStartList.StartListMembers.FirstOrDefault(startListMember => startListMember.Startposition == (oldStartPosition - 1));
+            if (startListMemberToMoveDown == null)
+            {
+                return;
+            }
+
+            int newStartPosition = startListMemberToMoveDown.Startposition;
+            bool movedToOldStartPosition =  await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveDown.Skier.Id,
+                startListMemberToMoveDown.RunNo, oldStartPosition);
+            if (movedToOldStartPosition)
+            {
+                bool movedToNewStartPosition = await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveUp.Skier.Id,
+                    startListMemberToMoveUp.RunNo, newStartPosition);   
+            }
+            Init();
         }
 
         private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(ICollection<StartListMemberModel> startListMembers)

@@ -66,12 +66,16 @@
                                    Margin="0,0,4,0"
                                    />
                         <Button
+                            Command="{Binding UpButtonCommand}" 
+                            CommandParameter="{Binding}"
                             Style="{DynamicResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon
                                 Kind="ArrowUpward" />
                         </Button>
                         <Button
+                            Command="{Binding DownButtonCommand}" 
+                            CommandParameter="{Binding}"
                             Style="{DynamicResource MaterialDesignIconButton}"
                             ToolTip="MaterialDesignIconButton">
                             <materialDesign:PackIcon

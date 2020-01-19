@@ -97,10 +97,13 @@ namespace Hurace.Core.Logic
             return await Task.Run(() =>
             {
                 var startlistAdo = new AdoStartListDao(connectionFactory);
-                
+                var race = new Race
+                {
+                    Id = raceId
+                };               
                 var startList = new StartListMember
                 {
-                    Race = new AdoRaceDao(connectionFactory).FindById(raceId),
+                    Race = race,
                     SkierId = skierId,
                     RunNo = runNo,
                     StartPos = startPosition
