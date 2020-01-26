@@ -64,6 +64,7 @@ namespace RaceControl.ViewModels
         private async void DeleteStartListMember(object sender, EventArgs e)
         {
             var startListMemberToRemove = (StartListMemberModel)sender;
+            SetExecutionNotPossibleForAll();
             if (startListMemberToRemove != null)
             {
                 var raceId = RunningRace.Id;
@@ -71,11 +72,43 @@ namespace RaceControl.ViewModels
                 var startposition = startListMemberToRemove.Startposition;
                 var runNo = startListMemberToRemove.RunNo;
                 await _startListLogic.DeleteStartListMember(raceId, skierId, runNo);
-                if(!await _startListLogic.IsStartListMemberInStartList(raceId , skierId, runNo))
+                var isInStartList = await _startListLogic.IsStartListMemberInStartList(raceId, skierId, runNo);
+                if (!isInStartList)
                 {
                     await RearrangeStartPositionOfStartListMembers(startposition);
                 }
                 Init();
+            }
+            SetExecutionPossibleForAll();
+        }
+
+        private void SetExecutionPossibleForAll()
+        {
+            foreach (var runningRaceStartListMember in RunningRaceStartList.StartListMembers)
+            {
+                ((CommandBase)runningRaceStartListMember.DeleteButtonCommand).IsExecutionPossible = true;
+                ((CommandBase)runningRaceStartListMember.UpButtonCommand).IsExecutionPossible = true;
+                ((CommandBase)runningRaceStartListMember.DownButtonCommand).IsExecutionPossible = true;
+            }
+
+            foreach (var possibleSkierNotInStartList in PossibleSkiersNotInStartList)
+            {
+                ((CommandBase)possibleSkierNotInStartList.AddButtonCommand).IsExecutionPossible = true;
+            }
+        }
+
+        private void SetExecutionNotPossibleForAll()
+        {
+            foreach (var runningRaceStartListMember in RunningRaceStartList.StartListMembers)
+            {
+                ((CommandBase)runningRaceStartListMember.DeleteButtonCommand).IsExecutionPossible = false;
+                ((CommandBase)runningRaceStartListMember.UpButtonCommand).IsExecutionPossible = false;
+                ((CommandBase)runningRaceStartListMember.DownButtonCommand).IsExecutionPossible = false;
+            }
+
+            foreach (var possibleSkierNotInStartList in PossibleSkiersNotInStartList)
+            {
+                ((CommandBase)possibleSkierNotInStartList.AddButtonCommand).IsExecutionPossible = false;
             }
         }
 
@@ -127,7 +160,7 @@ namespace RaceControl.ViewModels
             {
                 return;
             }
-
+            SetExecutionNotPossibleForAll();
             int newStartPosition = startListMemberToMoveUp.Startposition;
             bool movedToOldStartPosition =  await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveUp.Skier.Id,
                 startListMemberToMoveUp.RunNo, oldStartPosition);
@@ -137,6 +170,7 @@ namespace RaceControl.ViewModels
                     startListMemberToMoveDown.RunNo, newStartPosition);   
             }
             Init();
+            SetExecutionPossibleForAll();
         }
 
         private async void MoveUpStartListMember(object? sender, EventArgs e)
@@ -157,7 +191,7 @@ namespace RaceControl.ViewModels
             {
                 return;
             }
-
+            SetExecutionPossibleForAll();
             int newStartPosition = startListMemberToMoveDown.Startposition;
             bool movedToOldStartPosition =  await _startListLogic.UpdateStartListMemberStartPosition(RunningRace.Id, startListMemberToMoveDown.Skier.Id,
                 startListMemberToMoveDown.RunNo, oldStartPosition);
@@ -167,6 +201,7 @@ namespace RaceControl.ViewModels
                     startListMemberToMoveUp.RunNo, newStartPosition);   
             }
             Init();
+            SetExecutionPossibleForAll();
         }
 
         private async Task<ICollection<SkierModel>> GetPossibleSkiersNotInStartList(ICollection<StartListMemberModel> startListMembers)
