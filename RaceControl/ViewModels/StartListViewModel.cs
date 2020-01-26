@@ -121,6 +121,10 @@ namespace RaceControl.ViewModels
         private async void Init()
         {
             RunningRace = await GetRunningRace();
+            if (RunningRace == null)
+            {
+                return;
+            }
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);
             PossibleSkiersNotInStartList = await GetPossibleSkiersNotInStartList(RunningRaceStartList.StartListMembers);
 

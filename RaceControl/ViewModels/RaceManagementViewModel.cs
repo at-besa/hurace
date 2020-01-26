@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Cryptography.Pkcs;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hurace.Core.DAL.Domain;
@@ -51,6 +53,14 @@ namespace RaceControl.ViewModels
 			set => Set(ref selectedRaceType, value);
 		}
 
+		private string errorText;
+
+		public string ErrorText
+		{
+			get => errorText;
+			set => Set(ref errorText, value);
+		}
+
 		public ICollection<string> RaceStates { get; set; } = new List<string>();
 
 		public string SelectedState
@@ -66,8 +76,8 @@ namespace RaceControl.ViewModels
         public CommandBase CreateNewRaceCommand { get; set; }
 		
 		public RaceManagementViewModel()
-        {
-	        GetRaces();
+		{
+			GetRaces();
             GetRaceTypes();
             GetRaceStates();
             
@@ -97,6 +107,11 @@ namespace RaceControl.ViewModels
 		        RaceViewModels.Add(raceViewModel);
 	        }
 
+	        if (raceModels.Count >= 1)
+	        {
+		        SelectedRaceViewModel = new RaceViewModel(raceModels.FirstOrDefault(raceModel => raceModel.Id != -1));
+	        }
+
         }
 
         private async void GetRaceTypes()
@@ -114,6 +129,7 @@ namespace RaceControl.ViewModels
 	        foreach (var state in states)
 	        {
 		        RaceStates.Add(state);
+		        
 	        }
         }
         
@@ -121,6 +137,13 @@ namespace RaceControl.ViewModels
         {
 	        SelectedRaceViewModel.RaceModel.Type.Type = SelectedRaceType;
 	        SelectedRaceViewModel.RaceModel.Status.Name = SelectedState;
+	        if (SelectedState == "running" && await RunningRaceAlreadyExisits())
+	        {
+		        ErrorText = "There is only one running race possible! Change status!";
+		        return;
+	        }
+
+	        ErrorText = "";
 	        if (SelectedRaceViewModel.NewRace)
 	        {
 		        await managementManagementLogic.CreateRace(SelectedRaceViewModel.RaceModel);
@@ -132,7 +155,20 @@ namespace RaceControl.ViewModels
 			}
             
         }
-        
+
+        private async Task<bool> RunningRaceAlreadyExisits()
+        {
+	        var raceModels = await managementManagementLogic.GetRaces();
+	        var runningRaceModel = raceModels.
+		        FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
+	        if (runningRaceModel == null)
+	        {
+		        return false;
+	        }
+
+	        return true;
+        }
+
         private async void DeleteRace(object sender, EventArgs e)
         {
 	        await managementManagementLogic.DeleteRace(SelectedRaceViewModel.RaceModel.Id);

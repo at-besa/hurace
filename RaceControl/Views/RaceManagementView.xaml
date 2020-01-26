@@ -70,23 +70,21 @@
 			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Location}" Margin="4"></TextBox>
 		    <TextBlock Text="Number of Split-times"></TextBlock>
 			<TextBox Text="{Binding SelectedRaceViewModel.RaceModel.Splittimes}" Margin="4"></TextBox>
-
-			<StackPanel Orientation="Horizontal" Margin="25,10" HorizontalAlignment="Center">
-				<ComboBox ItemsSource="{Binding RaceStates}" SelectedItem="{Binding SelectedState}">
-					<!--<ComboBox.ItemTemplate>
+			<TextBlock Text="Status"></TextBlock>
+			<ComboBox ItemsSource="{Binding RaceStates}" SelectedItem="{Binding SelectedState}" Margin="4">
+				<!--<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
 								<TextBox Text="{Binding RaceStates.Name}"></TextBox>
 							</StackPanel>
 						</DataTemplate>
 					</ComboBox.ItemTemplate>-->
-				</ComboBox>
-
-			    <Button Command="{Binding SaveCommand}" Margin="25,0">
+			</ComboBox>
+			<Button Command="{Binding SaveCommand}" HorizontalAlignment="Right">
 				    <TextBlock Text="Save Race" Margin="2"></TextBlock>
-			    </Button>
-		    </StackPanel>
-	    </StackPanel>
+			</Button>
+			<TextBlock Margin="4" FontSize="15" FontWeight="UltraBold" Foreground="Red" Text="{Binding ErrorText}"></TextBlock>
+		</StackPanel>
 
 </Grid>
 </UserControl>
