@@ -47,6 +47,9 @@
 			<DockPanel HorizontalAlignment="Center" >
 				<TextBlock Text="Running Race: " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 				<TextBlock Text="{Binding RaceControlModel.RaceModel.Name}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+				<TextBlock Text="   -   " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+				<TextBlock Text="Active Run: " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+				<TextBlock Text="{Binding ActiveRun}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 			</DockPanel>
 			<Line Height="3" Fill="{DynamicResource MaterialDesignCardBackground}" VerticalAlignment="Bottom"></Line>
 		</Grid>
@@ -165,7 +168,7 @@
 						</Grid>
 					</materialDesign:Card>
 					<materialDesign:Card Grid.Column="1" Margin="10" HorizontalAlignment="Stretch">
-						<Grid>
+						<Grid Visibility="{Binding SelectedSkierBoxVisible}" >
 							<ListBox ItemsSource="{Binding ActualSplittimes}"  ItemTemplate="{DynamicResource SplittimeTemplate}" />
 						</Grid>
 					</materialDesign:Card>
@@ -198,7 +201,7 @@
 						</Grid>
 					</materialDesign:Card>
 					<materialDesign:Card Grid.Column="1" Margin="10" HorizontalAlignment="Stretch">
-						<Grid>
+						<Grid  Visibility="{Binding LastSkierBoxVisible}">
 							<ListBox ItemsSource="{Binding LastSplittimes}"  ItemTemplate="{DynamicResource SplittimeTemplate}" />
 						</Grid>
 					</materialDesign:Card>

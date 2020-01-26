@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Hurace.Core.DAL.Domain;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Interface;
 using Hurace.Core.Logic.Model;
@@ -150,15 +151,31 @@ namespace RaceControl.ViewModels
 	        {
 		        await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
 
-                if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
+
+		        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
 		            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
 		        {
 			        ActiveRun = 2;
-			        RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(RaceControlModel.RaceModel.Id, ActiveRun);
+			        RaceControlModel.StartListModel = await raceControlLogic.SortStartListforSecondRun();
 
-                    //SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.Where(model => model.Disqualified != false)
+			        SelectedSkierViewModel = SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.First();
+			        LastSkierBoxVisible = Visibility.Collapsed;
 
-                }
+		        }
+		        if (ActiveRun == 2 && (SelectedSkierViewModel.Startposition == GetHighestStarlistMember()
+		                               && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified)))
+
+		        {
+			        // then the race is finished 
+			        await raceControlLogic.SetRaceFinished();
+			        StartRunCommand.IsExecutionPossible = false;
+			        ClearanceCommand.IsExecutionPossible = false;
+			        SimulatorOnOffCommand.IsExecutionPossible = false;
+			        RaceControlModel.StartListModel.StartListMembers.Clear();
+			        LastSkierBoxVisible = Visibility.Collapsed;
+			        SelectedSkierBoxVisible = Visibility.Collapsed;
+
+		        }
                 else
 		        {
 			        LastSkierBoxVisible = Visibility.Visible;
@@ -167,13 +184,26 @@ namespace RaceControl.ViewModels
 				        model.Startposition == SelectedSkierViewModel.Startposition + 1);
 			        LastSplittimes = ActualSplittimes;
 
-                }
+		        }
+
 
 
 		        ShowSplittimesForActualSkier();
 
             }
 	    }
+
+        private int GetHighestStarlistMember()
+        {
+	        int i = 0;
+	        foreach (var m in RaceControlModel.StartListModel.StartListMembers)
+	        {
+		        if (m.Startposition == 0)
+					break;
+		        i++;
+            }
+            return i;
+        }
 
         private async void ShowSplittimesForActualSkier()
         {
