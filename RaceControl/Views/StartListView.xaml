@@ -146,7 +146,7 @@
                                     Command="{Binding AddButtonCommand}" 
                                     CommandParameter="{Binding}"
                                     Style="{DynamicResource MaterialDesignIconButton}"
-                                    ToolTip="MaterialDesignIconButton">
+                                    ToolTip="Add to start list">
                                     <materialDesign:PackIcon
                                         Kind="Plus" />
                                 </Button>

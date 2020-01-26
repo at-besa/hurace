@@ -122,6 +122,12 @@ namespace Hurace.Core.Logic
             return await Task.Run(() =>
             {
                 var startlistAdo = new AdoStartListDao(connectionFactory);
+                var raceDataAdo = new AdoRaceDataDao(connectionFactory);
+                var racedata = raceDataAdo.FindAllBySkierId(skierId).FirstOrDefault(rd => rd.RaceId == raceId);
+                if (!raceDataAdo.Delete(racedata))
+                {
+                    return false;
+                }
                 var race = new Race
                 {
                     Id = raceId
@@ -132,8 +138,8 @@ namespace Hurace.Core.Logic
                     SkierId = skierId,
                     RunNo = runNo
                 };
-                var result = startlistAdo.Delete(startList);
-                return result;
+                
+                return startlistAdo.Delete(startList);
             });
         }
 
@@ -142,6 +148,26 @@ namespace Hurace.Core.Logic
             return await Task.Run(() =>
             {
                 var startListAdo = new AdoStartListDao(connectionFactory);
+                var raceDataAdo = new AdoRaceDataDao(connectionFactory);
+                var oldRaceData = raceDataAdo.FindAllBySkierId(skierId).FirstOrDefault(rd => rd.RaceId == raceId);
+                if (oldRaceData != null)
+                {
+                    raceDataAdo.Delete(oldRaceData);
+                }
+                var newRaceData = new RaceData() 
+                { 
+                RaceId = raceId,
+                SkierId = skierId,
+                Blocked = true,
+                Disqualified = false,
+                Finished = false,
+                Running = false
+                };
+                if (raceDataAdo.Insert(newRaceData) == 0)
+                {
+                    return false;
+                }
+               
                 var race = new Race
                 {
                     Id = raceId
@@ -153,8 +179,7 @@ namespace Hurace.Core.Logic
                     RunNo = runNo,
                     StartPos = startPosition
                 };
-                var result = startListAdo.Insert(startListMember);
-                return result != 0;
+                return startListAdo.Insert(startListMember) != 0;
             });
         }
 

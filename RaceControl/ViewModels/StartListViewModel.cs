@@ -51,13 +51,16 @@ namespace RaceControl.ViewModels
             var skierToAdd = (SkierModel)sender;
             if(skierToAdd != null)
             {
+                SetExecutionNotPossibleForAll();
                 var raceId = RunningRace.Id;
                 var startPosition = RunningRaceStartList.StartListMembers.Count() + 1;
+
                 var inserted = await _startListLogic.InsertStartListMember(raceId, skierToAdd.Id, _runNo, startPosition);
                 if (inserted)
                 {
                     Init();
                 }
+                SetExecutionPossibleForAll();
             }
         }
 

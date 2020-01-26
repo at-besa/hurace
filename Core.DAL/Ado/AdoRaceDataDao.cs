@@ -56,8 +56,7 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(RaceData raceData)
         {
             return template.Execute(
-                       @"insert into RaceData(id, raceId, skierId, disqualified, running, blocked, finished) values (null, @rid, @skid, @dis, @running, @blocked, @finished); SELECT last_insert_rowid();",
-                       new QueryParameter("@id", raceData.Id),
+                       @"insert into RaceData(raceId, skierId, disqualified, running, blocked, finished) values (@rid, @skid, @dis, @running, @blocked, @finished); SELECT last_insert_rowid();",
                        new QueryParameter("@rid", raceData.RaceId),
                        new QueryParameter("@skid", raceData.SkierId),
                        new QueryParameter("@dis", raceData.Disqualified),
