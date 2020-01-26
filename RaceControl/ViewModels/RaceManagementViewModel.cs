@@ -124,6 +124,7 @@ namespace RaceControl.ViewModels
 	        if (SelectedRaceViewModel.NewRace)
 	        {
 		        await managementManagementLogic.CreateRace(SelectedRaceViewModel.RaceModel);
+		        SelectedRaceViewModel.NewRace = false;
 	        }
 	        else
 	        {

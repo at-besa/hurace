@@ -38,6 +38,7 @@ namespace Hurace.Core.Logic.Model
         {
             return new Race
             {
+                Id = Id,
                 Type = Type,
                 Status = Status,
                 Date = Date,
