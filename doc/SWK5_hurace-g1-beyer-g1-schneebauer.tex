@@ -69,7 +69,34 @@
 		\item{Die Api bzw. das RaceControl kann verwendet werden}
 	\end{enumerate}
 	
+	\section{README}
+	Es wird davon ausgegangen, dass es nur ein Race mit dem Status 'running' gibt. Die Anwendung ist so ausgelegt, dass man verschiedene Races bearbeiten kann, und genau eines davon den Status 'running' besitzen soll. Gibt es kein entsprechendes Race funktionieren die Startlistenverwaltung und das RaceControl nicht.
 	
+	\subsection{Workflow}
+	
+	\begin{enumerate}
+		\item{Aktuelles running Race verwenden oder neues erstellen und Status entsprechend bei beiden Races abändern}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_raceManagement.png}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_raceManagement_create.png}
+		\item{Skier zur Startliste hinzufügen und Startliste sortieren. Wenn kein running Race vorhanden, dann Fehler}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_startList.png}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_startList_no_race.png}
+		\item{Den Simulator (Toggle Brain Symbol) aktivieren}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_raceControl_simulator.png}
+		\item{Skier lauf starten (Start Run). Der Simulator liefert nun Zwischenzeiten. Wenn alle Zwischenzeiten vorhanden, dann den lauf beenden (Clearence)}
+		\newline
+		\includegraphics[width=.7\textwidth]{img/ui_raceControl_finsihed.png}
+		\item{Diesen Ablauf für jeden Skier wiederholen.}
+		\item{Nach Ende des ersten Durchgangs startet gleich der zweite Druchgang mit entsprechender Startreihenfolge}
+				\newline
+		\includegraphics[width=.7\textwidth]{img/ui_raceControl_run2.png}
+		
+	\end{enumerate}
 
 	\section{Hurace.Core}
 	\subsection{DAL}
