@@ -149,8 +149,12 @@ namespace Hurace.Core.Logic
             {
                 var startListAdo = new AdoStartListDao(connectionFactory);
                 var raceDataAdo = new AdoRaceDataDao(connectionFactory);
-                //var racedata = raceDataAdo.FindAllBySkierId(skierId).FirstOrDefault(rd => rd.RaceId == raceId);
-                var raceData = new RaceData() 
+                var oldRaceData = raceDataAdo.FindAllBySkierId(skierId).FirstOrDefault(rd => rd.RaceId == raceId);
+                if (oldRaceData != null)
+                {
+                    raceDataAdo.Delete(oldRaceData);
+                }
+                var newRaceData = new RaceData() 
                 { 
                 RaceId = raceId,
                 SkierId = skierId,
@@ -159,7 +163,7 @@ namespace Hurace.Core.Logic
                 Finished = false,
                 Running = false
                 };
-                if (raceDataAdo.Insert(raceData) != 0)
+                if (raceDataAdo.Insert(newRaceData) == 0)
                 {
                     return false;
                 }
