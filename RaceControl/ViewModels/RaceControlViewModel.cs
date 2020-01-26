@@ -155,7 +155,8 @@ namespace RaceControl.ViewModels
 
 
 			        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
-			            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
+			            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified)
+			            && ActiveRun != 2)
 			        {
 				        ActiveRun = 2;
 				        RaceControlModel.StartListModel = await raceControlLogic.SortStartListforSecondRun();
@@ -186,7 +187,7 @@ namespace RaceControl.ViewModels
 				        RaceControlModel.StartListModel.StartListMembers.Clear();
 				        LastSkierBoxVisible = Visibility.Collapsed;
 				        SelectedSkierBoxVisible = Visibility.Collapsed;
-
+				        ActiveRun = 0;
 			        }
 
                     ShowSplittimesForActualSkier();
