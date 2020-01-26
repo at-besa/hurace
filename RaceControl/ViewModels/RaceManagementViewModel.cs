@@ -156,6 +156,8 @@ namespace RaceControl.ViewModels
             RaceViewModels.Add(SelectedRaceViewModel);
         }
 
+
+
         //public event PropertyChangedEventHandler PropertyChanged;
 
         //[NotifyPropertyChangedInvocator]

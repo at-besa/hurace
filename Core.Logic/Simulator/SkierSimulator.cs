@@ -16,14 +16,23 @@ namespace Hurace.Core.Logic.Simulator
         {
             BaseTimeForRaceType = new []
             {
-                10,
-                8,
-                12,
-                11,
-                9,
-                7
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
             };
-            
+
+            //BaseTimeForRaceType = new[]
+            //{
+	           // 10,
+	           // 8,
+	           // 12,
+	           // 11,
+	           // 9,
+	           // 7
+            //};
         }
 
         public void Start(bool start, int raceid)

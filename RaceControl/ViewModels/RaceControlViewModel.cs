@@ -88,6 +88,8 @@ namespace RaceControl.ViewModels
         public CommandBase DisqualifyCommand { get; set; }
         public CommandBase SimulatorOnOffCommand { get; set; }
 
+        public int ActiveRun { get; set; } = 1;
+
         public RaceControlViewModel()
         {
             Init();
@@ -143,15 +145,26 @@ namespace RaceControl.ViewModels
 	            || SelectedSkierViewModel.Disqualified)
 	        {
 
-		        LastSkierBoxVisible = Visibility.Visible;
+		        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
+		            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
+		        {
+			        ActiveRun = 2;
+			        foreach (var member in RaceControlModel.StartListModel.StartListMembers)
+			        {
+				        member.Finished = false;
+			        }
+
+		        }
+                LastSkierBoxVisible = Visibility.Visible;
 
                 await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
                 LastSkierViewModel = SelectedSkierViewModel;
-		        SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
+                SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
 			        model.Startposition == SelectedSkierViewModel.Startposition + 1);
 
 		        LastSplittimes = ActualSplittimes;
 		        ShowSplittimesForActualSkier();
+
 
 		        //if (SelectedSkierViewModel != null)
 		        //{
@@ -163,7 +176,7 @@ namespace RaceControl.ViewModels
         private async void ShowSplittimesForActualSkier()
         {
 	        if (SelectedSkierViewModel != null)
-		        ActualSplittimes = await raceControlLogic.GetSplittimesForSkier(SelectedSkierViewModel.Skier.Id, 1);
+		        ActualSplittimes = await raceControlLogic.GetSplittimesForSkier(SelectedSkierViewModel.Skier.Id, ActiveRun);
         }
 
 
