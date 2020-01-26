@@ -75,11 +75,63 @@ namespace Hurace.Core.Logic
                     StartListModel = startlistmodel
                 };
 
-                RaceControlModel.StartListModel.StartListMembers.OrderBy(model => new AdoSplitTimeDao(connectionFactory).FindByIds(model.RaceDataId, runNo, race.Splittimes)?.Time ?? DateTime.Now);
 
                 return RaceControlModel;
             });
         }
+
+        public async Task<StartListModel> SortStartListforSecondRun()
+        {
+	        return await Task.Run(() =>
+	        {
+
+		        foreach (var startListMemberModel in RaceControlModel.StartListModel.StartListMembers)
+		        {
+			        startListMemberModel.Running = false;
+			        startListMemberModel.Blocked = true;
+			        startListMemberModel.Finished = false;
+			        startListMemberModel.RunNo = 2;
+			        Update(startListMemberModel, RaceControlModel.RaceModel.Id);
+		        }
+
+		        var newStartList = new ObservableCollection<StartListMemberModel>(RaceControlModel.StartListModel.StartListMembers.OrderBy(model => new AdoSplitTimeDao(connectionFactory).FindByIds(model.RaceDataId, 1, RaceControlModel.RaceModel.Splittimes - 1)?.Time ?? DateTime.Now));
+		        for (var i = 0; i < newStartList.Count; i++)
+		        {
+			        var startListMemberModel = newStartList[i];
+			        startListMemberModel.Startposition = i+1;
+			        if (startListMemberModel.Disqualified)
+			        {
+				        newStartList.Move(i, newStartList.Count-1);
+				        startListMemberModel.Startposition = 0;
+			        }
+
+		        }
+
+		        RaceControlModel.StartListModel.StartListMembers = newStartList;
+		        
+
+		        return RaceControlModel.StartListModel;
+	        });
+        }
+
+
+        public async Task SetRaceFinished()
+        {
+	        await Task.Run(() =>
+	        {
+                RaceControlModel.RaceModel.Status = new Status()
+                {
+                    Id = 4,
+                    Name = "finished"
+                };
+		        var race = RaceControlModel.RaceModel.ToRace();
+
+                var fdbbck = new AdoRaceDao(connectionFactory).Update(race);
+
+            });
+        }
+
+
 
         private async Task<int> EvaluateRunNo(StartListModel slm)
         {
@@ -136,11 +188,11 @@ namespace Hurace.Core.Logic
         {
 	        return await Task.Run(() =>
 	        {
-		        if (actualStartListMember != null)
+		        if (slm != null)
 		        {
-			        actualStartListMember.Disqualified = true;
-			        actualStartListMember.Running = false;
-			        return Update(actualStartListMember, raceId);
+			        slm.Disqualified = true;
+			        slm.Running = false;
+			        return Update(slm, raceId);
 		        }
 
 		        return false;
@@ -170,7 +222,7 @@ namespace Hurace.Core.Logic
 		            WinnerSplitimes = ActualSplitimes;
 	            else
 	            {
-		            if (ActualSplitimes.Count > 0 && ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
+		            if (ActualSplitimes.Count > 0 && WinnerSplitimes.Count > 0 && ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
 		            {
 			            WinnerSplitimes = ActualSplitimes;
 		            }

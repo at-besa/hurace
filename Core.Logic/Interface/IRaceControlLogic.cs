@@ -13,6 +13,9 @@ namespace Hurace.Core.Logic.Interface
         Task<bool> Disqualify(StartListMemberModel slm, int raceId);
         Task<ICollection<SplitTimeModel>> GetSplittimesForSkier(int skierId, int runNo);
         Task<bool> SimulatorOnOff(bool onOff, int raceId);
+        Task<StartListModel> SortStartListforSecondRun();
+        Task SetRaceFinished();
+
 
     }
 }

@@ -5,14 +5,28 @@ using System.Collections.ObjectModel;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
+using Hurace.Core.Logic.Helpers;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class RaceControlModel : IComparable<RaceControlModel>
+    public class RaceControlModel : NotifyPropertyChanged, IComparable<RaceControlModel>
     {
-        public RaceModel RaceModel { get; set; }
-        public SkierModel SkierModel { get; set; }
-        public StartListModel StartListModel { get; set; }
+	    private StartListModel startListModel;
+	    private RaceModel raceModel;
+
+	    public RaceModel RaceModel
+	    {
+		    get => raceModel;
+		    set => Set(ref  raceModel, value);
+	    }
+
+	    public SkierModel SkierModel { get; set; }
+
+        public StartListModel StartListModel
+        {
+	        get => startListModel;
+	        set => Set(ref startListModel, value);
+        }
 
 
         public int CompareTo(RaceControlModel other)
