@@ -16,6 +16,11 @@ namespace Hurace.Core.Logic.Model
         private int runNo;
         private SkierModel skier;
 
+        public int RaceDataId
+        {
+	        get => raceDataId;
+	        set => Set(ref raceDataId, value);
+        }
 
         public int Startposition
         {
@@ -74,6 +79,8 @@ namespace Hurace.Core.Logic.Model
         }
         
         private ICommand _downButtonCommand;
+        private int raceDataId;
+
         public ICommand DownButtonCommand
         {
             get => _downButtonCommand;

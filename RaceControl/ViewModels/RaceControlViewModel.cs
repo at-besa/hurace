@@ -75,12 +75,11 @@ namespace RaceControl.ViewModels
 
         private StartListMemberModel lastSkierViewModel;
         private bool simulatorOnOff;
+        private int activeRun;
 
         public StartListMemberModel LastSkierViewModel {
 	        get => lastSkierViewModel;
-	        set {
-		        Set(ref lastSkierViewModel, value);
-	        }
+	        set => Set(ref lastSkierViewModel, value);
         }
 
         public CommandBase StartRunCommand { get; set; }
@@ -88,7 +87,11 @@ namespace RaceControl.ViewModels
         public CommandBase DisqualifyCommand { get; set; }
         public CommandBase SimulatorOnOffCommand { get; set; }
 
-        public int ActiveRun { get; set; } = 1;
+        public int ActiveRun
+        {
+	        get => activeRun;
+	        set => Set(ref activeRun, value);
+        }
 
         public RaceControlViewModel()
         {
@@ -111,7 +114,8 @@ namespace RaceControl.ViewModels
         private async Task LoadDataAsync()
         {
 	        var race = await raceManagementLogic.GetRunningRace();
-	        RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id);
+	        RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id, ActiveRun);
+	        ActiveRun = RaceControlModel.RaceModel.ActualRun;
         }
 
         private async void StartRun(object sender, EventArgs e)
@@ -144,32 +148,30 @@ namespace RaceControl.ViewModels
 	        if ((ActualSplittimes.Count >= RaceControlModel.RaceModel.Splittimes && !SelectedSkierViewModel.Blocked) 
 	            || SelectedSkierViewModel.Disqualified)
 	        {
+		        await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
 
-		        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
+                if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
 		            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
 		        {
 			        ActiveRun = 2;
-			        foreach (var member in RaceControlModel.StartListModel.StartListMembers)
-			        {
-				        member.Finished = false;
-			        }
+			        RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(RaceControlModel.RaceModel.Id, ActiveRun);
 
-		        }
-                LastSkierBoxVisible = Visibility.Visible;
+                    //SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.Where(model => model.Disqualified != false)
 
-                await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
-                LastSkierViewModel = SelectedSkierViewModel;
-                SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
-			        model.Startposition == SelectedSkierViewModel.Startposition + 1);
+                }
+                else
+		        {
+			        LastSkierBoxVisible = Visibility.Visible;
+			        LastSkierViewModel = SelectedSkierViewModel;
+			        SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
+				        model.Startposition == SelectedSkierViewModel.Startposition + 1);
+			        LastSplittimes = ActualSplittimes;
 
-		        LastSplittimes = ActualSplittimes;
+                }
+
+
 		        ShowSplittimesForActualSkier();
 
-
-		        //if (SelectedSkierViewModel != null)
-		        //{
-			       // SelectedSkierViewModel.Finished = true;
-		        //}
             }
 	    }
 

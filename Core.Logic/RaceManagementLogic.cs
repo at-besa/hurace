@@ -123,7 +123,7 @@ namespace Hurace.Core.Logic
 		{
 			Races = await GetRaces();
 			var runningRaceModel = Races.FirstOrDefault(raceModel => raceModel.Status.Name.Equals("running"));
-
+			
 			return runningRaceModel;
 		}
 	}

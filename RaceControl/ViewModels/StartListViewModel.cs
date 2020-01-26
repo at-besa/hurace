@@ -188,7 +188,7 @@ namespace RaceControl.ViewModels
             {
                 return null;
             }
-            StartListModel startListModel = await _startListLogic.GetStartListForRaceId(runningRace.Id);
+            StartListModel startListModel = await _startListLogic.GetStartListForRaceId(runningRace.Id, _runNo);
             return startListModel;
         }
 

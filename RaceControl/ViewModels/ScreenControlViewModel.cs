@@ -70,7 +70,7 @@ namespace RaceControl.ViewModels
 	    private async Task LoadDataAsync()
 	    {
 		    var race = await raceManagementLogic.GetRunningRace();
-		    RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id);
+		    RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id, 1);
 
 	    }
 

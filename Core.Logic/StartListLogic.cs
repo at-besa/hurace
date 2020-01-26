@@ -35,7 +35,7 @@ namespace Hurace.Core.Logic
 
         }
 
-        public async Task<StartListModel> GetStartListForRaceId(int raceId)
+        public async Task<StartListModel> GetStartListForRaceId(int raceId, int runNo)
         {
             return await Task.Run(() => {  
                 StartList = new StartListModel();
@@ -52,8 +52,9 @@ namespace Hurace.Core.Logic
 
                 IEnumerable<StartListMember> startListMembers = 
                     new AdoStartListDao(connectionFactory)
-                    .FindAllByRaceIdAndRunNo(raceId, 1)//TODO change to Method Parameter
+                    .FindAllByRaceIdAndRunNo(raceId, runNo)
                     .OrderBy(startListMember => startListMember.StartPos);
+
 
                 foreach (var startListMember in startListMembers)
                 {
@@ -68,7 +69,8 @@ namespace Hurace.Core.Logic
                             Blocked = skierdata != null && skierdata.Blocked,
                             Disqualified = skierdata != null && skierdata.Disqualified,
                             Finished = skierdata != null && skierdata.Finished,
-                            Running = skierdata != null && skierdata.Running
+                            Running = skierdata != null && skierdata.Running,
+                            RaceDataId = skierdata?.Id ?? 0
                         }
                     );
                     

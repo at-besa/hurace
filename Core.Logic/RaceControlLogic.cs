@@ -59,21 +59,43 @@ namespace Hurace.Core.Logic
         }
 
 
-        public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId)
+        public async Task<RaceControlModel> GetRaceControlForRaceId(int raceId, int runNo)
         {
             return await Task.Run(async () =>
             {
                 var race = new AdoRaceDao(connectionFactory).FindById(raceId);
-                var startlistmodel = await startListLogic.GetStartListForRaceId(raceId);
-                
+                var startlistmodel = await startListLogic.GetStartListForRaceId(raceId, 1);
+                if(runNo == 0)
+		            runNo = await EvaluateRunNo(startlistmodel);
+
+
                 RaceControlModel = new RaceControlModel
                 {
-                    RaceModel = new RaceModel(race),
+                    RaceModel = new RaceModel(race){ActualRun = runNo},
                     StartListModel = startlistmodel
                 };
 
+                RaceControlModel.StartListModel.StartListMembers.OrderBy(model => new AdoSplitTimeDao(connectionFactory).FindByIds(model.RaceDataId, runNo, race.Splittimes)?.Time ?? DateTime.Now);
+
                 return RaceControlModel;
             });
+        }
+
+        private async Task<int> EvaluateRunNo(StartListModel slm)
+        {
+	        return await Task.Run(() =>
+	        {
+		        bool run1StillRunning = false;
+		        foreach (var member in slm.StartListMembers)
+		        {
+			        if (!(member.Finished || member.Disqualified))
+			        {
+                        run1StillRunning = true;
+				        break;
+                    }
+		        }
+		        return run1StillRunning ? 1 : 2;
+	        });
         }
 
         public async Task<bool> StartRun(StartListMemberModel slm, int raceId)
@@ -128,6 +150,7 @@ namespace Hurace.Core.Logic
         {
             var raceData = new RaceData
             {
+                Id = slm.RaceDataId,
                 RaceId = raceId,
                 SkierId = slm.Skier.Id,
                 Disqualified = slm.Disqualified,

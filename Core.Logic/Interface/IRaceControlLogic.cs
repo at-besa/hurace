@@ -7,7 +7,7 @@ namespace Hurace.Core.Logic.Interface
 {
     public interface IRaceControlLogic
     {
-        Task<RaceControlModel> GetRaceControlForRaceId(int raceId);
+        Task<RaceControlModel> GetRaceControlForRaceId(int raceId, int runNo);
         Task<bool> StartRun(StartListMemberModel slm, int raceId);
         Task<bool> Clearance(StartListMemberModel slm, int raceId);
         Task<bool> Disqualify(StartListMemberModel slm, int raceId);
