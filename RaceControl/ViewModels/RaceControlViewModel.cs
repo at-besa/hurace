@@ -146,51 +146,54 @@ namespace RaceControl.ViewModels
 
         private async void Clearance(object sender, EventArgs e)
         {
-	        if ((ActualSplittimes.Count >= RaceControlModel.RaceModel.Splittimes && !SelectedSkierViewModel.Blocked) 
-	            || SelectedSkierViewModel.Disqualified)
+	        if (selectedSkierViewModel != null)
 	        {
-		        await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
-
-
-		        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
-		            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
+		        if ((ActualSplittimes.Count >= RaceControlModel.RaceModel.Splittimes && !SelectedSkierViewModel.Blocked)
+		            || SelectedSkierViewModel.Disqualified)
 		        {
-			        ActiveRun = 2;
-			        RaceControlModel.StartListModel = await raceControlLogic.SortStartListforSecondRun();
+			        await raceControlLogic.Clearance(SelectedSkierViewModel, RaceControlModel.StartListModel.raceId);
 
-			        SelectedSkierViewModel = SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.First();
-			        LastSkierBoxVisible = Visibility.Collapsed;
+
+			        if (SelectedSkierViewModel.Startposition == RaceControlModel.StartListModel.StartListMembers.Count
+			            && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified))
+			        {
+				        ActiveRun = 2;
+				        RaceControlModel.StartListModel = await raceControlLogic.SortStartListforSecondRun();
+
+				        SelectedSkierViewModel = SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.First();
+				        LastSkierBoxVisible = Visibility.Collapsed;
+
+			        }
+		
+			        else
+			        {
+				        LastSkierBoxVisible = Visibility.Visible;
+				        LastSkierViewModel = SelectedSkierViewModel;
+				        SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
+					        model.Startposition == SelectedSkierViewModel.Startposition + 1);
+				        LastSplittimes = ActualSplittimes;
+
+			        }
+
+                    // if the selected skier null after clearance then the race is finished
+			        if (ActiveRun == 2 && SelectedSkierViewModel == null)
+			        {
+				        // then the race is finished 
+				        await raceControlLogic.SetRaceFinished();
+				        StartRunCommand.IsExecutionPossible = false;
+				        ClearanceCommand.IsExecutionPossible = false;
+				        SimulatorOnOffCommand.IsExecutionPossible = false;
+				        RaceControlModel.StartListModel.StartListMembers.Clear();
+				        LastSkierBoxVisible = Visibility.Collapsed;
+				        SelectedSkierBoxVisible = Visibility.Collapsed;
+
+			        }
+
+                    ShowSplittimesForActualSkier();
 
 		        }
-		        if (ActiveRun == 2 && (SelectedSkierViewModel.Startposition == GetHighestStarlistMember()
-		                               && (SelectedSkierViewModel.Finished || SelectedSkierViewModel.Disqualified)))
-
-		        {
-			        // then the race is finished 
-			        await raceControlLogic.SetRaceFinished();
-			        StartRunCommand.IsExecutionPossible = false;
-			        ClearanceCommand.IsExecutionPossible = false;
-			        SimulatorOnOffCommand.IsExecutionPossible = false;
-			        RaceControlModel.StartListModel.StartListMembers.Clear();
-			        LastSkierBoxVisible = Visibility.Collapsed;
-			        SelectedSkierBoxVisible = Visibility.Collapsed;
-
-		        }
-                else
-		        {
-			        LastSkierBoxVisible = Visibility.Visible;
-			        LastSkierViewModel = SelectedSkierViewModel;
-			        SelectedSkierViewModel = RaceControlModel.StartListModel.StartListMembers.FirstOrDefault(model =>
-				        model.Startposition == SelectedSkierViewModel.Startposition + 1);
-			        LastSplittimes = ActualSplittimes;
-
-		        }
-
-
-
-		        ShowSplittimesForActualSkier();
-
             }
+
 	    }
 
         private int GetHighestStarlistMember()

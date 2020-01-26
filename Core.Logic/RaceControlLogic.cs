@@ -222,7 +222,7 @@ namespace Hurace.Core.Logic
 		            WinnerSplitimes = ActualSplitimes;
 	            else
 	            {
-		            if (ActualSplitimes.Count > 0 && ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
+		            if (ActualSplitimes.Count > 0 && WinnerSplitimes.Count > 0 && ActualSplitimes.Last().Time < WinnerSplitimes.Last().Time && ActualSplitimes.Count == RaceControlModel.RaceModel.Splittimes)
 		            {
 			            WinnerSplitimes = ActualSplitimes;
 		            }
