@@ -19,7 +19,7 @@ namespace RaceControl.ViewModels
         private readonly int _runNo = 1;
 	    public RaceModel RunningRace { get; set; } = new RaceModel();
 
-	    private ICollection<SkierModel> _possibleSkiersNotInStartList;
+        private ICollection<SkierModel> _possibleSkiersNotInStartList;
         public ICollection<SkierModel> PossibleSkiersNotInStartList
 	    {
 		    get => _possibleSkiersNotInStartList;
@@ -32,15 +32,7 @@ namespace RaceControl.ViewModels
             get => _runningRaceStartList;
             set => Set(ref _runningRaceStartList, value);
         }
-
-        public StartListMemberModel SelectedStartListMember { get; set; }
-        public SkierModel SelectedPossibleSkierNotInStartList { get; set; }
-
-        public CommandBase DeleteStartListMemberCommand { get; set; }
-        public CommandBase AddStartListMemberCommand { get; set; }
-
-
-
+        
         public StartListViewModel()
 	    {
             Init();
