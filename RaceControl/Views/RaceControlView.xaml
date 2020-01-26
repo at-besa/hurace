@@ -45,11 +45,34 @@
 
 		<Grid Row="0" Background="{DynamicResource MaterialDesignCardBackground}" >
 			<DockPanel HorizontalAlignment="Center" >
+				<TextBlock Margin="4" FontSize="15" FontWeight="UltraBold" Foreground="Red" Text="{Binding ErrorText}"></TextBlock>
+				<DockPanel.Style>
+					<Style TargetType="{x:Type DockPanel}">
+						<Setter Property="Visibility" Value="Hidden"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding RaceControlModel}" Value="{x:Null}">
+								<Setter Property="Visibility" Value="Visible"/>
+							</DataTrigger>
+						</Style.Triggers>                    
+					</Style>
+				</DockPanel.Style>
+			</DockPanel>
+			<DockPanel HorizontalAlignment="Center" >
 				<TextBlock Text="Running Race: " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 				<TextBlock Text="{Binding RaceControlModel.RaceModel.Name}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 				<TextBlock Text="   -   " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 				<TextBlock Text="Active Run: " Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
 				<TextBlock Text="{Binding ActiveRun}" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"></TextBlock>
+				<DockPanel.Style>
+					<Style TargetType="{x:Type DockPanel}">
+						<Setter Property="Visibility" Value="Visible"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding RaceControlModel}" Value="{x:Null}">
+								<Setter Property="Visibility" Value="Hidden"/>
+							</DataTrigger>
+						</Style.Triggers>                    
+					</Style>
+				</DockPanel.Style>
 			</DockPanel>
 			<Line Height="3" Fill="{DynamicResource MaterialDesignCardBackground}" VerticalAlignment="Bottom"></Line>
 		</Grid>

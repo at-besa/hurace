@@ -17,7 +17,12 @@ namespace RaceControl.ViewModels
         private readonly IRaceManagementLogic _raceManagementLogic = RaceManagementLogic.Instance;
         private readonly IStartListLogic _startListLogic = StartListLogic.Instance;
         private readonly int _runNo = 1;
-	    public RaceModel RunningRace { get; set; } = new RaceModel();
+
+        public RaceModel RunningRace
+        {
+            get => runningRace;
+            set => Set(ref runningRace, value);
+        }
 
         private ICollection<SkierModel> _possibleSkiersNotInStartList;
         public ICollection<SkierModel> PossibleSkiersNotInStartList
@@ -27,14 +32,24 @@ namespace RaceControl.ViewModels
 	    }
 
 	    private StartListModel _runningRaceStartList;
+        private string errorText;
+        private RaceModel runningRace;
+
         public StartListModel RunningRaceStartList
         {
             get => _runningRaceStartList;
             set => Set(ref _runningRaceStartList, value);
         }
-        
+
+        public string ErrorText
+        {
+            get => errorText;
+            set => Set(ref errorText, value);
+        }
+
         public StartListViewModel()
 	    {
+            RunningRace = new RaceModel();
             Init();
         }
 
@@ -123,6 +138,7 @@ namespace RaceControl.ViewModels
             RunningRace = await GetRunningRace();
             if (RunningRace == null)
             {
+                ErrorText = "There is no running race! Change status in Race Management!";
                 return;
             }
             RunningRaceStartList = await GetRunningRaceStartList(RunningRace);

@@ -77,6 +77,7 @@ namespace RaceControl.ViewModels
         private StartListMemberModel lastSkierViewModel;
         private bool simulatorOnOff;
         private int activeRun;
+        private string errorText;
 
         public StartListMemberModel LastSkierViewModel {
 	        get => lastSkierViewModel;
@@ -92,6 +93,12 @@ namespace RaceControl.ViewModels
         {
 	        get => activeRun;
 	        set => Set(ref activeRun, value);
+        }
+
+        public string ErrorText
+        {
+	        get => errorText;
+	        set => Set(ref errorText, value);
         }
 
         public RaceControlViewModel()
@@ -115,9 +122,16 @@ namespace RaceControl.ViewModels
         private async Task LoadDataAsync()
         {
 	        var race = await raceManagementLogic.GetRunningRace();
+	        if (race == null)
+	        {
+		        ErrorText = "There is no running race! Change status in Race Management!";
+		        return;
+	        }
 	        RaceControlModel = await raceControlLogic.GetRaceControlForRaceId(race.Id, ActiveRun);
 	        ActiveRun = RaceControlModel.RaceModel.ActualRun;
         }
+
+
 
         private async void StartRun(object sender, EventArgs e)
         {

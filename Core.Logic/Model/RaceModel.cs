@@ -13,6 +13,7 @@ namespace Hurace.Core.Logic.Model
     public class RaceModel : NotifyPropertyChanged, IComparable<RaceModel> 
     {
         private Status status;
+        private string name;
 
         public RaceModel(Race race)
         {
@@ -39,7 +40,13 @@ namespace Hurace.Core.Logic.Model
 
         public int ActualRun { get; set; } = 1;
         public DateTime Date { get; set; }
-        public string Name { get; set; }
+
+        public string Name
+        {
+            get => name;
+            set => Set(ref name, value);
+        }
+
         public string Location { get; set; }
         public int Splittimes { get; set; }
         public string Sex { get; set;  }
