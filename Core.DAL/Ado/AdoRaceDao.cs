@@ -48,7 +48,7 @@ namespace Hurace.Core.DAL.Ado
         public int Insert(Race race)
         {
             return template.Execute(
-                       @"insert into Race(id, typeId, status, name, location, date, splittimes, sex, deleted) values (null, @type, @status, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
+                       @"insert into Race(id, typeId, statusId, name, location, date, splittimes, sex, deleted) values (null, @type, @status, @nam, @loc, @dat , @spl, @sex, 0); SELECT last_insert_rowid();",
                        new QueryParameter("@type", race.Type.Id),
                        new QueryParameter("@status", race.Status.Id),
                        new QueryParameter("@nam", race.Name),

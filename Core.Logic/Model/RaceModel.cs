@@ -41,7 +41,7 @@ namespace Hurace.Core.Logic.Model
                 Type = Type,
                 Status = Status,
                 Date = Date,
-                Name = Location,
+                Name = Name,
                 Location = Location,
                 Splittimes = Splittimes,
                 Sex = Sex
