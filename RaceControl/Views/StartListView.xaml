@@ -77,7 +77,7 @@
                                 Command="{Binding UpButtonCommand}" 
                                 CommandParameter="{Binding}"
                                 Style="{DynamicResource MaterialDesignIconButton}"
-                                ToolTip="MaterialDesignIconButton">
+                                ToolTip="Increase start position">
                                 <materialDesign:PackIcon
                                     Kind="ArrowUpward" 
                                 />
@@ -86,7 +86,7 @@
                                 Command="{Binding DownButtonCommand}" 
                                 CommandParameter="{Binding}"
                                 Style="{DynamicResource MaterialDesignIconButton}"
-                                ToolTip="MaterialDesignIconButton">
+                                ToolTip="Decrease start position">
                                 <materialDesign:PackIcon
                                     Kind="ArrowDownward" />
                             </Button>
@@ -94,7 +94,7 @@
                                 Command="{Binding DeleteButtonCommand}" 
                                 CommandParameter="{Binding}"
                                 Style="{DynamicResource MaterialDesignIconButton}"
-                                ToolTip="MaterialDesignIconButton">
+                                ToolTip="Delete from start list">
                                 <materialDesign:PackIcon
                                     Kind="Delete" />
                             </Button>
