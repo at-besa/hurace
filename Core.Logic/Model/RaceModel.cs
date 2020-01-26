@@ -2,14 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Hurace.Core.DAL.Ado;
 using Hurace.Core.DAL.Common;
 using Hurace.Core.DAL.Domain;
+using Hurace.Core.Logic.Helpers;
 
 namespace Hurace.Core.Logic.Model
 {
-    public class RaceModel : IComparable<RaceModel>
+    public class RaceModel : NotifyPropertyChanged, IComparable<RaceModel> 
     {
+        private Status status;
+
         public RaceModel(Race race)
         {
             Id = race.Id;
@@ -26,7 +30,13 @@ namespace Hurace.Core.Logic.Model
 
         public int Id { get; set; }
         public RaceType Type { get; set; }
-        public Status Status { get; set; }
+
+        public Status Status
+        {
+            get => status;
+            set => Set(ref status, value);
+        }
+
         public int ActualRun { get; set; } = 1;
         public DateTime Date { get; set; }
         public string Name { get; set; }

@@ -21,7 +21,14 @@ namespace RaceControl.ViewModels
 	{
 	    private readonly IRaceManagementLogic managementManagementLogic = RaceManagementLogic.Instance;
 	    private RaceViewModel selectedRaceViewModel;
-	    public ObservableCollection<RaceViewModel> RaceViewModels { get; } = new ObservableCollection<RaceViewModel>();
+
+	    private ObservableCollection<RaceViewModel> raceViewModels;
+	    public ObservableCollection<RaceViewModel> RaceViewModels
+	    {
+		    get => raceViewModels;
+		    set => Set(ref raceViewModels, value);
+		    
+	    } 
 
 	    public RaceViewModel SelectedRaceViewModel
 	    {
@@ -77,6 +84,7 @@ namespace RaceControl.ViewModels
 		
 		public RaceManagementViewModel()
 		{
+			RaceViewModels = new ObservableCollection<RaceViewModel>();
 			GetRaces();
             GetRaceTypes();
             GetRaceStates();

@@ -1,11 +1,19 @@
-﻿using Hurace.Core.Logic.Model;
+﻿using Hurace.Core.Logic.Helpers;
+using Hurace.Core.Logic.Model;
 using Swack.UI.ViewModels;
 
 namespace RaceControl.ViewModels.RaceManagementHelpers
 {
-    public class RaceViewModel
+    public class RaceViewModel : NotifyPropertyChanged
     {
-        public RaceModel RaceModel { get; set; }
+        private RaceModel raceModel;
+
+        public RaceModel RaceModel
+        {
+            get => raceModel;
+            set => Set(ref raceModel, value);
+        }
+
         public string Image { get; set; }
         public bool NewRace { get; set; } = false;
 
