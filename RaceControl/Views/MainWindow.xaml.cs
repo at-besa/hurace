@@ -27,6 +27,7 @@ namespace RaceControl
 		{
 			InitializeComponent();
 			ApplyBase(true);
+			DataContext = new RaceManagementViewModel();
 		}
 
 		private void RaceManagement_Clicked(object sender, RoutedEventArgs e)

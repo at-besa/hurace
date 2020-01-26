@@ -18,9 +18,9 @@
 		<DataTemplate x:Name="RaceManagementTemplate" DataType="{x:Type viewmodels:RaceManagementViewModel}">
 			<views:RaceManagementView DataContext="{Binding}"></views:RaceManagementView>
 		</DataTemplate>
-		<DataTemplate x:Name="ScreenControlTemplate" DataType="{x:Type viewmodels:ScreenControlViewModel}">
-			<views:ScreenControlView DataContext="{Binding}"></views:ScreenControlView>
-		</DataTemplate>
+		<!-- <DataTemplate x:Name="ScreenControlTemplate" DataType="{x:Type viewmodels:ScreenControlViewModel}"> -->
+		<!-- 	<views:ScreenControlView DataContext="{Binding}"></views:ScreenControlView> -->
+		<!-- </DataTemplate> -->
 		<DataTemplate x:Name="RaceControlTemplate" DataType="{x:Type viewmodels:RaceControlViewModel}">
 			<views:RaceControlView DataContext="{Binding}"></views:RaceControlView>
 		</DataTemplate>
@@ -40,7 +40,7 @@
 			<Button Content="Race Management" FontSize="18" FontWeight="Bold"  Margin="5,0"  Click="RaceManagement_Clicked" ></Button>
 			<Button Content="Start List" FontSize="18" FontWeight="Bold" Margin="5,0" Click="StartListButton_Clicked"></Button>
 			<Button Content="Race Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="RaceControlButton_Clicked"></Button>
-			<Button Content="Screen Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="ScreenControlButton_Clicked"></Button>
+			<!-- <Button Content="Screen Control" FontSize="18" FontWeight="Bold"  Margin="5,0" Click="ScreenControlButton_Clicked"></Button> -->
 		</StackPanel>
 
 		<ContentControl Foreground="{DynamicResource MaterialDesignDarkForeground}" Grid.Row="1" Content="{Binding}"></ContentControl>
